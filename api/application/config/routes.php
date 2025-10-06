@@ -168,10 +168,10 @@ $route['bulk-delete/validate']['POST'] = 'bulk_delete_api/validate';
 
 // Student House API Routes
 $route['student-house/list']['POST'] = 'student_house_api/list';
-$route['student-house/get/(:num)']['POST'] = 'student_house_api/get/$1';
+$route['student-house/get/(.+)']['POST'] = 'student_house_api/get/$1';
 $route['student-house/create']['POST'] = 'student_house_api/create';
-$route['student-house/update/(:num)']['POST'] = 'student_house_api/update/$1';
-$route['student-house/delete/(:num)']['POST'] = 'student_house_api/delete/$1';
+$route['student-house/update/(.+)']['POST'] = 'student_house_api/update/$1';
+$route['student-house/delete/(.+)']['POST'] = 'student_house_api/delete/$1';
 
 // Classes API Routes
 $route['classes/list']['POST'] = 'classes_api/list';
