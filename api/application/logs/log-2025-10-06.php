@@ -102,3 +102,13 @@ ERROR - 2025-10-06 13:20:39 --> Severity: Warning --> Undefined array key "short
 ERROR - 2025-10-06 13:24:05 --> Auth_model login() - Login blocked, student_panel_login = "0"
 ERROR - 2025-10-06 13:25:25 --> Auth_model login() - Login blocked, student_panel_login = "0"
 ERROR - 2025-10-06 13:35:46 --> Auth_model login() - Login blocked, student_panel_login = "0"
+ERROR - 2025-10-06 13:48:47 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 17:18:48 --> PHP Error: Creation of dynamic property Staffattendancemodel::$current_session is deprecated in C:\xampp\htdocs\amt\api\application\models\Staffattendancemodel.php on line 11
+ERROR - 2025-10-06 17:18:48 --> PHP Error: Creation of dynamic property Staffattendancemodel::$current_date is deprecated in C:\xampp\htdocs\amt\api\application\models\Staffattendancemodel.php on line 12
+ERROR - 2025-10-06 17:18:48 --> PHP Error: Creation of dynamic property Teacher_webservice::$staffattendancemodel is deprecated in C:\xampp\htdocs\amt\api\system\core\Loader.php on line 359
+ERROR - 2025-10-06 17:18:48 --> PHP Error: Creation of dynamic property Teacher_webservice::$leaverequest_model is deprecated in C:\xampp\htdocs\amt\api\system\core\Loader.php on line 359
+ERROR - 2025-10-06 15:59:40 --> Auth_model login() - Login blocked, student_panel_login = "0"
+ERROR - 2025-10-06 17:20:18 --> Error loading models: Unable to locate the model you have specified: Schoolhouse_model
+ERROR - 2025-10-06 17:20:18 --> Severity: Warning --> Undefined property: Student_house_api::$setting_model C:\xampp\htdocs\amt\api\application\controllers\Student_house_api.php 54
+ERROR - 2025-10-06 17:20:18 --> Severity: error --> Exception: Call to a member function getSetting() on null C:\xampp\htdocs\amt\api\application\controllers\Student_house_api.php 54
+ERROR - 2025-10-06 17:24:54 --> Error loading models: Unable to locate the model you have specified: Role_model
