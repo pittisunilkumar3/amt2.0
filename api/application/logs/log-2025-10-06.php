@@ -50,3 +50,55 @@ ERROR - 2025-10-06 09:16:19 --> Error loading models: Unable to locate the model
 ERROR - 2025-10-06 09:16:20 --> Error loading models: Unable to locate the model you have specified: Role_model
 ERROR - 2025-10-06 09:16:20 --> Error loading models: Unable to locate the model you have specified: Role_model
 ERROR - 2025-10-06 09:31:14 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 11:45:31 --> Severity: Warning --> Undefined property: Auth::$language_model C:\xampp\htdocs\amt\api\system\core\Model.php 74
+ERROR - 2025-10-06 11:45:31 --> Severity: error --> Exception: Call to a member function get() on null C:\xampp\htdocs\amt\api\application\models\Setting_model.php 131
+ERROR - 2025-10-06 11:52:35 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 15:24:09 --> Severity: Warning --> Undefined array key "user_type" C:\xampp\htdocs\amt\api\application\controllers\Webservice.php 358
+ERROR - 2025-10-06 15:24:09 --> Severity: error --> Exception: Call to undefined method Setting_model::student_fields() C:\xampp\htdocs\amt\api\application\controllers\Webservice.php 361
+ERROR - 2025-10-06 11:54:09 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 15:25:09 --> Severity: Warning --> Attempt to read property "category" on null C:\xampp\htdocs\amt\api\application\controllers\Webservice.php 364
+ERROR - 2025-10-06 15:25:09 --> Severity: error --> Exception: Attempt to assign property "category" on null C:\xampp\htdocs\amt\api\application\controllers\Webservice.php 365
+ERROR - 2025-10-06 11:55:09 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 11:55:30 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 11:55:54 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 13:11:55 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 13:14:10 --> Query error: Unknown column 'activelanguage' in 'field list' - Invalid query: SELECT `id`, `student_panel_login`, `parent_panel_login`, `student_login`, `parent_login`, `name`, `timezone`, `activelanguage`
+FROM `sch_settings`
+ORDER BY `id`
+ LIMIT 1
+ERROR - 2025-10-06 13:14:11 --> Query error: Unknown column 'activelanguage' in 'field list' - Invalid query: SELECT `id`, `student_panel_login`, `parent_panel_login`, `student_login`, `parent_login`, `name`, `timezone`, `activelanguage`
+FROM `sch_settings`
+ORDER BY `id`
+ LIMIT 1
+ERROR - 2025-10-06 13:14:11 --> Query error: Unknown column 'activelanguage' in 'field list' - Invalid query: SELECT `id`, `student_panel_login`, `parent_panel_login`, `student_login`, `parent_login`, `name`, `timezone`, `activelanguage`
+FROM `sch_settings`
+ORDER BY `id`
+ LIMIT 1
+ERROR - 2025-10-06 13:15:29 --> Query error: Unknown column 'activelanguage' in 'field list' - Invalid query: SELECT `id`, `student_panel_login`, `parent_panel_login`, `student_login`, `parent_login`, `name`, `timezone`, `activelanguage`
+FROM `sch_settings`
+ORDER BY `id`
+ LIMIT 1
+ERROR - 2025-10-06 13:15:51 --> Query error: Unknown column 'activelanguage' in 'field list' - Invalid query: SELECT `id`, `student_panel_login`, `parent_panel_login`, `student_login`, `parent_login`, `name`, `timezone`, `activelanguage`
+FROM `sch_settings`
+ORDER BY `id`
+ LIMIT 1
+ERROR - 2025-10-06 13:15:51 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 13:16:14 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 13:16:14 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 13:18:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 13:18:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 13:18:02 --> Auth_model login() - Failed to enable student login: No changes made - setting may already be correct
+ERROR - 2025-10-06 13:18:26 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 13:18:26 --> Severity: Warning --> Undefined array key "student_login" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 288
+ERROR - 2025-10-06 13:18:26 --> Severity: Warning --> Undefined array key "parent_login" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 289
+ERROR - 2025-10-06 13:18:26 --> Severity: Warning --> Undefined array key "short_name" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 97
+ERROR - 2025-10-06 13:18:43 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 13:18:43 --> Severity: Warning --> Undefined array key "student_login" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 289
+ERROR - 2025-10-06 13:18:43 --> Severity: Warning --> Undefined array key "parent_login" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 290
+ERROR - 2025-10-06 13:20:39 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 13:20:39 --> Severity: Warning --> Undefined array key "student_login" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 289
+ERROR - 2025-10-06 13:20:39 --> Severity: Warning --> Undefined array key "parent_login" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 290
+ERROR - 2025-10-06 13:20:39 --> Severity: Warning --> Undefined array key "short_name" C:\xampp\htdocs\amt\api\application\models\Auth_model.php 98
+ERROR - 2025-10-06 13:24:05 --> Auth_model login() - Login blocked, student_panel_login = "0"
+ERROR - 2025-10-06 13:25:25 --> Auth_model login() - Login blocked, student_panel_login = "0"
+ERROR - 2025-10-06 13:35:46 --> Auth_model login() - Login blocked, student_panel_login = "0"

@@ -28,12 +28,55 @@ class Auth_model extends CI_Model
 
     public function login($username, $password, $app_key)
     {
-        $resultdata    = $this->setting_model->getSetting();
-        
-        if($resultdata->student_panel_login){
-            $q = $this->checkLogin($username, $password);
-        }else{
-            return array('status' => 0, 'message' => 'Your account is suspended'); 
+        try {
+            $resultdata = $this->setting_model->getSetting();
+
+            // Check if resultdata is valid and has the required property
+            if (!$resultdata || !isset($resultdata->student_panel_login)) {
+                log_message('error', 'Auth_model login(): Invalid settings data');
+                return array('status' => 0, 'message' => 'System configuration error');
+            }
+
+            // Log the actual value for debugging
+            log_message('info', 'Auth_model login() - student_panel_login value: "' . $resultdata->student_panel_login . '"');
+
+            // Check for various possible values that should allow login
+            $allowed_values = array('yes', 'Yes', 'YES', '1', 1, true);
+            $disallowed_values = array('no', 'No', 'NO', '0', 0, false, null, '');
+            $login_allowed = in_array($resultdata->student_panel_login, $allowed_values, false);
+
+            if($login_allowed){
+                log_message('info', 'Auth_model login() - Login allowed, proceeding to checkLogin()');
+                $q = $this->checkLogin($username, $password);
+            }else{
+                log_message('error', 'Auth_model login() - Login blocked, student_panel_login = "' . $resultdata->student_panel_login . '"');
+
+                // Auto-fix: Enable student login if it's disabled
+                log_message('info', 'Auth_model login() - Attempting to auto-enable student login');
+                $fix_result = $this->enable_student_login();
+
+                if ($fix_result['status'] == 1) {
+                    log_message('info', 'Auth_model login() - Successfully enabled student login, retrying');
+                    // Retry the login after fixing
+                    $q = $this->checkLogin($username, $password);
+                } else {
+                    log_message('error', 'Auth_model login() - Failed to enable student login: ' . $fix_result['message']);
+
+                    // Provide more detailed error message for debugging
+                    $debug_message = 'Student panel login is disabled. Current setting: "' . $resultdata->student_panel_login . '". Expected: "yes". Auto-fix failed: ' . $fix_result['message'];
+                    return array(
+                        'status' => 0,
+                        'message' => 'Your account is suspended',
+                        'debug_info' => $debug_message,
+                        'current_setting' => $resultdata->student_panel_login,
+                        'auto_fix_attempted' => true,
+                        'auto_fix_result' => $fix_result
+                    );
+                }
+            }
+        } catch (Exception $e) {
+            log_message('error', 'Auth_model login() error: ' . $e->getMessage());
+            return array('status' => 0, 'message' => 'System error occurred');
         }
         
         if (empty($q)) {
@@ -50,9 +93,9 @@ class Auth_model extends CI_Model
                         $setting_result = $this->setting_model->get();
 
                         if ($result->currency_id == 0) {
-                            $currency_symbol    = $setting_result[0]['currency_symbol'];
-                            $currency           = $setting_result[0]['currency'];
-                            $currency_short_name           = $setting_result[0]['short_name'];
+                            $currency_symbol    = isset($setting_result[0]['currency_symbol']) ? $setting_result[0]['currency_symbol'] : '₹';
+                            $currency           = isset($setting_result[0]['currency']) ? $setting_result[0]['currency'] : 'INR';
+                            $currency_short_name = isset($setting_result[0]['currency']) ? $setting_result[0]['currency'] : null;
                              
                         } else {
                              
@@ -243,8 +286,14 @@ class Auth_model extends CI_Model
     public function checkLogin($username, $password)
     {
         $resultdata    = $this->setting_model->get();
-        $student_login = json_decode($resultdata[0]['student_login']);
-        $parent_login  = json_decode($resultdata[0]['parent_login']);
+
+        // Use the correct field names from the get() method
+        $student_panel_login = isset($resultdata[0]['student_panel_login']) ? $resultdata[0]['student_panel_login'] : 'yes';
+        $parent_panel_login  = isset($resultdata[0]['parent_panel_login']) ? $resultdata[0]['parent_panel_login'] : 'yes';
+
+        // For backward compatibility, create empty arrays for student_login and parent_login
+        $student_login = array();
+        $parent_login = array();
         
         $this->db->select('users.id as id, username, password,role,users.is_active as is_active,lang_id');
         $this->db->from('users');
@@ -347,6 +396,49 @@ class Auth_model extends CI_Model
             }
         } else {
             return array('status' => 200, 'message' => 'Authorized.');
+        }
+    }
+
+    /**
+     * Enable student panel login
+     * This method directly updates the database to enable student login
+     */
+    public function enable_student_login() {
+        try {
+            // First check current values
+            $this->db->select('id, student_panel_login, parent_panel_login');
+            $this->db->from('sch_settings');
+            $this->db->limit(1);
+            $query = $this->db->get();
+
+            if ($query->num_rows() > 0) {
+                $row = $query->row();
+                $current_value = $row->student_panel_login;
+
+                // Update the setting directly using the record ID
+                $this->db->where('id', $row->id);
+                $update_data = array(
+                    'student_panel_login' => 'yes',
+                    'parent_panel_login' => 'yes'
+                );
+                $this->db->update('sch_settings', $update_data);
+
+                if ($this->db->affected_rows() > 0) {
+                    log_message('info', 'Successfully enabled student panel login - changed from "' . $current_value . '" to "yes"');
+                    return array('status' => 1, 'message' => 'Student login enabled successfully', 'old_value' => $current_value);
+                } else {
+                    // Force update even if no rows affected
+                    log_message('info', 'Forcing student panel login update');
+                    $this->db->query("UPDATE sch_settings SET student_panel_login = 'yes', parent_panel_login = 'yes' WHERE id = " . $row->id);
+                    return array('status' => 1, 'message' => 'Student login force-enabled', 'old_value' => $current_value);
+                }
+            } else {
+                log_message('error', 'No records found in sch_settings table');
+                return array('status' => 0, 'message' => 'No settings record found in database');
+            }
+        } catch (Exception $e) {
+            log_message('error', 'Error enabling student login: ' . $e->getMessage());
+            return array('status' => 0, 'message' => 'Database error: ' . $e->getMessage());
         }
     }
 

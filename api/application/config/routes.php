@@ -60,6 +60,12 @@ $route['test-db/staff'] = 'test_db/test_staff';
 $route['test-db/settings'] = 'test_db/test_settings';
 $route['test-db/auth-tables'] = 'test_db/test_auth_tables';
 
+// Debug Auth Routes
+$route['debug-auth/check-settings'] = 'debug_auth/check_settings';
+$route['debug-auth/fix-settings'] = 'debug_auth/fix_settings';
+$route['debug-auth/test-auth'] = 'debug_auth/test_auth';
+$route['debug-auth/enable-login'] = 'debug_auth/enable_login';
+
 // Teacher Authentication Routes
 $route['teacher/test'] = 'teacher_auth/test';
 $route['teacher/check-credentials'] = 'teacher_auth/check_credentials';

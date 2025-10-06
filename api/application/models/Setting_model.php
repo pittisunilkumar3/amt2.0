@@ -7,6 +7,8 @@ class Setting_model extends MY_Model {
 
     public function __construct() {
         parent::__construct();
+        // Load required models
+        $this->load->model('language_model');
     }
 
     public function getMysqlVersion() {
@@ -89,52 +91,138 @@ class Setting_model extends MY_Model {
         return $query->row();
     }
 
-    public function getSetting() {  
+    public function getSetting() {
+        try {
+            // First, try a simple query to get just the essential settings
+            $this->db->select('id, student_panel_login, parent_panel_login, student_login, parent_login, name, timezone, languages');
+            $this->db->from('sch_settings');
+            $this->db->order_by('id');
+            $this->db->limit(1);
+            $simple_query = $this->db->get();
 
-        $this->db->select('sch_settings.id,sch_settings.base_url,sch_settings.folder_path,
-          sch_settings.attendence_type,sch_settings.lang_id,sch_settings.is_rtl,sch_settings.fee_due_days,
-          sch_settings.staff_notification_email,sch_settings.class_teacher,sch_settings.cron_secret_key,
-          sch_settings.timezone,sch_settings.online_admission_application_form,
-          sch_settings.name,sch_settings.email,sch_settings.biometric,sch_settings.biometric_device,
-          sch_settings.phone,sch_settings.adm_prefix,sch_settings.adm_start_from,languages.language,
-          sch_settings.adm_no_digit,sch_settings.adm_update_status,sch_settings.adm_auto_insert,
-          
-          sch_settings.sroll_prefix,
-          sch_settings.sroll_no_digit,
-          sch_settings.sroll_start_from,
-          sch_settings.sroll_auto_insert,
-          sch_settings.sroll_update_status,
-          
-          sch_settings.staffid_prefix,sch_settings.staffid_start_from,sch_settings.staffid_auto_insert,
-          sch_settings.staffid_no_digit,sch_settings.staffid_update_status,sch_settings.superadmin_restriction,
-          sch_settings.student_timeline,sch_settings.address,sch_settings.dise_code,sch_settings.date_format,
-          sch_settings.currency,sch_settings.currency_place,sch_settings.start_month,sch_settings.start_week,
-          sch_settings.session_id,sch_settings.image,sch_settings.theme,sessions.session,online_admission,
-          sch_settings.is_duplicate_fees_invoice,sch_settings.is_student_house,sch_settings.is_blood_group,
-          sch_settings.roll_no,sch_settings.lastname,sch_settings.middlename,sch_settings.category,
-          sch_settings.cast,sch_settings.religion,sch_settings.mobile_no,sch_settings.student_email,
-          sch_settings.admission_date,sch_settings.student_photo,sch_settings.student_height,sch_settings.student_weight,
-          sch_settings.measurement_date,sch_settings.father_name,sch_settings.father_phone,sch_settings.father_occupation,sch_settings.father_pic,sch_settings.mother_name,sch_settings.mother_phone,sch_settings.mother_occupation,sch_settings.mother_pic,sch_settings.guardian_phone,sch_settings.guardian_name,sch_settings.guardian_relation,sch_settings.guardian_email,sch_settings.guardian_pic,sch_settings.guardian_occupation,sch_settings.guardian_address,sch_settings.current_address,sch_settings.permanent_address,sch_settings.route_list,sch_settings.hostel_id,sch_settings.bank_account_no,sch_settings.bank_name,sch_settings.ifsc_code,sch_settings.national_identification_no,sch_settings.local_identification_no,sch_settings.rte,sch_settings.previous_school_details,sch_settings.student_note,sch_settings.upload_documents,sch_settings.staff_designation,sch_settings.staff_department,sch_settings.staff_last_name,sch_settings.staff_father_name,sch_settings.staff_mother_name,sch_settings.staff_date_of_joining,sch_settings.staff_phone,sch_settings.staff_emergency_contact,sch_settings.staff_marital_status,sch_settings.staff_photo,sch_settings.staff_current_address,sch_settings.staff_permanent_address,sch_settings.staff_qualification,sch_settings.staff_work_experience,sch_settings.staff_note,sch_settings.staff_epf_no,sch_settings.staff_basic_salary,sch_settings.staff_contract_type,sch_settings.staff_work_shift,sch_settings.staff_work_location,sch_settings.staff_leaves,sch_settings.staff_account_details,sch_settings.staff_social_media,sch_settings.staff_upload_documents,sch_settings.admin_logo,sch_settings.admin_small_logo,sch_settings.mobile_api_url,sch_settings.app_primary_color_code,sch_settings.app_secondary_color_code,sch_settings.app_logo,languages.short_code as `language_code`,sch_settings.student_profile_edit,sch_settings.my_question,sch_settings.online_admission_payment,online_admission_amount,sch_settings.online_admission_instruction,sch_settings.online_admission_conditions,sch_settings.languages as activelanguage,sch_settings.single_page_print as single_page_print, sch_settings.student_barcode, sch_settings.staff_barcode,sch_settings.calendar_event_reminder,sch_settings.student_login,sch_settings.parent_login,sch_settings.student_panel_login,sch_settings.parent_panel_login,sch_settings.currency_format,sch_settings.exam_result,sch_settings.admin_mobile_api_url,sch_settings.admin_app_primary_color_code,sch_settings.admin_app_secondary_color_code,is_student_feature_lock,is_offline_fee_payment,lock_grace_period,sch_settings.collect_back_date_fees,sch_settings.event_reminder,sch_settings.event_reminder,sch_settings.maintenance_mode,currencies.symbol as currency_symbol,currencies.base_price,currencies.short_name as currency,currencies.id as currency_id,sch_settings.offline_bank_payment_instruction,sch_settings.admin_login_page_background,sch_settings.user_login_page_background,sch_settings.low_attendance_limit');
+            if ($simple_query->num_rows() > 0) {
+                $simple_result = $simple_query->row();
+                log_message('info', 'getSetting() simple query success - student_panel_login: ' . $simple_result->student_panel_login);
 
-        $this->db->from('sch_settings');
-        $this->db->join('sessions', 'sessions.id = sch_settings.session_id');
-        $this->db->join('languages', 'languages.id = sch_settings.lang_id');
-		$this->db->join('currencies', 'currencies.id = sch_settings.currency');
-        $this->db->order_by('sch_settings.id');
-        $query = $this->db->get();    
-        
+                // If simple query works, try the complex query
+                $this->db->select('sch_settings.id,sch_settings.base_url,sch_settings.folder_path,
+                  sch_settings.attendence_type,sch_settings.lang_id,sch_settings.is_rtl,sch_settings.fee_due_days,
+                  sch_settings.staff_notification_email,sch_settings.class_teacher,sch_settings.cron_secret_key,
+                  sch_settings.timezone,sch_settings.online_admission_application_form,
+                  sch_settings.name,sch_settings.email,sch_settings.biometric,sch_settings.biometric_device,
+                  sch_settings.phone,sch_settings.adm_prefix,sch_settings.adm_start_from,
+                  sch_settings.adm_no_digit,sch_settings.adm_update_status,sch_settings.adm_auto_insert,
+                  sch_settings.sroll_prefix,sch_settings.sroll_no_digit,sch_settings.sroll_start_from,
+                  sch_settings.sroll_auto_insert,sch_settings.sroll_update_status,
+                  sch_settings.staffid_prefix,sch_settings.staffid_start_from,sch_settings.staffid_auto_insert,
+                  sch_settings.staffid_no_digit,sch_settings.staffid_update_status,sch_settings.superadmin_restriction,
+                  sch_settings.student_timeline,sch_settings.address,sch_settings.dise_code,sch_settings.date_format,
+                  sch_settings.currency,sch_settings.currency_place,sch_settings.start_month,sch_settings.start_week,
+                  sch_settings.session_id,sch_settings.image,sch_settings.theme,sch_settings.online_admission,
+                  sch_settings.is_duplicate_fees_invoice,sch_settings.is_student_house,sch_settings.is_blood_group,
+                  sch_settings.roll_no,sch_settings.lastname,sch_settings.middlename,sch_settings.category,
+                  sch_settings.cast,sch_settings.religion,sch_settings.mobile_no,sch_settings.student_email,
+                  sch_settings.admission_date,sch_settings.student_photo,sch_settings.student_height,sch_settings.student_weight,
+                  sch_settings.measurement_date,sch_settings.father_name,sch_settings.father_phone,sch_settings.father_occupation,sch_settings.father_pic,sch_settings.mother_name,sch_settings.mother_phone,sch_settings.mother_occupation,sch_settings.mother_pic,sch_settings.guardian_phone,sch_settings.guardian_name,sch_settings.guardian_relation,sch_settings.guardian_email,sch_settings.guardian_pic,sch_settings.guardian_occupation,sch_settings.guardian_address,sch_settings.current_address,sch_settings.permanent_address,sch_settings.route_list,sch_settings.hostel_id,sch_settings.bank_account_no,sch_settings.bank_name,sch_settings.ifsc_code,sch_settings.national_identification_no,sch_settings.local_identification_no,sch_settings.rte,sch_settings.previous_school_details,sch_settings.student_note,sch_settings.upload_documents,sch_settings.staff_designation,sch_settings.staff_department,sch_settings.staff_last_name,sch_settings.staff_father_name,sch_settings.staff_mother_name,sch_settings.staff_date_of_joining,sch_settings.staff_phone,sch_settings.staff_emergency_contact,sch_settings.staff_marital_status,sch_settings.staff_photo,sch_settings.staff_current_address,sch_settings.staff_permanent_address,sch_settings.staff_qualification,sch_settings.staff_work_experience,sch_settings.staff_note,sch_settings.staff_epf_no,sch_settings.staff_basic_salary,sch_settings.staff_contract_type,sch_settings.staff_work_shift,sch_settings.staff_work_location,sch_settings.staff_leaves,sch_settings.staff_account_details,sch_settings.staff_social_media,sch_settings.staff_upload_documents,sch_settings.admin_logo,sch_settings.admin_small_logo,sch_settings.mobile_api_url,sch_settings.app_primary_color_code,sch_settings.app_secondary_color_code,sch_settings.app_logo,sch_settings.student_profile_edit,sch_settings.my_question,sch_settings.online_admission_payment,sch_settings.online_admission_amount,sch_settings.online_admission_instruction,sch_settings.online_admission_conditions,sch_settings.languages as activelanguage,sch_settings.single_page_print as single_page_print, sch_settings.student_barcode, sch_settings.staff_barcode,sch_settings.calendar_event_reminder,sch_settings.student_login,sch_settings.parent_login,sch_settings.student_panel_login,sch_settings.parent_panel_login,sch_settings.currency_format,sch_settings.exam_result,sch_settings.admin_mobile_api_url,sch_settings.admin_app_primary_color_code,sch_settings.admin_app_secondary_color_code,sch_settings.is_student_feature_lock,sch_settings.is_offline_fee_payment,sch_settings.lock_grace_period,sch_settings.collect_back_date_fees,sch_settings.event_reminder,sch_settings.maintenance_mode,sch_settings.offline_bank_payment_instruction,sch_settings.admin_login_page_background,sch_settings.user_login_page_background,sch_settings.low_attendance_limit');
+
+                $this->db->from('sch_settings');
+
+                // Try JOINs with LEFT JOIN to avoid failures
+                $this->db->join('sessions', 'sessions.id = sch_settings.session_id', 'left');
+                $this->db->join('languages', 'languages.id = sch_settings.lang_id', 'left');
+                $this->db->join('currencies', 'currencies.id = sch_settings.currency', 'left');
+                $this->db->order_by('sch_settings.id');
+                $this->db->limit(1);
+                $query = $this->db->get();
+
+                if ($query->num_rows() > 0) {
+                    $result = $query->row();
+                    log_message('info', 'getSetting() complex query success');
+                } else {
+                    log_message('warning', 'getSetting() complex query failed, using simple result');
+                    $result = $simple_result;
+                }
+            } else {
+                log_message('error', 'getSetting() simple query failed - no records in sch_settings');
+                $result = null;
+            }
+        } catch (Exception $e) {
+            log_message('error', 'getSetting() exception: ' . $e->getMessage());
+            $result = null;
+        }
+
         $result = $query->row();
-        
-        $json_languages = json_decode($result->activelanguage);        
-        foreach ($json_languages as $key => $value) {       
-       
-            $langresult  =        $this->language_model->get($value);							
-            $language[$key] =  $langresult;
-           					
-		}
-        
-        $result->activelanguage2    =   $language;        
-        return 	$result;
+
+        // Check if result is null
+        if (!$result) {
+            log_message('error', 'getSetting(): No settings found in database');
+            // Return a default object with required properties
+            $result = new stdClass();
+            $result->student_panel_login = 'yes'; // Default to allow login
+            $result->activelanguage = null;
+        }
+
+        // Handle activelanguage processing with error handling
+        $language = array();
+        if (isset($result->activelanguage) && !empty($result->activelanguage)) {
+            $json_languages = json_decode($result->activelanguage);
+            if ($json_languages && is_array($json_languages)) {
+                foreach ($json_languages as $key => $value) {
+                    try {
+                        $langresult = $this->language_model->get($value);
+                        if ($langresult) {
+                            $language[$key] = $langresult;
+                        }
+                    } catch (Exception $e) {
+                        log_message('error', 'Error loading language ' . $value . ': ' . $e->getMessage());
+                    }
+                }
+            }
+        }
+
+        $result->activelanguage2 = $language;
+        return $result;
+    }
+
+    /**
+     * Check and fix student panel login setting
+     * This method ensures student_panel_login is set to 'yes' for API access
+     */
+    public function check_and_fix_student_login() {
+        try {
+            // Check current value
+            $this->db->select('id, student_panel_login');
+            $this->db->from('sch_settings');
+            $this->db->limit(1);
+            $query = $this->db->get();
+
+            if ($query->num_rows() > 0) {
+                $row = $query->row();
+                log_message('info', 'Current student_panel_login value: ' . $row->student_panel_login);
+
+                if ($row->student_panel_login != 'yes') {
+                    // Fix the value
+                    $this->db->where('id', $row->id);
+                    $this->db->update('sch_settings', array('student_panel_login' => 'yes'));
+
+                    if ($this->db->affected_rows() > 0) {
+                        log_message('info', 'Fixed student_panel_login: changed from "' . $row->student_panel_login . '" to "yes"');
+                        return array('status' => 1, 'message' => 'Fixed student_panel_login setting', 'old_value' => $row->student_panel_login);
+                    } else {
+                        log_message('error', 'Failed to update student_panel_login');
+                        return array('status' => 0, 'message' => 'Failed to update setting');
+                    }
+                } else {
+                    return array('status' => 1, 'message' => 'student_panel_login is already set to "yes"');
+                }
+            } else {
+                log_message('error', 'No records found in sch_settings table');
+                return array('status' => 0, 'message' => 'No settings found in database');
+            }
+        } catch (Exception $e) {
+            log_message('error', 'check_and_fix_student_login error: ' . $e->getMessage());
+            return array('status' => 0, 'message' => 'Database error: ' . $e->getMessage());
+        }
     }
 
     public function remove($id) {

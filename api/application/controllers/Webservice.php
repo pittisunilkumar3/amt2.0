@@ -355,12 +355,21 @@ class Webservice extends CI_Controller
                 if ($response['status'] == 200) {
                     $params = json_decode(file_get_contents('php://input'), true);
                     $studentId = $params['student_id'];
-                    $user_type = $params['user_type'];
+                    $user_type = isset($params['user_type']) ? $params['user_type'] : 'student';
 
-
-                    $student_fields = $this->setting_model->student_fields();
+                    $student_fields = $this->customfield_model->student_fields();
                     $student_array = array();
                     $student_result = $this->student_model->get($studentId);
+
+                    // Check if student exists
+                    if (!$student_result) {
+                        json_output(404, array(
+                            'status' => 0,
+                            'message' => 'Student not found',
+                            'timestamp' => date('Y-m-d H:i:s')
+                        ));
+                        return;
+                    }
 
                     if ($student_result->category == '') {
                         $student_result->category = '';
