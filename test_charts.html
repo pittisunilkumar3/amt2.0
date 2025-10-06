@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Charts Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .chart-box {
+            width: 45%;
+            text-align: center;
+        }
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            max-width: 100%;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Dashboard Charts Test</h1>
+        
+        <div id="status-container">
+            <div class="status info">
+                <strong>📊 Testing Chart.js Integration</strong><br>
+                This page tests the same Chart.js setup used in the dashboard with real data from September 2025.
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-box">
+                <h3>💰 Income Chart - September 2025</h3>
+                <canvas id="income-chart" width="400" height="400"></canvas>
+            </div>
+            <div class="chart-box">
+                <h3>💸 Expense Chart - September 2025</h3>
+                <canvas id="expense-chart" width="400" height="400"></canvas>
+            </div>
+        </div>
+
+        <div id="data-summary">
+            <h3>📈 Data Summary</h3>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 48%;">
+                    <h4>Income Categories:</h4>
+                    <ul id="income-list"></ul>
+                    <p><strong>Total Income: ₹<span id="total-income">0</span></strong></p>
+                </div>
+                <div style="width: 48%;">
+                    <h4>Expense Categories:</h4>
+                    <ul id="expense-list"></ul>
+                    <p><strong>Total Expenses: ₹<span id="total-expense">0</span></strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js Library - Same version as dashboard -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    
+    <script>
+        // Test data from our database (September 2025)
+        const incomeData = {
+            labels: ['Donation', 'Rent', 'Miscellaneous', 'Book Sale', 'Uniform Sale', 'Chit'],
+            data: [27000, 8000, 12500, 7500, 2500, 1500],
+            colors: ['#66aa18', '#ffcd56', '#4bc0c0', '#c9cbcf', '#715d20', '#ff9f40']
+        };
+
+        const expenseData = {
+            labels: ['Stationery Purchase', 'Electricity Bill', 'Telephone Bill', 'Miscellaneous', 'Flower', 'Water Can Bill'],
+            data: [4300, 6700, 1200, 3000, 800, 5700],
+            colors: ['#9966ff', '#36a2eb', '#ff9f40', '#715d20', '#c9cbcf', '#4bc0c0']
+        };
+
+        // Function to update status
+        function updateStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('status-container');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.innerHTML = message;
+            statusContainer.appendChild(statusDiv);
+        }
+
+        // Function to populate data summary
+        function populateDataSummary() {
+            const incomeList = document.getElementById('income-list');
+            const expenseList = document.getElementById('expense-list');
+            
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            // Populate income list
+            incomeData.labels.forEach((label, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${label}:</strong> ₹${incomeData.data[index].toLocaleString()}`;
+                incomeList.appendChild(li);
+                totalIncome += incomeData.data[index];
+            });
+
+            // Populate expense list
+            expenseData.labels.forEach((label, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${label}:</strong> ₹${expenseData.data[index].toLocaleString()}`;
+                expenseList.appendChild(li);
+                totalExpense += expenseData.data[index];
+            });
+
+            document.getElementById('total-income').textContent = totalIncome.toLocaleString();
+            document.getElementById('total-expense').textContent = totalExpense.toLocaleString();
+        }
+
+        // Test Chart.js availability
+        if (typeof Chart === 'undefined') {
+            updateStatus('❌ <strong>ERROR:</strong> Chart.js library failed to load!', 'error');
+        } else {
+            updateStatus('✅ <strong>SUCCESS:</strong> Chart.js library loaded successfully!', 'success');
+            
+            try {
+                // Create Income Chart (same configuration as dashboard)
+                const incomeChart = new Chart(document.getElementById("income-chart"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: incomeData.labels,
+                        datasets: [{
+                            label: "Income",
+                            backgroundColor: incomeData.colors,
+                            data: incomeData.data
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        circumference: Math.PI,
+                        rotation: -Math.PI,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        }
+                    }
+                });
+
+                updateStatus('✅ <strong>SUCCESS:</strong> Income chart created successfully!', 'success');
+
+                // Create Expense Chart (same configuration as dashboard)
+                const expenseChart = new Chart(document.getElementById("expense-chart"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: expenseData.labels,
+                        datasets: [{
+                            label: "Expenses",
+                            backgroundColor: expenseData.colors,
+                            data: expenseData.data
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        circumference: Math.PI,
+                        rotation: -Math.PI,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        }
+                    }
+                });
+
+                updateStatus('✅ <strong>SUCCESS:</strong> Expense chart created successfully!', 'success');
+                updateStatus('🎉 <strong>ALL TESTS PASSED!</strong> Charts are working perfectly with real data.', 'success');
+
+            } catch (error) {
+                updateStatus(`❌ <strong>ERROR:</strong> Failed to create charts: ${error.message}`, 'error');
+                console.error('Chart creation error:', error);
+            }
+        }
+
+        // Populate data summary
+        populateDataSummary();
+
+        // Log data for debugging
+        console.log('Income Data:', incomeData);
+        console.log('Expense Data:', expenseData);
+        console.log('Chart.js Version:', Chart.version || 'Unknown');
+    </script>
+</body>
+</html>

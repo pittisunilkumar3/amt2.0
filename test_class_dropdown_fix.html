@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Dropdown Fix Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-header {
+            background: #d9534f;
+            color: white;
+            padding: 10px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 5px 5px 0 0;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+        }
+        .test-pass {
+            border-left-color: #5cb85c;
+            background: #dff0d8;
+        }
+        .test-fail {
+            border-left-color: #d9534f;
+            background: #f2dede;
+        }
+        .test-warning {
+            border-left-color: #f0ad4e;
+            background: #fcf8e3;
+        }
+        .btn {
+            background: #d9534f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #c9302c;
+        }
+        .btn-test {
+            background: #5cb85c;
+        }
+        .btn-test:hover {
+            background: #449d44;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .console-output {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🔧 Class Dropdown Redirect Fix Test</h1>
+            <p>This page helps test the fix for the class dropdown redirect issue in the Student Fee search page.</p>
+        </div>
+
+        <div class="test-item test-warning">
+            <h3>🚨 Issue Description:</h3>
+            <p>When selecting a class from the dropdown in the Student Fee search page, instead of staying on the current page and populating the section dropdown, the page was redirecting to:</p>
+            <code>http://localhost/amt/financereports/fee_collection_report_columnwise</code>
+        </div>
+
+        <div class="test-item">
+            <h3>🔍 Test Instructions:</h3>
+            <ol>
+                <li>Click "Open Student Fee Page" below</li>
+                <li>Select a class from the class dropdown</li>
+                <li>Verify that:
+                    <ul>
+                        <li>The page stays on the Student Fee search interface</li>
+                        <li>The section dropdown gets populated with relevant sections</li>
+                        <li>No unwanted redirect occurs</li>
+                        <li>Console shows debugging messages (press F12 to open developer tools)</li>
+                    </ul>
+                </li>
+                <li>Try selecting different classes to ensure consistent behavior</li>
+                <li>Check browser console for any error messages</li>
+            </ol>
+        </div>
+
+        <div class="test-item">
+            <h3>✅ Expected Behavior After Fix:</h3>
+            <ul>
+                <li><strong>✅ No Redirect:</strong> Page remains on Student Fee search interface</li>
+                <li><strong>✅ Section Population:</strong> Section dropdown populates based on selected class(es)</li>
+                <li><strong>✅ Console Logging:</strong> Debug messages appear in browser console</li>
+                <li><strong>✅ Form Functionality:</strong> Search form continues to work normally</li>
+                <li><strong>✅ URL Stability:</strong> URL remains <code>http://localhost/amt/studentfee</code></li>
+            </ul>
+        </div>
+
+        <div class="test-item">
+            <h3>🛠️ Fixes Applied:</h3>
+            <ul>
+                <li>Added <code>e.preventDefault()</code> and <code>e.stopPropagation()</code> to class dropdown change handler</li>
+                <li>Added comprehensive debugging and logging</li>
+                <li>Added form submission prevention during dropdown changes</li>
+                <li>Added URL validation to ensure correct page context</li>
+                <li>Enhanced error handling and console monitoring</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="btn btn-test" onclick="openStudentFeePage()">Open Student Fee Page</button>
+            <button class="btn" onclick="openConsoleMonitor()">Monitor Console</button>
+            <button class="btn" onclick="testRedirectPrevention()">Test Redirect Prevention</button>
+        </div>
+
+        <div id="test-results" style="margin-top: 20px;"></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-header">
+            <h2>🖥️ Live Test Frame</h2>
+        </div>
+        <iframe id="test-frame" src="about:blank"></iframe>
+        
+        <div class="console-output" id="console-output">
+            <div>Console Output (simulated):</div>
+            <div id="console-messages"></div>
+        </div>
+    </div>
+
+    <script>
+        let consoleMessages = [];
+        
+        function openStudentFeePage() {
+            const iframe = document.getElementById('test-frame');
+            iframe.src = 'http://localhost/amt/studentfee';
+            
+            // Add load event listener
+            iframe.onload = function() {
+                setTimeout(function() {
+                    addConsoleMessage('✅ Student Fee page loaded successfully');
+                    addConsoleMessage('🔍 Ready to test class dropdown selection');
+                    checkPageURL();
+                }, 1000);
+            };
+            
+            addConsoleMessage('🚀 Loading Student Fee page...');
+        }
+
+        function openConsoleMonitor() {
+            addConsoleMessage('📊 Console monitoring instructions:');
+            addConsoleMessage('1. Press F12 to open Developer Tools');
+            addConsoleMessage('2. Go to Console tab');
+            addConsoleMessage('3. Look for messages starting with 🚀, 🔍, ✅, or 🚫');
+            addConsoleMessage('4. Test class dropdown selection');
+            addConsoleMessage('5. Watch for any redirect attempts or errors');
+        }
+
+        function testRedirectPrevention() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = `
+                <div class="test-item test-warning">
+                    <h3>🧪 Redirect Prevention Test</h3>
+                    <p>To test the redirect prevention:</p>
+                    <ol>
+                        <li>Open the Student Fee page in the frame above</li>
+                        <li>Open browser Developer Tools (F12)</li>
+                        <li>Go to Console tab</li>
+                        <li>Select a class from the dropdown</li>
+                        <li>Look for these console messages:
+                            <ul>
+                                <li><code>🔍 Class dropdown changed - preventing any redirects</code></li>
+                                <li><code>Form submission prevented: true</code></li>
+                                <li><code>✅ Form submission re-enabled after section population</code></li>
+                            </ul>
+                        </li>
+                        <li>Verify the URL remains: <code>http://localhost/amt/studentfee</code></li>
+                    </ol>
+                </div>
+            `;
+        }
+
+        function checkPageURL() {
+            try {
+                const iframe = document.getElementById('test-frame');
+                const iframeURL = iframe.contentWindow.location.href;
+                
+                if (iframeURL.indexOf('studentfee') !== -1) {
+                    addConsoleMessage('✅ Correct page loaded: ' + iframeURL);
+                } else if (iframeURL.indexOf('fee_collection_report_columnwise') !== -1) {
+                    addConsoleMessage('🚫 ERROR: Redirected to wrong page: ' + iframeURL);
+                } else {
+                    addConsoleMessage('⚠️ Unknown page loaded: ' + iframeURL);
+                }
+            } catch (error) {
+                addConsoleMessage('⚠️ Cannot access iframe URL (cross-origin restriction)');
+            }
+        }
+
+        function addConsoleMessage(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            consoleMessages.push(`[${timestamp}] ${message}`);
+            
+            const consoleDiv = document.getElementById('console-messages');
+            consoleDiv.innerHTML = consoleMessages.slice(-10).join('<br>');
+            
+            // Auto-scroll to bottom
+            const consoleOutput = document.getElementById('console-output');
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Simulate some initial console messages
+        window.onload = function() {
+            addConsoleMessage('🔧 Class Dropdown Fix Test initialized');
+            addConsoleMessage('📋 Ready to test redirect prevention');
+        };
+
+        // Monitor for any navigation changes
+        setInterval(function() {
+            try {
+                const iframe = document.getElementById('test-frame');
+                if (iframe.src && iframe.src !== 'about:blank') {
+                    const currentURL = iframe.contentWindow.location.href;
+                    if (currentURL.indexOf('fee_collection_report_columnwise') !== -1) {
+                        addConsoleMessage('🚨 ALERT: Unwanted redirect detected!');
+                        addConsoleMessage('🚫 URL: ' + currentURL);
+                    }
+                }
+            } catch (error) {
+                // Cross-origin restriction - normal
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

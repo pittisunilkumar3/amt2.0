@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Fee CSS Fix Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-header {
+            background: #3c8dbc;
+            color: white;
+            padding: 10px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 5px 5px 0 0;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+        }
+        .test-pass {
+            border-left-color: #5cb85c;
+            background: #dff0d8;
+        }
+        .test-fail {
+            border-left-color: #d9534f;
+            background: #f2dede;
+        }
+        .test-warning {
+            border-left-color: #f0ad4e;
+            background: #fcf8e3;
+        }
+        .btn {
+            background: #3c8dbc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #286090;
+        }
+        .btn-test {
+            background: #5cb85c;
+        }
+        .btn-test:hover {
+            background: #449d44;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>Student Fee CSS Fix Verification</h1>
+            <p>This page helps verify that the CSS fixes for the Student Fee search page are working correctly.</p>
+        </div>
+
+        <div class="test-item">
+            <h3>Test Instructions:</h3>
+            <ol>
+                <li>Click the "Open Student Fee Page" button below</li>
+                <li>Try to search without selecting any values in the dropdowns</li>
+                <li>Verify that the page styling remains intact during validation errors</li>
+                <li>Check that form elements maintain their appearance</li>
+                <li>Ensure error messages display properly without breaking layout</li>
+            </ol>
+        </div>
+
+        <div class="test-item">
+            <h3>What to Look For:</h3>
+            <ul>
+                <li><strong>✅ Pass:</strong> Page maintains consistent styling throughout</li>
+                <li><strong>✅ Pass:</strong> Form elements remain properly styled during validation</li>
+                <li><strong>✅ Pass:</strong> Error messages display without breaking layout</li>
+                <li><strong>✅ Pass:</strong> Buttons and dropdowns function correctly</li>
+                <li><strong>✅ Pass:</strong> No CSS files fail to load (check browser console)</li>
+            </ul>
+        </div>
+
+        <div class="test-item">
+            <h3>Common Issues Fixed:</h3>
+            <ul>
+                <li>Form validation errors breaking page layout</li>
+                <li>CSS classes being removed during AJAX calls</li>
+                <li>SumoSelect dropdowns losing styling</li>
+                <li>Bootstrap grid system not working properly</li>
+                <li>Error messages not displaying correctly</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="btn btn-test" onclick="openStudentFeePage()">Open Student Fee Page</button>
+            <button class="btn" onclick="runCSSTest()">Run CSS Test</button>
+            <button class="btn" onclick="checkConsoleErrors()">Check Console</button>
+        </div>
+
+        <div id="test-results" style="margin-top: 20px;"></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-header">
+            <h2>Live Test Frame</h2>
+        </div>
+        <iframe id="test-frame" src="about:blank"></iframe>
+    </div>
+
+    <script>
+        function openStudentFeePage() {
+            const iframe = document.getElementById('test-frame');
+            iframe.src = 'http://localhost/amt/studentfee';
+            
+            // Add load event listener to check for errors
+            iframe.onload = function() {
+                setTimeout(function() {
+                    checkIframeCSS();
+                }, 1000);
+            };
+        }
+
+        function runCSSTest() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<h3>Running CSS Tests...</h3>';
+            
+            const tests = [
+                {
+                    name: 'Bootstrap CSS Loading',
+                    test: function() {
+                        return fetch('http://localhost/amt/backend/bootstrap/css/bootstrap.min.css')
+                            .then(response => response.ok);
+                    }
+                },
+                {
+                    name: 'Custom CSS Loading',
+                    test: function() {
+                        return fetch('http://localhost/amt/backend/dist/css/custom_style.css')
+                            .then(response => response.ok);
+                    }
+                },
+                {
+                    name: 'SumoSelect CSS Loading',
+                    test: function() {
+                        return fetch('http://localhost/amt/assets1/vendor/bootstrap-multiselect/sumoselect.css')
+                            .then(response => response.ok);
+                    }
+                },
+                {
+                    name: 'Font Awesome CSS Loading',
+                    test: function() {
+                        return fetch('http://localhost/amt/backend/dist/css/font-awesome.min.css')
+                            .then(response => response.ok);
+                    }
+                }
+            ];
+
+            let testResults = '';
+            let completedTests = 0;
+
+            tests.forEach(test => {
+                test.test()
+                    .then(result => {
+                        const status = result ? 'test-pass' : 'test-fail';
+                        const icon = result ? '✅' : '❌';
+                        testResults += `<div class="test-item ${status}">${icon} ${test.name}: ${result ? 'PASS' : 'FAIL'}</div>`;
+                        completedTests++;
+                        
+                        if (completedTests === tests.length) {
+                            results.innerHTML = '<h3>Test Results:</h3>' + testResults;
+                        }
+                    })
+                    .catch(error => {
+                        testResults += `<div class="test-item test-fail">❌ ${test.name}: ERROR - ${error.message}</div>`;
+                        completedTests++;
+                        
+                        if (completedTests === tests.length) {
+                            results.innerHTML = '<h3>Test Results:</h3>' + testResults;
+                        }
+                    });
+            });
+        }
+
+        function checkConsoleErrors() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = `
+                <div class="test-item test-warning">
+                    <h3>Console Check Instructions:</h3>
+                    <ol>
+                        <li>Open browser Developer Tools (F12)</li>
+                        <li>Go to the Console tab</li>
+                        <li>Navigate to the Student Fee page</li>
+                        <li>Look for any red error messages</li>
+                        <li>Common errors to watch for:
+                            <ul>
+                                <li>404 errors for CSS/JS files</li>
+                                <li>JavaScript errors during form submission</li>
+                                <li>AJAX errors during search</li>
+                                <li>Missing function errors</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            `;
+        }
+
+        function checkIframeCSS() {
+            try {
+                const iframe = document.getElementById('test-frame');
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                if (iframeDoc) {
+                    const results = document.getElementById('test-results');
+                    let testResults = '<h3>Iframe CSS Check:</h3>';
+                    
+                    // Check if key elements exist and have proper styling
+                    const contentWrapper = iframeDoc.querySelector('.content-wrapper');
+                    const boxElements = iframeDoc.querySelectorAll('.box');
+                    const formControls = iframeDoc.querySelectorAll('.form-control');
+                    
+                    if (contentWrapper) {
+                        testResults += '<div class="test-item test-pass">✅ Content wrapper found</div>';
+                    } else {
+                        testResults += '<div class="test-item test-fail">❌ Content wrapper missing</div>';
+                    }
+                    
+                    if (boxElements.length > 0) {
+                        testResults += `<div class="test-item test-pass">✅ Box elements found (${boxElements.length})</div>`;
+                    } else {
+                        testResults += '<div class="test-item test-fail">❌ No box elements found</div>';
+                    }
+                    
+                    if (formControls.length > 0) {
+                        testResults += `<div class="test-item test-pass">✅ Form controls found (${formControls.length})</div>`;
+                    } else {
+                        testResults += '<div class="test-item test-fail">❌ No form controls found</div>';
+                    }
+                    
+                    results.innerHTML = testResults;
+                } else {
+                    document.getElementById('test-results').innerHTML = 
+                        '<div class="test-item test-warning">⚠️ Cannot access iframe content (cross-origin restriction)</div>';
+                }
+            } catch (error) {
+                document.getElementById('test-results').innerHTML = 
+                    `<div class="test-item test-fail">❌ Error checking iframe: ${error.message}</div>`;
+            }
+        }
+
+        // Auto-run basic tests on page load
+        window.onload = function() {
+            setTimeout(runCSSTest, 1000);
+        };
+    </script>
+</body>
+</html>

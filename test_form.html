@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fee Report Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h3>Test Fee Collection Report</h3>
+    <form action="http://localhost/amt/financereports/fee_collection_report_columnwise" method="post">
+        <input type="hidden" name="csrf_test_name" value="test_csrf_token">
+        
+        <label>Search Duration:</label>
+        <select name="search_type">
+            <option value="this_year">This Year</option>
+        </select><br><br>
+        
+        <label>Class:</label>
+        <select name="class_id[]" multiple>
+            <option value="1">Class 1</option>
+            <option value="2">Class 2</option>
+        </select><br><br>
+        
+        <label>Section:</label>
+        <select name="section_id[]" multiple>
+            <option value="1">Section A</option>
+        </select><br><br>
+        
+        <label>Session:</label>
+        <select name="sch_session_id[]" multiple>
+            <option value="1">2024-25</option>
+        </select><br><br>
+        
+        <button type="submit">Search</button>
+    </form>
+    
+    <script>
+    $('form').on('submit', function(e) {
+        console.log('Form data:', $(this).serializeArray());
+    });
+    </script>
+</body>
+</html>

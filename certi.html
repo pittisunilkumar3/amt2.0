@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Management - AMT Admin</title>
+    <style type="text/css">
+        /* Exact AMT Font System */
+        @font-face {
+            font-family:'Roboto';
+            src: url('data:font/woff2;base64,') format('woff2');
+            font-style: normal;
+            font-weight: normal;
+        }
+        @font-face {
+            font-family:'Roboto-Bold';
+            src: url('data:font/woff2;base64,') format('woff2');
+            font-style: normal;
+            font-weight: normal;
+        }
+        @font-face {
+            font-family:'Roboto-Medium';
+            src: url('data:font/woff2;base64,') format('woff2');
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        /* Base styles matching AMT exactly */
+        html, body {
+            min-height: 100%;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 10pt;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #ecf0f5;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* AMT Custom Utilities */
+        b, strong { font-family: 'Roboto-Bold'; }
+        label { font-family: 'Roboto-Medium'; font-weight: normal; }
+        .font-weight-bold { font-family: 'Roboto-Bold'; }
+        .content-header { display: none; }
+        .cursor-pointer { cursor: pointer; }
+        .text-break { word-break: break-word; overflow-wrap: break-word; }
+        .border0 { border: 0 !important; }
+        .p0 { padding: 0 !important; }
+        .pt3 { padding-top: 3px; }
+        .pb5 { padding-bottom: 5px; }
+        .pt5 { padding-top: 5px; }
+        .pt7 { padding-top: 7px; }
+        .ptt10 { padding-top: 10px; }
+        .pt15 { padding-top: 15px; }
+        .paddlr { padding: 6px 15px 6px 5px; }
+        .paddA10 { padding: 10px; }
+        .modal { z-index: 1100; }
+        .float-right { float: right; }
+        .bg-white { background: #fff; }
+        
+        /* Content wrapper - exact AMT styling */
+        .content-wrapper {
+            min-height: 100%;
+            background-color: #ecf0f5;
+            padding: 20px;
+        }
+
+        /* Section styles */
+        .content-header {
+            padding: 15px;
+            margin: 0 0 20px 0;
+            display: none; /* AMT hides this */
+        }
+
+        .content-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #444;
+        }
+
+        .content {
+            padding: 0;
+        }
+
+        /* Exact Bootstrap 3.3.5 Grid with AMT modifications */
+        .row {
+            margin-right: -5px; /* AMT uses 5px instead of 15px */
+            margin-left: -5px;
+        }
+
+        .row:before,
+        .row:after {
+            display: table;
+            content: " ";
+        }
+
+        .row:after {
+            clear: both;
+        }
+
+        .col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 5px; /* AMT uses 5px */
+            padding-left: 5px;
+        }
+
+        @media (min-width: 992px) {
+            .col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9 {
+                float: left;
+            }
+            .col-md-12 { width: 100%; }
+            .col-md-8 { width: 66.66666667%; }
+            .col-md-6 { width: 50%; }
+            .col-md-4 { width: 33.33333333%; }
+        }
+
+        @media (min-width: 768px) {
+            .col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9 {
+                float: left;
+            }
+            .col-sm-6 { width: 50%; }
+        }
+        
+        /* Exact AMT Box Styling */
+        .box {
+            position: relative;
+            border-radius: 3px;
+            background: #ffffff;
+            border-top: 3px solid #d2d6de;
+            margin-bottom: 20px;
+            width: 100%;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24); /* AMT custom shadow */
+        }
+
+        .box.box-primary {
+            border-top-color: #faa21c; /* AMT orange theme */
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+        }
+
+        .box.box-info {
+            border-top-color: #faa21c;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+        }
+        
+        .box-header {
+            color: #444;
+            display: block;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .box-header.with-border {
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .box-header .box-title {
+            display: inline-block;
+            font-size: 18px;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .box-body {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            padding: 10px;
+        }
+        
+        .box-footer {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-top: 1px solid #f4f4f4;
+            padding: 10px;
+            background-color: #fff;
+        }
+        
+        /* Exact AMT Form Controls */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-family: 'Roboto-Medium';
+            font-weight: normal;
+            color: #555;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 28px; /* AMT uses 28px instead of 34px */
+            padding: 0px 12px; /* AMT uses 0px top/bottom */
+            font-size: 10pt; /* AMT uses 10pt */
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #66afe9;
+            outline: 0;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+        }
+
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+            background-color: #fff; /* AMT keeps white background */
+            opacity: 1;
+        }
+
+        textarea.form-control {
+            height: auto;
+            resize: vertical;
+        }
+
+        /* AMT Switch Styling */
+        .material-switch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .material-switch input[type="checkbox"] {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .material-switch label {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .material-switch label:before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            background-color: white;
+            transition: transform 0.3s;
+        }
+
+        .material-switch input[type="checkbox"]:checked + label {
+            background-color: #4CAF50;
+        }
+
+        .material-switch input[type="checkbox"]:checked + label:before {
+            transform: translateX(20px);
+        }
+        
+        /* Exact AMT Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            text-decoration: none;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #727272; /* AMT custom gray */
+            border-color: #525252;
+            transition: .3s;
+        }
+
+        .btn-primary:hover, .btn-primary:active, .btn-primary.hover {
+            color: #fff;
+            background-color: #070707; /* AMT dark hover */
+            border-color: #525252;
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #727272; /* AMT uses same as primary */
+            border-color: #525252;
+        }
+
+        .btn-info:hover, .btn-info:active, .btn-info.hover {
+            color: #fff;
+            background-color: #070707;
+            border-color: #525252;
+        }
+
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .btn-default:hover {
+            color: #333;
+            background-color: #e6e6e6;
+            border-color: #adadad;
+        }
+
+        .btn-xs {
+            padding: 1px 5px;
+            font-size: 12px;
+            line-height: 1.5;
+            border-radius: 3px;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+        
+        /* Grid system */
+        .row {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        
+        .col-md-4 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            width: 33.33333333%;
+            float: left;
+        }
+        
+        .col-md-8 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            width: 66.66666667%;
+            float: left;
+        }
+        
+        .col-md-6 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            width: 50%;
+            float: left;
+        }
+        
+        .col-md-12 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            width: 100%;
+            float: left;
+        }
+        
+        .row:before,
+        .row:after {
+            display: table;
+            content: " ";
+        }
+        
+        .row:after {
+            clear: both;
+        }
+        
+        /* Exact AMT Table Styling */
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            background-color: transparent;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .table > thead > tr > th,
+        .table > tbody > tr > th,
+        .table > tfoot > tr > th,
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            padding: 5px; /* AMT uses 5px instead of 8px */
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .table > thead > tr > th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #ddd;
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: #fff; /* AMT uses white instead of gray */
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+        .table-bordered > thead > tr > th,
+        .table-bordered > tbody > tr > th,
+        .table-bordered > tfoot > tr > th,
+        .table-bordered > thead > tr > td,
+        .table-bordered > tbody > tr > td,
+        .table-bordered > tfoot > tr > td {
+            border: 0px solid #ddd; /* AMT removes borders */
+        }
+
+        .table-hover > tbody > tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .table-responsive {
+            min-height: .01%;
+            overflow-x: auto;
+        }
+
+        /* AMT specific table classes */
+        .mailbox-messages {
+            overflow: visible;
+        }
+
+        .mailbox-name {
+            font-weight: 600;
+        }
+
+        .mailbox-name a {
+            color: #444;
+            text-decoration: none;
+        }
+
+        .mailbox-name a:hover {
+            color: #3c8dbc;
+            text-decoration: underline;
+        }
+
+        .mailbox-date {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .white-space-nowrap {
+            white-space: nowrap;
+        }
+
+        .no-print {
+            /* For print hiding */
+        }
+
+        .noExport {
+            /* For export hiding */
+        }
+        
+        .mailbox-name {
+            font-weight: 600;
+        }
+        
+        .mailbox-name a {
+            color: #444;
+            text-decoration: none;
+        }
+        
+        .mailbox-name a:hover {
+            color: #3c8dbc;
+            text-decoration: underline;
+        }
+        
+        .mailbox-date {
+            color: #999;
+            font-size: 13px;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .white-space-nowrap {
+            white-space: nowrap;
+        }
+
+        /* AMT Icon System */
+        .fa {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Enhanced icon fallbacks */
+        .fa-newspaper-o:before { content: "📰"; font-family: inherit; font-size: 14px; }
+        .fa-reorder:before { content: "☰"; font-family: inherit; font-size: 12px; }
+        .fa-pencil:before { content: "✏️"; font-family: inherit; font-size: 12px; }
+        .fa-remove:before { content: "✖"; font-family: inherit; font-size: 12px; }
+        .fa-picture-o:before { content: "🖼️"; font-family: inherit; }
+        .fa-3x { font-size: 3em; }
+
+        /* AMT specific classes */
+        .req {
+            color: #dd4b39;
+        }
+
+        .text-primary {
+            color: #337ab7;
+        }
+
+        .text-danger {
+            color: #dd4b39;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+
+        /* Image utilities */
+        .object-fit-cover {
+            object-fit: cover;
+        }
+
+        .fit-image-40 {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Exact AMT Modal Styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1100; /* AMT uses 1100 */
+            display: none;
+            overflow: hidden;
+            outline: 0;
+        }
+
+        .modal.fade {
+            opacity: 0;
+            transition: opacity 0.15s linear;
+        }
+
+        .modal.fade.in {
+            opacity: 1;
+        }
+
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 10px;
+        }
+
+        .modal-lg {
+            width: 900px;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            border: 1px solid #999;
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: 6px;
+            box-shadow: 0 3px 9px rgba(0,0,0,.5);
+            background-clip: padding-box;
+            outline: 0;
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .modal-header .close {
+            margin-top: -2px;
+        }
+
+        .modal-title {
+            margin: 0;
+            line-height: 1.42857143;
+            font-size: 18px;
+        }
+
+        .modal-body {
+            position: relative;
+            padding: 15px;
+        }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: .2;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .close:hover, .close:focus {
+            color: #fff; /* AMT white on hover */
+            outline: none;
+            -webkit-transform: translate(0%, -0%) rotate(90deg);
+            transform: translate(0%, 8%) rotate(90deg); /* AMT rotation effect */
+            opacity: .5;
+        }
+
+        /* Certificate preview styles - optimized for responsive display */
+        .tc-container {
+            width: 100%;
+            position: relative;
+            text-align: center;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .tc-container tr td {
+            vertical-align: top;
+            font-family: arial;
+            color: #000;
+        }
+
+        .tc-container table {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        /* Enhanced modal body for certificate display */
+        #certificate_detail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .certificate-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Certificate display with proper internal spacing */
+        .tc-container {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 15px !important;
+            box-sizing: border-box;
+        }
+
+        .tc-container img {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .tc-container table {
+            width: calc(100% - 60px) !important;
+            margin: 0 auto !important;
+            padding: 20px !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Certificate content spacing and overlap prevention */
+        .tc-container table td {
+            padding: 15px 20px !important;
+            line-height: 1.8 !important;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Prevent text overlap and ensure readability */
+        .tc-container p {
+            margin: 10px 0 !important;
+            padding: 10px 20px !important;
+            box-sizing: border-box;
+        }
+
+        /* Logo and header spacing */
+        .tc-container img {
+            margin: 5px !important;
+        }
+
+        /* Certificate title spacing */
+        .tc-container h1, .tc-container h2, .tc-container h3 {
+            margin: 15px 0 !important;
+            padding: 5px 0 !important;
+        }
+
+        .tcmybg {
+            background: top center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        .tc-container tr td h1, h2, h3 {
+            margin-top: 0;
+            font-weight: normal;
+        }
+
+        /* AMT specific layout classes */
+        .ptbnull {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .titlefix {
+            /* AMT title styling */
+        }
+
+        .download_label {
+            display: none; /* Hidden by default, shown for exports */
+        }
+
+        .overflow-visible {
+            overflow: visible;
+        }
+
+        .minh45 {
+            min-height: 45px;
+        }
+
+        .switch-inline {
+            /* Switch styling */
+        }
+
+        .switchcheck {
+            /* Switch check styling */
+        }
+
+        .img_div_modal {
+            /* Image div modal styling */
+        }
+
+        .mediarow {
+            /* Media row styling */
+        }
+
+        /* Enhanced Responsive Design for Certificate Modal - Comprehensive Solution */
+
+        /* Desktop screens (≥992px) - Optimized for perfect text alignment */
+        @media (min-width: 992px) {
+            .certificate-container {
+                min-height: 95vh;
+                padding: 20px;
+                overflow: hidden;
+            }
+
+            .certificate-container table {
+                width: 860px !important;
+                max-width: 92%;
+                margin: 0 auto;
+            }
+
+            .certificate-container table td {
+                font-size: 16px;
+                line-height: 1.6;
+                padding: 15px;
+            }
+
+            /* Perfect text alignment for desktop */
+            .certificate-text-desktop {
+                font-size: 16px !important;
+                line-height: 1.8;
+                text-align: center;
+            }
+
+            .certificate-header-desktop {
+                font-size: 16px !important;
+                font-weight: 500;
+            }
+
+            .certificate-footer-desktop {
+                font-size: 14px !important;
+                font-weight: 500;
+            }
+        }
+
+        /* Tablet screens (768px-991px) - Optimized for tablet viewing */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .modal-body {
+                padding: 10px;
+            }
+
+            .certificate-container {
+                min-height: 85vh;
+                padding: 15px;
+                overflow: hidden;
+            }
+
+            .certificate-container table {
+                width: 645px !important;
+                max-width: 88%;
+                margin: 0 auto;
+            }
+
+            .certificate-container table td {
+                font-size: 14px;
+                line-height: 1.6;
+                padding: 12px;
+            }
+
+            /* Perfect text alignment for tablets */
+            .certificate-text-tablet {
+                font-size: 14px !important;
+                line-height: 1.7;
+                text-align: center;
+            }
+
+            .certificate-header-tablet {
+                font-size: 14px !important;
+                font-weight: 500;
+            }
+
+            .certificate-footer-tablet {
+                font-size: 13px !important;
+                font-weight: 500;
+            }
+
+            /* Form adjustments for tablets */
+            .col-md-4, .col-md-8, .col-md-6, .col-md-12 {
+                width: 100%;
+                float: none;
+                margin-bottom: 15px;
+            }
+
+            .form-control {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+        }
+
+        /* Mobile screens (≤767px) - Compact viewing with no side spaces */
+        @media (max-width: 767px) {
+            .modal-content {
+                border-radius: 4px;
+                margin: 0;
+                padding: 0;
+            }
+
+            .modal-body {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .certificate-container {
+                min-height: 66.5vh !important;
+                padding: 5px !important;
+                margin: 0 !important;
+                overflow: hidden;
+            }
+
+            .tc-container {
+                padding: 8px !important;
+            }
+
+            .tc-container table {
+                width: calc(100% - 30px) !important;
+                max-width: 95% !important;
+                min-width: 280px;
+                margin: 0 auto !important;
+                padding: 10px !important;
+            }
+
+            .tc-container table td {
+                font-size: 12px !important;
+                line-height: 1.5 !important;
+                padding: 8px 12px !important;
+            }
+
+            /* Perfect text alignment for mobile */
+            .certificate-text-mobile {
+                font-size: 12px !important;
+                line-height: 1.6;
+                text-align: center;
+            }
+
+            .certificate-header-mobile {
+                font-size: 12px !important;
+                font-weight: 500;
+            }
+
+            .certificate-footer-mobile {
+                font-size: 11px !important;
+                font-weight: 500;
+            }
+
+            /* Mobile form adjustments */
+            .col-md-4, .col-md-8, .col-md-6, .col-md-12, .col-sm-6 {
+                width: 100%;
+                float: none;
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                font-size: 16px; /* Prevent zoom on iOS */
+                padding: 8px 12px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 14px;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .table-responsive {
+                border: none;
+                font-size: 11px;
+            }
+
+            .table th, .table td {
+                padding: 6px;
+                font-size: 11px;
+            }
+
+            .content-wrapper {
+                padding: 8px;
+            }
+
+            .box {
+                margin-bottom: 10px;
+            }
+
+            .box-header {
+                padding: 8px 12px;
+            }
+
+            .box-body {
+                padding: 12px;
+            }
+        }
+
+        /* Extra small screens (≤480px) */
+        @media (max-width: 480px) {
+            .modal-lg {
+                width: 100% !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .modal-dialog {
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .modal-body {
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            .certificate-container {
+                min-height: 500px !important;
+                padding: 0 !important;
+            }
+
+            .tc-container {
+                max-width: 98% !important;
+                height: 450px !important;
+                min-width: 280px;
+                overflow: visible !important;
+            }
+
+            .certificate-table {
+                width: 280px !important;
+                min-width: 280px;
+                max-width: 95% !important;
+            }
+
+            /* Extra small font sizes */
+            .certificate-text-xs {
+                font-size: 10px !important;
+                line-height: 1.5;
+            }
+
+            .certificate-header-xs {
+                font-size: 10px !important;
+            }
+
+            .certificate-footer-xs {
+                font-size: 9px !important;
+            }
+
+            .form-control {
+                font-size: 16px;
+                padding: 6px 10px;
+            }
+
+            .btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .table th, .table td {
+                padding: 4px;
+                font-size: 10px;
+            }
+
+            .content-wrapper {
+                padding: 3px;
+            }
+
+            .box-header {
+                padding: 6px 10px;
+            }
+
+            .box-body {
+                padding: 10px;
+            }
+
+            .student-photo {
+                width: 40px !important;
+                height: auto !important;
+            }
+        }
+
+        /* Additional responsive enhancements for certificate display */
+        @media screen and (max-width: 767px) {
+            .table-responsive {
+                width: 100%;
+                margin-bottom: 15px;
+                overflow-y: hidden;
+                -ms-overflow-style: -ms-autohiding-scrollbar;
+                border: 1px solid #ddd;
+            }
+
+            /* Ensure background images scale properly on mobile */
+            .tc-container img {
+                object-fit: contain !important;
+                object-position: center !important;
+            }
+        }
+
+        /* Ensure ornate decorative borders and patterns are preserved */
+        .tc-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tc-container img {
+            transition: all 0.3s ease;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        /* Responsive text scaling for better readability */
+        @media (max-width: 767px) {
+            .tc-container table {
+                transform-origin: center top;
+            }
+        }
+
+        /* Ensure modal backdrop is properly responsive */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #000;
+        }
+
+        .modal-backdrop.fade {
+            opacity: 0;
+        }
+
+        .modal-backdrop.in {
+            opacity: 0.5;
+        }
+
+        /* Smooth transitions for responsive changes */
+        .tc-container, .tc-container img, .tc-container table {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Prevent horizontal scrolling on small screens */
+        @media (max-width: 767px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .modal-dialog {
+                overflow-x: hidden;
+            }
+        }
+
+        /* Improve touch targets on mobile */
+        @media (max-width: 767px) {
+            .btn, .close {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 10px 15px;
+            }
+
+            .close {
+                font-size: 24px;
+                line-height: 1;
+            }
+        }
+
+        /* Ensure certificate content is always readable */
+        .tc-container table td {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced Certificate Styles for Pixel Perfect Design */
+        .certificate-container {
+            font-family: 'Times New Roman', serif !important;
+            background: white;
+            border: none;
+            border-radius: 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .certificate-table {
+            font-family: 'Times New Roman', serif !important;
+        }
+
+        .certificate-header, .certificate-footer {
+            font-weight: bold;
+            color: #2C3E50;
+        }
+
+        .certificate-text {
+            color: #2C3E50;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Enhanced Modal Styles - AMT Standard */
+        .modal-content {
+            border: 1px solid #999;
+            border-radius: 6px;
+            box-shadow: 0 3px 9px rgba(0,0,0,.5);
+        }
+
+        .modal-header {
+            background-color: #fff;
+            color: #333;
+            border-bottom: 1px solid #e5e5e5;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .modal-header .close {
+            color: #000;
+            opacity: 0.2;
+            text-shadow: 0 1px 0 #fff;
+        }
+
+        .modal-header .close:hover {
+            color: #fff;
+            opacity: 0.5;
+            transform: translate(0%, 8%) rotate(90deg);
+        }
+
+        .modal-body {
+            background: #fff;
+            padding: 0; /* Remove padding to show full certificate */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        /* Enhanced certificate text rendering with perfect alignment */
+        .certificate-text {
+            font-family: 'arial', sans-serif;
+            color: #000;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Perfect text positioning in certificates */
+        .certificate-container {
+            font-family: 'arial', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-container table {
+            font-family: 'arial', sans-serif;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        .certificate-container table td {
+            color: #000;
+            font-weight: normal;
+            vertical-align: top;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Enhanced text alignment classes */
+        .text-center-perfect {
+            text-align: center !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-left-perfect {
+            text-align: left !important;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .text-right-perfect {
+            text-align: right !important;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .modal-footer {
+            background-color: #f5f5f5;
+            border-top: 1px solid #e5e5e5;
+            border-radius: 0 0 6px 6px;
+        }
+
+        /* Enhanced Modal Sizing - AMT Standard with Perfect Certificate Display */
+        @media (min-width: 1200px) {
+            .modal-lg {
+                width: 90%;
+                max-width: 1100px;
+                margin: 8px auto;
+            }
+
+            .modal-dialog {
+                width: 90%;
+                max-width: 1100px;
+                margin: 8px auto;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .modal-lg {
+                width: 99%;
+                max-width: 990px;
+                margin: 5px auto;
+            }
+
+            .modal-dialog {
+                width: 99%;
+                max-width: 990px;
+                margin: 5px auto;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .modal-lg {
+                width: 102%;
+                max-width: 780px;
+                margin: 5px auto;
+            }
+
+            .modal-dialog {
+                width: 102%;
+                max-width: 780px;
+                margin: 5px auto;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .modal-lg {
+                width: 99%;
+                max-width: 520px;
+                margin: 1px auto;
+            }
+
+            .modal-dialog {
+                width: 99%;
+                max-width: 520px;
+                margin: 1px auto;
+            }
+
+            .modal-content {
+                margin: 0;
+                padding: 0;
+            }
+
+            .modal-body {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
+
+        /* Perfect modal centering and sizing */
+        .modal-dialog {
+            display: flex;
+            align-items: center;
+            min-height: calc(100vh - 40px);
+        }
+
+        .modal-content {
+            width: 100%;
+            margin: auto;
+        }
+
+        /* Enhanced certificate container alignment with balanced spacing */
+        .certificate-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 66.5vh;
+            padding: 10px 2%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <!-- Exact AMT Certificate Management Interface -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1><i class="fa fa-newspaper-o"></i> Certificate Management</h1>
+        </section>
+        <section class="content">
+            <div class="row">
+
+
+                <!-- Certificate List - Full Width -->
+                <div class="col-md-12">
+                    <div class="box box-primary" id="hroom">
+                        <div class="box-header ptbnull">
+                            <h3 class="box-title titlefix">Student Certificate List</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive mailbox-messages overflow-visible">
+                                <div class="download_label">Student Certificate List</div>
+                                <table class="table table-striped table-bordered table-hover example">
+                                    <thead>
+                                        <tr>
+                                            <th>Certificate Name</th>
+                                            <th>Background Image</th>
+                                            <th class="text-right noExport">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="mailbox-name">
+                                                <a style="cursor: pointer;" class="view_data" id="1" data-toggle="popover">Academic Achievement Certificate</a>
+                                            </td>
+                                            <td class="mailbox-name">
+                                                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23f8f9fa' stroke='%23007bff' stroke-width='1'/><text x='20' y='22' text-anchor='middle' font-family='Arial' font-size='8' fill='%23666'>IMG</text></svg>" width="40" height="40" class="object-fit-cover fit-image-40">
+                                            </td>
+                                            <td class="mailbox-date text-right no-print white-space-nowrap">
+                                                <a data-toggle="tooltip" id="1" class="btn btn-default btn-xs view_data" title="View">
+                                                    <i class="fa fa-reorder"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="mailbox-name">
+                                                <a style="cursor: pointer;" class="view_data" id="2" data-toggle="popover">Transfer Certificate</a>
+                                            </td>
+                                            <td class="mailbox-name">
+                                                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23f0f8ff' stroke='%23007bff' stroke-width='1'/><text x='20' y='22' text-anchor='middle' font-family='Arial' font-size='8' fill='%23666'>TC</text></svg>" width="40" height="40" class="object-fit-cover fit-image-40">
+                                            </td>
+                                            <td class="mailbox-date text-right no-print white-space-nowrap">
+                                                <a data-toggle="tooltip" id="2" class="btn btn-default btn-xs view_data" title="View">
+                                                    <i class="fa fa-reorder"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="mailbox-name">
+                                                <a style="cursor: pointer;" class="view_data" id="3" data-toggle="popover">Character Certificate</a>
+                                            </td>
+                                            <td class="mailbox-name">
+                                                <i class="fa fa-picture-o fa-3x" aria-hidden="true"></i>
+                                            </td>
+                                            <td class="mailbox-date text-right no-print white-space-nowrap">
+                                                <a data-toggle="tooltip" id="3" class="btn btn-default btn-xs view_data" title="View">
+                                                    <i class="fa fa-reorder"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="mailbox-name">
+                                                <a style="cursor: pointer;" class="view_data" id="4" data-toggle="popover">Course Completion Certificate</a>
+                                            </td>
+                                            <td class="mailbox-name">
+                                                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23fff8dc' stroke='%23ffa500' stroke-width='1'/><text x='20' y='22' text-anchor='middle' font-family='Arial' font-size='7' fill='%23666'>CERT</text></svg>" width="40" height="40" class="object-fit-cover fit-image-40">
+                                            </td>
+                                            <td class="mailbox-date text-right no-print white-space-nowrap">
+                                                <a data-toggle="tooltip" id="4" class="btn btn-default btn-xs view_data" title="View">
+                                                    <i class="fa fa-reorder"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Certificate View - Compact Design with No Side Spaces -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" style="max-width: 900px; width: 90%; margin: 5px auto;">
+            <div class="modal-content" style="margin: 0; padding: 0;">
+                <div class="modal-header" style="padding: 5px 15px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">View Certificate - AMARAVATHI JUNIOR COLLEGE</h4>
+                </div>
+                <div class="modal-body" id="certificate_detail" style="padding: 15px; margin: 0; overflow: visible;">
+                    <!-- Certificate preview will be loaded here dynamically -->
+                    <div id="certificate-preview-container" class="certificate-container">
+                        <!-- Default placeholder content with real background image -->
+                        <div class="tc-container" style="position: relative; text-align: center; font-family: 'Times New Roman', serif; background: white; width: 96%; margin: 0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.1); height: 713px; padding: 15px; box-sizing: border-box;">
+                            <!-- Real Certificate Background Image -->
+                            <img src="nibog.jpg" style="width: 100%; height: 713px; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;" />
+
+                            <!-- AMT Table-based Certificate Content Layout -->
+                            <table width="calc(100% - 60px)" cellspacing="0" cellpadding="0" style="position: absolute; top: 0; margin-left: auto; margin-right: auto; left: 0; right: 0; max-width: 790px; z-index: 2; padding: 20px; box-sizing: border-box;">
+                                <!-- Header Row - Minimal since logos are in background image -->
+                                <tr>
+                                    <td valign="top" style="text-align: center; position: relative; top: 40px; font-size: 15px; color: #2C3E50; font-weight: 500; padding: 15px 20px;">
+                                        <!-- Empty header space - logos are in background image -->
+                                    </td>
+                                </tr>
+
+                                <!-- Certificate Title and Content Row -->
+                                <tr>
+                                    <td valign="top" style="text-align: center; position: relative; top: 120px; font-size: 15px; color: #2C3E50; line-height: 2.0; padding: 20px 30px;">
+                                        <!-- Certificate Content - Only Dynamic Overlay Content -->
+                                        <div style="text-align: center; margin: 60px 40px 30px 40px; padding: 15px;">
+                                            <!-- Student Name - Positioned to align with background image -->
+                                            <h2 style="font-size: 28px; font-weight: bold; color: #000; margin: 20px 0 25px 0; font-family: 'Times New Roman', serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">Vemu Thaaswika Shashti Prakash</h2>
+
+                                            <!-- Certificate Text -->
+                                            <p style="font-size: 15px; color: #000; margin: 20px 0; text-align: center; line-height: 1.6; font-family: 'Times New Roman', serif;">
+                                                aged <strong style="color: #DC143C;">12 months</strong> has made a remarkable participation in <strong style="color: #DC143C;">Baby Walker Race Game</strong><br>
+                                                conducted by NEW INDIA BABY OLYMPIC GAMES held at <strong style="color: #DC143C;">VIZAG</strong> in the year <strong style="color: #DC143C;">2025</strong>.
+                                            </p>
+
+                                            <!-- Colorful Character Icons -->
+                                            <div style="margin: 25px 0; display: flex; justify-content: center; align-items: center; gap: 12px;">
+                                                <div style="width: 35px; height: 35px; background: #FF1493; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                    <span style="color: white; font-size: 18px; font-weight: bold;">♪</span>
+                                                </div>
+                                                <div style="width: 35px; height: 35px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                    <span style="color: white; font-size: 18px; font-weight: bold;">★</span>
+                                                </div>
+                                                <div style="width: 35px; height: 35px; background: #32CD32; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                    <span style="color: white; font-size: 18px; font-weight: bold;">♦</span>
+                                                </div>
+                                                <div style="width: 35px; height: 35px; background: #9370DB; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                    <span style="color: white; font-size: 18px; font-weight: bold;">♠</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Footer Row -->
+                                <tr>
+                                    <td valign="top" style="text-align: center; position: relative; top: 180px; font-size: 13px; font-weight: 500; padding: 15px 25px;">
+                                        <!-- Director Signature - Only dynamic overlay content -->
+                                        <div style="display: flex; justify-content: flex-end; margin-top: 30px; padding-right: 80px;">
+                                            <div style="text-align: center;">
+                                                <div style="font-style: italic; font-size: 18px; color: #2E8B57; margin-bottom: 5px; font-family: 'Brush Script MT', cursive;">Deepika K</div>
+                                                <div style="width: 120px; height: 2px; background: #000; margin: 0 auto 5px auto;"></div>
+                                                <p style="margin: 0; color: #000; font-weight: bold; font-size: 14px;">Director</p>
+                                            </div>
+                                        </div>
+                                        <!-- Sponsor logos are part of background image -->
+                                    </td>
+                                </tr>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AMT Certificate Data with Optimized Positioning - Fixed Spacing and Image Display
+        const certificateData = {
+            1: {
+                certificate_name: 'Certificate of Achievement',
+                admission_no: '[admission_no]',
+                student_name: 'Vemu Thaaswika Shashti Prakash',
+                father_name: '[father_name]',
+                certificate_text: 'aged <strong style="color: #DC143C;">12 months</strong> has made a remarkable participation in <strong style="color: #DC143C;">Baby Walker Race Game</strong> conducted by NEW INDIA BABY OLYMPIC GAMES held at <strong style="color: #DC143C;">VIZAG</strong> in the year <strong style="color: #DC143C;">2025</strong>.',
+                left_header: '',
+                center_header: '',
+                right_header: '',
+                left_footer: '',
+                center_footer: '',
+                right_footer: 'Director',
+                header_height: 120,
+                content_height: 300,
+                footer_height: 480,
+                content_width: 850,
+                enable_student_image: 0,
+                enable_image_height: 0,
+                background_image: 'nibog.jpg'
+            },
+            2: {
+                certificate_name: 'Transfer Certificate',
+                admission_no: '[admission_no]',
+                student_name: 'Jane Smith',
+                father_name: 'Mr. John Smith',
+                certificate_text: 'aged 12 months has made a remarkable participation in baby walker race game conducted by <strong>New INDIA BABY OLYMPIC GAMES</strong> held at <strong>VIZAG</strong> in the year <strong>2025</strong>.',
+                left_header: 'Admission No : TC001',
+                center_header: 'AMARAVATHI JUNIOR COLLEGE',
+                right_header: 'Date : 15/03/2024',
+                left_footer: 'Office Seal',
+                center_footer: '',
+                right_footer: 'Principal',
+                header_height: 140,
+                content_height: 320,
+                footer_height: 450,
+                content_width: 850,
+                enable_student_image: 0,
+                enable_image_height: 0,
+                background_image: 'nibog.jpg'
+            },
+            3: {
+                certificate_name: 'Character Certificate',
+                admission_no: '[admission_no]',
+                student_name: 'Mike Johnson',
+                father_name: 'Mr. Robert Johnson',
+                certificate_text: 'aged 12 months has made a remarkable participation in baby walker race game conducted by <strong>New INDIA BABY OLYMPIC GAMES</strong> held at <strong>VIZAG</strong> in the year <strong>2025</strong>.',
+                left_header: 'Admission No : CC001',
+                center_header: 'AMARAVATHI JUNIOR COLLEGE',
+                right_header: 'Date : 20/03/2024',
+                left_footer: 'Office Seal',
+                center_footer: '',
+                right_footer: 'Principal',
+                header_height: 140,
+                content_height: 320,
+                footer_height: 450,
+                content_width: 850,
+                enable_student_image: 0,
+                enable_image_height: 0,
+                background_image: 'nibog.jpg'
+            },
+            4: {
+                certificate_name: 'Course Completion Certificate',
+                admission_no: '[admission_no]',
+                student_name: 'Sarah Wilson',
+                father_name: 'Mr. David Wilson',
+                certificate_text: 'aged 12 months has made a remarkable participation in baby walker race game conducted by <strong>New INDIA BABY OLYMPIC GAMES</strong> held at <strong>VIZAG</strong> in the year <strong>2025</strong>.',
+                left_header: 'Admission No : CCC001',
+                center_header: 'AMARAVATHI JUNIOR COLLEGE',
+                right_header: 'Date : 25/03/2024',
+                left_footer: 'Office Seal',
+                center_footer: '',
+                right_footer: 'Principal',
+                header_height: 140,
+                content_height: 320,
+                footer_height: 450,
+                content_width: 850,
+                enable_student_image: 0,
+                enable_image_height: 0,
+                background_image: 'nibog.jpg'
+            }
+        };
+
+        // Modal functionality
+        function showModal() {
+            document.getElementById('myModal').style.display = 'block';
+            document.getElementById('myModal').classList.add('in');
+            document.getElementById('myModal').style.opacity = '1';
+        }
+
+        function hideModal() {
+            document.getElementById('myModal').style.display = 'none';
+            document.getElementById('myModal').classList.remove('in');
+            document.getElementById('myModal').style.opacity = '0';
+            currentCertificateId = null; // Reset for resize handling
+        }
+
+        // Enhanced Certificate view functionality with responsive support
+        function viewCertificate(certificateId) {
+            const cert = certificateData[certificateId];
+            if (cert) {
+                // Store current certificate ID for resize handling
+                currentCertificateId = certificateId;
+
+                // Generate responsive certificate HTML
+                const certificateHtml = generateCertificateHTML(cert);
+
+                // Update modal content with responsive certificate
+                document.getElementById('certificate_detail').innerHTML = certificateHtml;
+
+                // Show modal with responsive certificate
+                showModal();
+
+                // Log certificate view for debugging
+                console.log('Certificate viewed:', certificateId);
+                console.log('Screen dimensions:', window.innerWidth + 'x' + window.innerHeight);
+                console.log('Certificate positioning:', {
+                    headerHeight: cert.header_height,
+                    contentHeight: cert.content_height,
+                    footerHeight: cert.footer_height,
+                    contentWidth: cert.content_width
+                });
+            }
+        }
+
+
+
+
+
+        // Generate certificate HTML - Enhanced AMT Implementation with Perfect Text Alignment
+        function generateCertificateHTML(cert) {
+            // Enhanced device detection with proper breakpoints
+            const screenWidth = window.innerWidth;
+            const isMobile = screenWidth <= 767;
+            const isTablet = screenWidth > 767 && screenWidth <= 991;
+            const isDesktop = screenWidth >= 992;
+            const isExtraSmall = screenWidth <= 480;
+
+            // Responsive scaling factors optimized for text alignment
+            let scaleFactor, containerHeight, certificateWidth, tableWidth;
+            let fontSize, headerFontSize, footerFontSize;
+            let modalPadding, textPadding;
+
+            if (isExtraSmall) {
+                // Extra small screens (≤480px) - maintain readability with spacing
+                scaleFactor = 0.5;
+                containerHeight = '523px';
+                certificateWidth = '100%';
+                tableWidth = 'calc(100% - 20px)';
+                fontSize = '10px';
+                headerFontSize = '10px';
+                footerFontSize = '9px';
+                modalPadding = '5px';
+                textPadding = '8px';
+            } else if (isMobile) {
+                // Mobile screens (481px-767px) - optimized with proper spacing
+                scaleFactor = 0.65;
+                containerHeight = '589px';
+                certificateWidth = '100%';
+                tableWidth = 'calc(100% - 30px)';
+                fontSize = '12px';
+                headerFontSize = '12px';
+                footerFontSize = '11px';
+                modalPadding = '8px';
+                textPadding = '12px';
+            } else if (isTablet) {
+                // Tablet screens (768px-991px) - balanced with good spacing
+                scaleFactor = 0.85;
+                containerHeight = '646px';
+                certificateWidth = '100%';
+                tableWidth = 'calc(100% - 50px)';
+                fontSize = '14px';
+                headerFontSize = '14px';
+                footerFontSize = '13px';
+                modalPadding = '12px';
+                textPadding = '15px';
+            } else {
+                // Desktop screens (≥992px) - full size with optimal spacing
+                scaleFactor = 1.0;
+                containerHeight = '713px';
+                certificateWidth = '100%';
+                tableWidth = 'calc(100% - 60px)';
+                fontSize = '16px';
+                headerFontSize = '16px';
+                footerFontSize = '14px';
+                modalPadding = '15px';
+                textPadding = '20px';
+            }
+
+            // Calculate precisely aligned positioning using AMT's coordinate system - optimized spacing
+            const headerHeight = Math.round((cert.header_height || 100) * scaleFactor);
+            const contentHeight = Math.round((cert.content_height || 240) * scaleFactor);
+            const footerHeight = Math.round((cert.footer_height || 360) * scaleFactor);
+
+            // Background image with responsive scaling - maintains aspect ratio
+            let backgroundImageHtml = '';
+            if (cert.background_image) {
+                backgroundImageHtml = `<img src="${cert.background_image}" style="width: 100%; height: ${containerHeight}; position: absolute; top: 0; left: 0; z-index: 1; object-fit: contain; object-position: center;" />`;
+            }
+
+            return `
+                <div class="tc-container" style="position: relative; text-align: center; font-family: arial; padding: ${modalPadding}; width: 96%; margin: 0 auto; height: ${containerHeight}; overflow: visible; box-sizing: border-box;">
+                    <!-- Certificate Background Image - Responsive with Full Display -->
+                    ${backgroundImageHtml}
+
+                    <!-- AMT Certificate Table - Exact PHP Implementation Structure -->
+                    <table width="${tableWidth}" cellspacing="0" cellpadding="0" style="position: relative; z-index: 2; margin: 0 auto; padding: ${textPadding}; box-sizing: border-box;">
+
+                        <!-- Student Image Row (if enabled) - AMT Structure -->
+                        ${cert.enable_student_image == 1 ? `
+                        <tr style="position: absolute; right: 20px; top: ${Math.round((cert.enable_image_height || 0) * scaleFactor)}px;">
+                            <td>
+                                <img src="uploads/student_images/no_image.png" width="${Math.round(100 * scaleFactor)}" height="auto" style="border: 2px solid #333; border-radius: 4px;">
+                            </td>
+                        </tr>` : ''}
+
+
+
+                        <!-- Certificate Content Row - Only Dynamic Overlay Content -->
+                        <tr style="position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; width: ${tableWidth}; display: block; top: ${contentHeight}px;">
+                            <td colspan="3" valign="top" align="center" style="padding: ${textPadding};">
+                                <!-- Student Name - Positioned to align with background image -->
+                                <h2 style="font-size: ${Math.round(fontSize * 2.0)}px; font-weight: bold; color: #000; margin: ${Math.round(40 * scaleFactor)}px 0 ${Math.round(30 * scaleFactor)}px 0; font-family: 'Times New Roman', serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); text-align: center;">${cert.student_name}</h2>
+
+                                <!-- Certificate Text -->
+                                <p style="font-size: ${Math.round(fontSize * 1.0)}px; color: #000; margin: ${Math.round(25 * scaleFactor)}px 0; text-align: center; line-height: 1.8; font-family: 'Times New Roman', serif;">
+                                    ${cert.certificate_text}
+                                </p>
+
+                                <!-- Colorful Character Icons -->
+                                <div style="margin: ${Math.round(35 * scaleFactor)}px 0; display: flex; justify-content: center; align-items: center; gap: ${Math.round(15 * scaleFactor)}px;">
+                                    <div style="width: ${Math.round(40 * scaleFactor)}px; height: ${Math.round(40 * scaleFactor)}px; background: #FF1493; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <span style="color: white; font-size: ${Math.round(20 * scaleFactor)}px; font-weight: bold;">♪</span>
+                                    </div>
+                                    <div style="width: ${Math.round(40 * scaleFactor)}px; height: ${Math.round(40 * scaleFactor)}px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <span style="color: white; font-size: ${Math.round(20 * scaleFactor)}px; font-weight: bold;">★</span>
+                                    </div>
+                                    <div style="width: ${Math.round(40 * scaleFactor)}px; height: ${Math.round(40 * scaleFactor)}px; background: #32CD32; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <span style="color: white; font-size: ${Math.round(20 * scaleFactor)}px; font-weight: bold;">♦</span>
+                                    </div>
+                                    <div style="width: ${Math.round(40 * scaleFactor)}px; height: ${Math.round(40 * scaleFactor)}px; background: #9370DB; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <span style="color: white; font-size: ${Math.round(20 * scaleFactor)}px; font-weight: bold;">♠</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            `;
+        }
+
+        // Exact AMT JavaScript functionality
+        var base_url = window.location.origin + '/amt/';
+
+        // AMT Print function - exact replication
+        function printDiv(elem) {
+            Popup(jQuery ? jQuery(elem).html() : elem.innerHTML);
+        }
+
+        function Popup(data) {
+            var frame1 = document.createElement('iframe');
+            frame1.name = "frame1";
+            frame1.style.position = "absolute";
+            frame1.style.top = "-1000000px";
+            document.body.appendChild(frame1);
+
+            var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html>');
+            frameDoc.document.write('<head>');
+            frameDoc.document.write('<title>Certificate Print</title>');
+            frameDoc.document.write('<style>body { font-family: arial; margin: 0; padding: 20px; } * { padding: 0; margin: 0; } .tc-container { width: 100%; position: relative; text-align: center; padding: 2%; } .tc-container tr td { vertical-align: bottom; } .tcmybg { background: top center; position: absolute; top: 0; left: 0; bottom: 0; z-index: 1; } .tc-container tr td h1, h2, h3 { margin-top: 0; font-weight: normal; }</style>');
+            frameDoc.document.write('</head>');
+            frameDoc.document.write('<body>');
+            frameDoc.document.write(data);
+            frameDoc.document.write('</body>');
+            frameDoc.document.write('</html>');
+            frameDoc.document.close();
+
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+            return true;
+        }
+
+
+
+        // Enhanced window resize handler for responsive certificate display
+        let currentCertificateId = null;
+        let resizeTimeout = null;
+
+        function handleResize() {
+            // Clear existing timeout to debounce resize events
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
+            }
+
+            // Set new timeout for debounced resize handling
+            resizeTimeout = setTimeout(function() {
+                // Check if modal is currently open and has certificate data
+                const modal = document.getElementById('myModal');
+                const modalDisplay = window.getComputedStyle(modal).display;
+
+                if (currentCertificateId && modalDisplay !== 'none') {
+                    // Get current certificate data
+                    var cert = certificateData[currentCertificateId];
+                    if (cert) {
+                        // Regenerate certificate with new responsive settings
+                        var certificateHtml = generateCertificateHTML(cert);
+                        document.getElementById('certificate_detail').innerHTML = certificateHtml;
+
+                        // Log resize event for debugging (can be removed in production)
+                        console.log('Certificate resized for screen width:', window.innerWidth);
+                    }
+                }
+            }, 250); // 250ms debounce delay for smooth performance
+        }
+
+        // Enhanced debounce resize handler with proper cleanup
+        window.addEventListener('resize', handleResize);
+
+        // Handle orientation changes on mobile devices
+        window.addEventListener('orientationchange', function() {
+            setTimeout(handleResize, 500); // Delay to allow orientation change to complete
+        });
+
+        // Ensure viewport meta tag is properly set for responsive behavior
+        function ensureViewportMeta() {
+            let viewport = document.querySelector('meta[name="viewport"]');
+            if (!viewport) {
+                viewport = document.createElement('meta');
+                viewport.name = 'viewport';
+                viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                document.head.appendChild(viewport);
+            } else {
+                // Update existing viewport meta tag for better mobile experience
+                viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+            }
+        }
+
+        // Initialize viewport on page load
+        ensureViewportMeta();
+
+        // Function to get current device type for debugging
+        function getCurrentDeviceType() {
+            const width = window.innerWidth;
+            if (width <= 480) return 'Extra Small (≤480px)';
+            if (width <= 767) return 'Mobile (481px-767px)';
+            if (width <= 991) return 'Tablet (768px-991px)';
+            return 'Desktop (≥992px)';
+        }
+
+        // Add device type indicator for testing (can be removed in production)
+        function showDeviceInfo() {
+            const deviceType = getCurrentDeviceType();
+            console.log('Current device type:', deviceType, 'Width:', window.innerWidth);
+        }
+
+        // Show device info on load and resize
+        window.addEventListener('load', showDeviceInfo);
+        window.addEventListener('resize', showDeviceInfo);
+
+        // Event listeners - enhanced AMT structure with responsive support
+        document.addEventListener('DOMContentLoaded', function() {
+            // AMT AJAX-style certificate viewing with responsive enhancements
+            document.querySelectorAll('.view_data').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var certificateId = this.getAttribute('id'); // AMT uses id, not data-id
+                    currentCertificateId = certificateId; // Store for resize handling
+
+                    // Simulate AMT AJAX call
+                    setTimeout(function() {
+                        var cert = certificateData[certificateId];
+                        if (cert) {
+                            // Update modal content with responsive certificate HTML
+                            var certificateHtml = generateCertificateHTML(cert);
+                            document.getElementById('certificate_detail').innerHTML = certificateHtml;
+                            showModal();
+                        }
+                    }, 100); // Simulate network delay
+                });
+            });
+
+            // Modal close button
+            var closeBtn = document.querySelector('.close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hideModal);
+            }
+
+            // Modal background click
+            document.getElementById('myModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideModal();
+                }
+            });
+
+
+
+            // AMT popover initialization (placeholder)
+            document.querySelectorAll('.detail_popover').forEach(function(element) {
+                // AMT uses popover for additional details
+            });
+
+            console.log('AMT Certificate Management Interface loaded successfully');
+        });
+    </script>
+</body>
+</html>

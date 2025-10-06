@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Payment Transfer Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="fa fa-exchange-alt"></i> Advance Payment Transfer Tracking Demo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <h5><i class="fa fa-info-circle"></i> Implementation Summary</h5>
+                            <p>This system now provides comprehensive tracking of advance payment transfers with the following features:</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6><i class="fa fa-eye"></i> Visual Transfer Preview</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; border: 1px solid #d4edda;">
+                                            <div style="font-weight: bold; color: #155724; margin-bottom: 10px; font-size: 14px;">
+                                                <i class="fa fa-exchange" aria-hidden="true"></i> Advance Payment Transfer Analysis
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div style="background-color: #fff; padding: 8px; border-radius: 3px; margin-bottom: 8px;">
+                                                        <small><strong>Amount to Transfer:</strong></small><br>
+                                                        <span style="color: #28a745; font-weight: bold; font-size: 16px;">₹2,500.00</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div style="background-color: #fff; padding: 8px; border-radius: 3px; margin-bottom: 8px;">
+                                                        <small><strong>Remaining Advance:</strong></small><br>
+                                                        <span style="color: #17a2b8; font-weight: bold; font-size: 16px;">₹2,500.00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div style="background-color: #fff; padding: 8px; border-radius: 3px; margin-bottom: 8px;">
+                                                        <small><strong>Transfer Type:</strong></small><br>
+                                                        <span style="color: #6f42c1; font-weight: bold;">Partial Transfer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div style="background-color: #fff; padding: 8px; border-radius: 3px; margin-bottom: 8px;">
+                                                        <small><strong>Account Impact:</strong></small><br>
+                                                        <span style="color: #fd7e14; font-weight: bold;">No Cash Entry</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #c3e6cb; font-size: 12px; color: #155724;">
+                                                <i class="fa fa-lightbulb" aria-hidden="true"></i> 
+                                                <strong>Note:</strong> This amount will be transferred from your advance payment balance to settle the fee. No additional cash payment is required for this portion.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6><i class="fa fa-check-circle"></i> Success Notification</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-success">
+                                            <h6><i class="icon fa fa-check"></i> Advance Payment Transfer Successful!</h6>
+                                            <strong>Amount Transferred:</strong> ₹2,500.00<br>
+                                            <strong>Receipt Number:</strong> 2024/25-001<br>
+                                            <strong>Transfer Type:</strong> Direct advance payment utilization<br>
+                                            <strong>Account Impact:</strong> Zero cash entry - funds transferred from advance balance
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6><i class="fa fa-database"></i> Database Tracking</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>Transfer Details Stored:</strong></p>
+                                        <ul>
+                                            <li>Original advance payment details (ID, date, original amount)</li>
+                                            <li>Balance before and after transfer</li>
+                                            <li>Amount transferred and fee category</li>
+                                            <li>Receipt information and timestamp</li>
+                                            <li>User who processed the transfer</li>
+                                        </ul>
+                                        <div class="alert alert-secondary">
+                                            <strong>Database Table:</strong> <code>advance_payment_transfers</code><br>
+                                            <strong>Purpose:</strong> Complete audit trail for all advance payment transfers
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card border-dark">
+                                    <div class="card-header bg-dark text-white">
+                                        <h6><i class="fa fa-list"></i> Transfer Process Flow</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ol>
+                                            <li><strong>User Action:</strong> Check "Collect from Advance Payment" checkbox</li>
+                                            <li><strong>Real-time Preview:</strong> System shows transfer details immediately</li>
+                                            <li><strong>Validation:</strong> Amount validated against available advance balance</li>
+                                            <li><strong>Processing:</strong> Transfer details calculated and stored in database</li>
+                                            <li><strong>Confirmation:</strong> Success notification shows transfer summary</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="alert alert-primary">
+                                    <h6><i class="fa fa-trophy"></i> Key Benefits</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul>
+                                                <li>Complete transparency in transfers</li>
+                                                <li>Real-time transfer preview</li>
+                                                <li>Comprehensive audit trail</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul>
+                                                <li>Error prevention with validation</li>
+                                                <li>Clear financial distinction</li>
+                                                <li>Ready for reporting</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

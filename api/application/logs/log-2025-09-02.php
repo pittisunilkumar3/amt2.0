@@ -1,0 +1,18 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2025-09-02 07:50:03 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 07:50:05 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 07:50:11 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 09:51:00 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 09:51:03 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 17:30:02 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 17:30:05 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'
+ERROR - 2025-09-02 17:30:15 --> Query error: Unknown column 'app_key' in 'SET' - Invalid query: UPDATE `staff` SET `app_key` = 'dmju4wQVyzY:APA91bGV8MUPod52ykp0DH9ip8QBMjjJC1NZJ_GJyoXk2Kk0DavKQDT9YimKI3a-HmK_0fKd_e4fWQ0Vxer2TIae61dWxebxxFOHt8zlwOTOXPjMMe31wY8'
+WHERE `id` = '6'

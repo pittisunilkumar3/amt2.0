@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Fee Collection</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Test Fee Collection</h1>
+    <button id="testBtn">Test Fee Collection</button>
+    <div id="response"></div>
+
+    <script>
+    $('#testBtn').click(function() {
+        console.log('Testing fee collection...');
+        
+        $.ajax({
+            url: 'http://localhost/amt/studentfee/addstudentfee',
+            type: 'POST',
+            data: {
+                student_fees_master_id: '1',
+                date: '05/09/2025',
+                fee_groups_feetype_id: '1',
+                amount: '1',
+                amount_discount: '0',
+                amount_fine: '0',
+                payment_mode: 'Cash',
+                student_session_id: '8',
+                fee_category: 'transport',
+                transport_fees_id: '1',
+                action: 'collect'
+            },
+            dataType: 'json',
+            beforeSend: function() {
+                console.log('AJAX beforeSend triggered');
+            },
+            success: function(response) {
+                console.log('AJAX Success:', response);
+                $('#response').html('<pre>' + JSON.stringify(response, null, 2) + '</pre>');
+            },
+            error: function(xhr, status, error) {
+                console.log('AJAX Error:', error);
+                console.log('XHR:', xhr);
+                console.log('Status:', status);
+                console.log('Response Text:', xhr.responseText);
+                $('#response').html('<p style="color: red;">Error: ' + error + '</p><p>' + xhr.responseText + '</p>');
+            }
+        });
+    });
+    </script>
+</body>
+</html>
