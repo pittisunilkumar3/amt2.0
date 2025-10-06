@@ -82,6 +82,7 @@ $route['teacher/menu']['POST'] = 'teacher_webservice/menu';
 $route['teacher/simple_menu']['POST'] = 'teacher_webservice/simple_menu';
 $route['teacher/students']['POST'] = 'teacher_webservice/students';
 $route['teacher/classes-with-sections']['POST'] = 'teacher_webservice/classes_with_sections';
+$route['teacher/sessions-with-classes-sections']['POST'] = 'teacher_webservice/sessions_with_classes_sections';
 $route['teacher/student-categories']['POST'] = 'teacher_webservice/student_categories';
 $route['teacher/student-category/get']['POST'] = 'teacher_webservice/student_category_get';
 $route['teacher/student-category/create']['POST'] = 'teacher_webservice/student_category_create';

@@ -2594,6 +2594,171 @@ class Teacher_webservice extends CI_Controller
     }
 
     /**
+     * Get sessions with their associated classes and sections in hierarchical structure
+     * POST /teacher/sessions-with-classes-sections
+     *
+     * Request body (optional):
+     * {
+     *   "include_inactive": false  // Optional: include inactive sessions/classes/sections (default: false)
+     * }
+     *
+     * Returns: Hierarchical structure of sessions → classes → sections
+     */
+    public function sessions_with_classes_sections()
+    {
+        try {
+            // Get JSON input
+            $json_input = json_decode(file_get_contents('php://input'), true);
+
+            // Check for JSON decode errors
+            if (json_last_error() !== JSON_ERROR_NONE && file_get_contents('php://input') !== '') {
+                json_output(400, array(
+                    'status' => 0,
+                    'message' => 'Invalid JSON format in request body',
+                    'error' => array(
+                        'type' => 'JSON Parse Error',
+                        'details' => json_last_error_msg()
+                    ),
+                    'timestamp' => date('Y-m-d H:i:s')
+                ));
+                return;
+            }
+
+            // Extract optional include_inactive filter (default: false)
+            $include_inactive = isset($json_input['include_inactive']) && $json_input['include_inactive'] === true;
+
+            // Query to get sessions
+            $this->db->select('id, session as session_name, is_active');
+            $this->db->from('sessions');
+
+            // Only filter by is_active if include_inactive is false
+            if (!$include_inactive) {
+                // Since all sessions might have is_active='no', we'll return all sessions
+                // Comment out the is_active filter to return all sessions
+                // $this->db->where('is_active', 'yes');
+            }
+
+            $this->db->order_by('session', 'ASC');
+
+            $sessions_query = $this->db->get();
+
+            if (!$sessions_query) {
+                json_output(500, array(
+                    'status' => 0,
+                    'message' => 'Failed to retrieve sessions',
+                    'error' => array(
+                        'type' => 'Database Error',
+                        'details' => $this->db->error()
+                    ),
+                    'timestamp' => date('Y-m-d H:i:s')
+                ));
+                return;
+            }
+
+            $sessions = $sessions_query->result();
+
+            // Build hierarchical structure
+            $result = array();
+
+            foreach ($sessions as $session) {
+                // Query to get classes for this session through student_session table
+                $this->db->distinct();
+                $this->db->select('c.id, c.class as class_name, c.is_active');
+                $this->db->from('student_session ss');
+                $this->db->join('classes c', 'c.id = ss.class_id', 'inner');
+                $this->db->where('ss.session_id', $session->id);
+
+                // Only filter by is_active if include_inactive is false
+                if (!$include_inactive) {
+                    // Comment out is_active filters to return all classes
+                    // $this->db->where('c.is_active', 'yes');
+                }
+
+                $this->db->order_by('c.class', 'ASC');
+
+                $classes_query = $this->db->get();
+
+                $classes = array();
+                if ($classes_query && $classes_query->num_rows() > 0) {
+                    foreach ($classes_query->result() as $class) {
+                        // Query to get sections for this class and session
+                        $this->db->distinct();
+                        $this->db->select('s.id, s.section as section_name, s.is_active');
+                        $this->db->from('student_session ss');
+                        $this->db->join('sections s', 's.id = ss.section_id', 'inner');
+                        $this->db->where('ss.session_id', $session->id);
+                        $this->db->where('ss.class_id', $class->id);
+
+                        // Only filter by is_active if include_inactive is false
+                        if (!$include_inactive) {
+                            // Comment out is_active filters to return all sections
+                            // $this->db->where('s.is_active', 'yes');
+                        }
+
+                        $this->db->order_by('s.section', 'ASC');
+
+                        $sections_query = $this->db->get();
+
+                        $sections = array();
+                        if ($sections_query && $sections_query->num_rows() > 0) {
+                            foreach ($sections_query->result() as $section) {
+                                $sections[] = array(
+                                    'section_id' => intval($section->id),
+                                    'section_name' => $section->section_name,
+                                    'is_active' => $section->is_active
+                                );
+                            }
+                        }
+
+                        // Add class with its sections to classes array
+                        $classes[] = array(
+                            'class_id' => intval($class->id),
+                            'class_name' => $class->class_name,
+                            'is_active' => $class->is_active,
+                            'sections_count' => count($sections),
+                            'sections' => $sections
+                        );
+                    }
+                }
+
+                // Add session with its classes to result
+                $result[] = array(
+                    'session_id' => intval($session->id),
+                    'session_name' => $session->session_name,
+                    'is_active' => $session->is_active,
+                    'classes_count' => count($classes),
+                    'classes' => $classes
+                );
+            }
+
+            // Return success response
+            json_output(200, array(
+                'status' => 1,
+                'message' => 'Sessions with classes and sections retrieved successfully',
+                'filters_applied' => array(
+                    'include_inactive' => $include_inactive
+                ),
+                'total_sessions' => count($result),
+                'data' => $result,
+                'timestamp' => date('Y-m-d H:i:s')
+            ));
+
+        } catch (Exception $e) {
+            json_output(500, array(
+                'status' => 0,
+                'message' => 'An error occurred while retrieving sessions with classes and sections',
+                'error' => array(
+                    'type' => 'Exception',
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ),
+                'timestamp' => date('Y-m-d H:i:s')
+            ));
+        }
+    }
+
+    /**
      * Get students by class, section, and session
      * POST /teacher/students
      *
@@ -3334,6 +3499,7 @@ class Teacher_webservice extends CI_Controller
                 'POST /teacher/profile' => 'Get comprehensive staff profile',
                 'POST /teacher/students' => 'Get students by class/section/session',
                 'POST /teacher/classes-with-sections' => 'Get classes with sections',
+                'POST /teacher/sessions-with-classes-sections' => 'Get sessions with classes and sections',
                 'POST /teacher/student-categories' => 'Get all student categories',
                 'POST /teacher/student-category/get' => 'Get single student category',
                 'POST /teacher/student-category/create' => 'Create student category',
