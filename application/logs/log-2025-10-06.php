@@ -38,3 +38,21 @@ ERROR - 2025-10-06 17:20:12 --> Could not find the language line "email_id"
 ERROR - 2025-10-06 17:20:12 --> Could not find the language line "signup"
 ERROR - 2025-10-06 17:20:12 --> Could not find the language line "signup"
 ERROR - 2025-10-06 17:20:12 --> Could not find the language line "email_id"
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Undefined variable $is_captcha C:\xampp\htdocs\amt\application\views\admin\login.php 83
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-06 21:43:02 --> Severity: Warning --> Undefined variable $is_captcha C:\xampp\htdocs\amt\application\views\admin\login.php 83
+ERROR - 2025-10-06 21:43:28 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-06 21:43:28 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-06 18:13:29 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-06 18:13:29 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-06 21:46:50 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-06 21:46:50 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-06 18:16:50 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-06 18:16:50 --> Could not find the language line "thank_you_for_your_complain"

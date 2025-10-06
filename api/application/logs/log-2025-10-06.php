@@ -112,3 +112,13 @@ ERROR - 2025-10-06 17:20:18 --> Error loading models: Unable to locate the model
 ERROR - 2025-10-06 17:20:18 --> Severity: Warning --> Undefined property: Student_house_api::$setting_model C:\xampp\htdocs\amt\api\application\controllers\Student_house_api.php 54
 ERROR - 2025-10-06 17:20:18 --> Severity: error --> Exception: Call to a member function getSetting() on null C:\xampp\htdocs\amt\api\application\controllers\Student_house_api.php 54
 ERROR - 2025-10-06 17:24:54 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:14:35 --> Error loading models: Unable to locate the model you have specified: Disable_reason_model
+ERROR - 2025-10-06 18:14:35 --> Severity: Warning --> Undefined property: Disable_reason_api::$setting_model C:\xampp\htdocs\amt\api\application\controllers\Disable_reason_api.php 54
+ERROR - 2025-10-06 18:14:35 --> Severity: error --> Exception: Call to a member function getSetting() on null C:\xampp\htdocs\amt\api\application\controllers\Disable_reason_api.php 54
+ERROR - 2025-10-06 21:47:07 --> Severity: error --> Exception: Undefined constant "INSERT_RECORD_CONSTANT" C:\xampp\htdocs\amt\api\application\models\Disable_reason_model.php 98
+ERROR - 2025-10-06 18:18:40 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:19:47 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:19:47 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:19:47 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:21:20 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:21:20 --> Error loading models: Unable to locate the model you have specified: Role_model

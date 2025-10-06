@@ -38,12 +38,13 @@ class Disable_reason_api extends CI_Controller
 
         // Load required models
         try {
-            $this->load->model(array(
-                'disable_reason_model',
-                'setting_model'
-            ));
+            $this->load->model('disable_reason_model');
+            $this->load->model('setting_model');
         } catch (Exception $e) {
             log_message('error', 'Error loading models: ' . $e->getMessage());
+            // Set default values if models fail to load
+            $this->setting_model = null;
+            $this->disable_reason_model = null;
         }
 
         // Load form validation library
@@ -51,17 +52,24 @@ class Disable_reason_api extends CI_Controller
 
         // Get school settings
         try {
-            $this->sch_setting_detail = $this->setting_model->getSetting();
-            
-            // Set timezone
-            if (isset($this->sch_setting_detail->timezone) && $this->sch_setting_detail->timezone != "") {
-                date_default_timezone_set($this->sch_setting_detail->timezone);
+            if ($this->setting_model !== null) {
+                $this->sch_setting_detail = $this->setting_model->getSetting();
+
+                // Set timezone
+                if (isset($this->sch_setting_detail->timezone) && $this->sch_setting_detail->timezone != "") {
+                    date_default_timezone_set($this->sch_setting_detail->timezone);
+                } else {
+                    date_default_timezone_set('UTC');
+                }
             } else {
+                log_message('warning', 'Setting model not loaded, using default timezone');
                 date_default_timezone_set('UTC');
+                $this->sch_setting_detail = null;
             }
         } catch (Exception $e) {
             log_message('error', 'Error loading school settings: ' . $e->getMessage());
             date_default_timezone_set('UTC');
+            $this->sch_setting_detail = null;
         }
     }
 

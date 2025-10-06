@@ -84,3 +84,8 @@ defined('EXIT_USER_INPUT') OR define('EXIT_USER_INPUT', 7); // invalid user inpu
 defined('EXIT_DATABASE') OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN') OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX') OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+// Record operation constants
+define('INSERT_RECORD_CONSTANT', 'New Record inserted');
+define('UPDATE_RECORD_CONSTANT', 'Record updated');
+define('DELETE_RECORD_CONSTANT', 'Record deleted');
