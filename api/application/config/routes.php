@@ -218,3 +218,11 @@ $route['income-head/get/(:num)']['POST'] = 'income_head_api/get/$1';
 $route['income-head/create']['POST'] = 'income_head_api/create';
 $route['income-head/update/(:num)']['POST'] = 'income_head_api/update/$1';
 $route['income-head/delete/(:num)']['POST'] = 'income_head_api/delete/$1';
+
+// Student Report API Routes
+$route['student-report/filter']['POST'] = 'student_report_api/filter';
+$route['student-report/list']['POST'] = 'student_report_api/list';
+
+// Guardian Report API Routes
+$route['guardian-report/filter']['POST'] = 'guardian_report_api/filter';
+$route['guardian-report/list']['POST'] = 'guardian_report_api/list';

@@ -122,3 +122,43 @@ ERROR - 2025-10-06 18:19:47 --> Error loading models: Unable to locate the model
 ERROR - 2025-10-06 18:19:47 --> Error loading models: Unable to locate the model you have specified: Role_model
 ERROR - 2025-10-06 18:21:20 --> Error loading models: Unable to locate the model you have specified: Role_model
 ERROR - 2025-10-06 18:21:20 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 22:18:58 --> Severity: error --> Exception: Cannot use object of type stdClass as array C:\xampp\htdocs\amt\api\application\controllers\Student_report_api.php 283
+ERROR - 2025-10-06 18:48:58 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:52:01 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:01 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 18:52:02 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 16:52:02 --> Severity: Warning --> Undefined property: Class_section_report_api::$student_model C:\xampp\htdocs\amt\api\application\controllers\Class_section_report_api.php 178
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 16:52:02 --> Severity: Warning --> Undefined property: Class_section_report_api::$student_model C:\xampp\htdocs\amt\api\application\controllers\Class_section_report_api.php 178
+ERROR - 2025-10-06 18:52:02 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 18:52:02 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 16:52:02 --> Severity: Warning --> Undefined property: Class_section_report_api::$student_model C:\xampp\htdocs\amt\api\application\controllers\Class_section_report_api.php 178
+ERROR - 2025-10-06 22:25:08 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Class_model.php 43
+ERROR - 2025-10-06 22:25:08 --> Severity: error --> Exception: Call to undefined method Student_model::studentGuardianDetails() C:\xampp\htdocs\amt\api\application\controllers\Guardian_report_api.php 107
+ERROR - 2025-10-06 18:55:08 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-06 19:12:58 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 19:12:58 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 19:12:58 --> Error loading models in Class_section_report_api: Unable to locate the model you have specified: Classsection_model
+ERROR - 2025-10-06 19:12:58 --> Severity: Warning --> Undefined array key "WARNING" C:\xampp\htdocs\amt\api\system\core\Log.php 181
+ERROR - 2025-10-06 22:42:58 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Class_model.php 43
+ERROR - 2025-10-06 22:42:58 --> Severity: error --> Exception: Call to undefined method Student_model::studentGuardianDetails() C:\xampp\htdocs\amt\api\application\controllers\Guardian_report_api.php 107
+ERROR - 2025-10-06 22:42:59 --> Severity: error --> Exception: Call to undefined method Student_model::admissionYear() C:\xampp\htdocs\amt\api\application\controllers\Admission_report_api.php 341
+ERROR - 2025-10-06 22:42:59 --> Severity: error --> Exception: Call to undefined method Student_model::getdtforlogincredential() C:\xampp\htdocs\amt\api\application\controllers\Login_detail_report_api.php 99
+ERROR - 2025-10-06 22:42:59 --> Severity: error --> Exception: Call to undefined method Student_model::getdtforlogincredential() C:\xampp\htdocs\amt\api\application\controllers\Parent_login_detail_report_api.php 100
+ERROR - 2025-10-06 19:12:59 --> Severity: Warning --> Undefined property: Class_subject_report_api::$setting_model C:\xampp\htdocs\amt\api\system\core\Model.php 74
+ERROR - 2025-10-06 19:12:59 --> Severity: error --> Exception: Call to a member function getCurrentSession() on null C:\xampp\htdocs\amt\api\application\models\Subjecttimetable_model.php 13
+ERROR - 2025-10-06 19:12:59 --> Severity: Warning --> Undefined property: Class_subject_report_api::$setting_model C:\xampp\htdocs\amt\api\system\core\Model.php 74
+ERROR - 2025-10-06 19:12:59 --> Severity: error --> Exception: Call to a member function getCurrentSession() on null C:\xampp\htdocs\amt\api\application\models\Subjecttimetable_model.php 13
+ERROR - 2025-10-06 19:12:59 --> Severity: Warning --> Undefined property: Class_subject_report_api::$setting_model C:\xampp\htdocs\amt\api\system\core\Model.php 74
+ERROR - 2025-10-06 19:12:59 --> Severity: error --> Exception: Call to a member function getCurrentSession() on null C:\xampp\htdocs\amt\api\application\models\Subjecttimetable_model.php 13
