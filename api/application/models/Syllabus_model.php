@@ -112,4 +112,50 @@ class Syllabus_model extends CI_Model
         $this->db->where("id", $id)->delete("lesson_plan_forum");
     }
 
+    /**
+     * Get subject status (complete/incomplete topics count)
+     *
+     * @param int $id Subject group subject ID
+     * @param int $subject_group_class_sections_id Subject group class sections ID
+     * @return array Subject status data
+     */
+    public function get_subjectstatus($id, $subject_group_class_sections_id)
+    {
+        $sql = "SELECT COUNT(CASE WHEN topic.status = 0 then 1 ELSE NULL END) as 'incomplete', COUNT(CASE WHEN topic.status = 1 then 1 ELSE NULL END) as 'complete',count('*') as total FROM `lesson` inner join topic on lesson.id=topic.lesson_id WHERE lesson.subject_group_class_sections_id=" . $this->db->escape($subject_group_class_sections_id) . " and `subject_group_subject_id`=" . $this->db->escape($id);
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    /**
+     * Get teacher-wise syllabus report for a subject
+     *
+     * @param int $subject_group_subject_id Subject group subject ID
+     * @param int $subject_group_class_sections_id Subject group class sections ID
+     * @return array Teacher report data
+     */
+    public function get_subjectteachersreport($subject_group_subject_id, $subject_group_class_sections_id)
+    {
+        $this->db->select('GROUP_CONCAT(subject_syllabus.id) as subject_syllabus_id,CONCAT_WS(" ",staff.name,staff.surname,"(",staff.employee_id,")") as name,count(subject_syllabus.id) as total_priodes,subjects.name as subject_name,subjects.code')
+            ->from('subject_syllabus')->join('topic', 'topic.id=subject_syllabus.topic_id')->join('lesson', 'lesson.id=topic.lesson_id')
+            ->join('staff', 'staff.id=subject_syllabus.created_for');
+        $this->db->join("subject_group_subjects", "subject_group_subjects.id = lesson.subject_group_subject_id");
+        $this->db->join("subjects", "subjects.id = subject_group_subjects.subject_id");
+        $this->db->where('lesson.subject_group_subject_id', $subject_group_subject_id);
+        $this->db->where('lesson.subject_group_class_sections_id', $subject_group_class_sections_id);
+        $this->db->group_by('subject_syllabus.created_for');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Get subject syllabus details by ID
+     *
+     * @param int $id Subject syllabus ID
+     * @return array Syllabus details
+     */
+    public function get_subjectsyllabusbyid($id)
+    {
+        return $this->db->select('subject_syllabus.*,lesson.name as lesson_name,topic.name as topic_name')->from('subject_syllabus')->join('topic', 'topic.id=subject_syllabus.topic_id')->join('lesson', 'lesson.id=topic.lesson_id')->where('subject_syllabus.id', $id)->get()->row_array();
+    }
+
 }

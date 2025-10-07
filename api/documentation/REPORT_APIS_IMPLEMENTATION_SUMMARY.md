@@ -4,8 +4,8 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
-**Total APIs Implemented:** 20
-**Total Endpoints:** 40 (filter + list for each API)
+**Total APIs Implemented:** 22
+**Total Endpoints:** 44 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
 
@@ -204,6 +204,26 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Returns:** Detailed online exam reports including exam information and student participation data
 - **Special Features:** Includes exam details, total_students count, students list with attempt status and rank information
 - **Status:** ✅ Complete with model methods and routes configured
+
+### 21. Lesson Plan Report API
+- **Controller:** `api/application/controllers/Lesson_plan_report_api.php`
+- **Endpoints:**
+  - `POST /api/lesson-plan-report/filter`
+  - `POST /api/lesson-plan-report/list`
+- **Filters:** class_id, section_id, subject_group_id, session_id
+- **Returns:** Lesson plan completion status for all subjects in a subject group
+- **Special Features:** Shows complete/incomplete percentages, topic counts, subject-wise breakdown
+- **Status:** ✅ Complete with full documentation
+
+### 22. Teacher Syllabus Status Report API
+- **Controller:** `api/application/controllers/Teacher_syllabus_status_report_api.php`
+- **Endpoints:**
+  - `POST /api/teacher-syllabus-status-report/filter`
+  - `POST /api/teacher-syllabus-status-report/list`
+- **Filters:** class_id, section_id, subject_group_id, subject_id, session_id
+- **Returns:** Teacher-wise syllabus completion status for a specific subject
+- **Special Features:** Shows teacher names, total periods taught, detailed syllabus information per period
+- **Status:** ✅ Complete with full documentation
 
 ---
 

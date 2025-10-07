@@ -279,3 +279,7 @@ ERROR - 2025-10-07 21:03:25 --> Severity: Warning --> Undefined variable $count 
 ERROR - 2025-10-07 21:03:25 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\onlineexamrank.php 346
 ERROR - 2025-10-07 17:33:26 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-07 17:33:26 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-07 21:31:40 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-07 21:31:40 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-07 21:31:48 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-07 21:31:48 --> Could not find the language line "thank_you_for_your_complain"

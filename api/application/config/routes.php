@@ -298,3 +298,11 @@ $route['online-exams-report/list']['POST'] = 'online_exams_report_api/list';
 // Online Exam Report API Routes
 $route['online-exam-report/filter']['POST'] = 'online_exam_report_api/filter';
 $route['online-exam-report/list']['POST'] = 'online_exam_report_api/list';
+
+// Lesson Plan Report API Routes
+$route['lesson-plan-report/filter']['POST'] = 'lesson_plan_report_api/filter';
+$route['lesson-plan-report/list']['POST'] = 'lesson_plan_report_api/list';
+
+// Teacher Syllabus Status Report API Routes
+$route['teacher-syllabus-status-report/filter']['POST'] = 'teacher_syllabus_status_report_api/filter';
+$route['teacher-syllabus-status-report/list']['POST'] = 'teacher_syllabus_status_report_api/list';
