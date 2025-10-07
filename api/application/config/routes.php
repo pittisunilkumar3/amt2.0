@@ -306,3 +306,11 @@ $route['lesson-plan-report/list']['POST'] = 'lesson_plan_report_api/list';
 // Teacher Syllabus Status Report API Routes
 $route['teacher-syllabus-status-report/filter']['POST'] = 'teacher_syllabus_status_report_api/filter';
 $route['teacher-syllabus-status-report/list']['POST'] = 'teacher_syllabus_status_report_api/list';
+
+// Payroll Report API Routes
+$route['payroll-report/filter']['POST'] = 'payroll_report_api/filter';
+$route['payroll-report/list']['POST'] = 'payroll_report_api/list';
+
+// Staff Report API Routes
+$route['staff-report/filter']['POST'] = 'staff_report_api/filter';
+$route['staff-report/list']['POST'] = 'staff_report_api/list';

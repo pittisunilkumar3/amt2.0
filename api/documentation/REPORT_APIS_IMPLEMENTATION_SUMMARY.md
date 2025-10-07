@@ -4,8 +4,8 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
-**Total APIs Implemented:** 22
-**Total Endpoints:** 44 (filter + list for each API)
+**Total APIs Implemented:** 24
+**Total Endpoints:** 48 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
 
@@ -223,6 +223,28 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Filters:** class_id, section_id, subject_group_id, subject_id, session_id
 - **Returns:** Teacher-wise syllabus completion status for a specific subject
 - **Special Features:** Shows teacher names, total periods taught, detailed syllabus information per period
+- **Status:** ✅ Complete with full documentation
+
+### 23. Payroll Report API
+- **Controller:** `api/application/controllers/Payroll_report_api.php`
+- **Endpoints:**
+  - `POST /api/payroll-report/filter`
+  - `POST /api/payroll-report/list`
+- **Filters:** month, year, role, from_date, to_date
+- **Returns:** Staff payroll information including salary details, allowances, deductions, and payment status
+- **Special Features:** Supports both month/year filtering and custom date range filtering, returns paid payroll records
+- **Documentation:** `api/documentation/PAYROLL_REPORT_API_README.md` (451 lines)
+- **Status:** ✅ Complete with full documentation
+
+### 24. Staff Report API
+- **Controller:** `api/application/controllers/Staff_report_api.php`
+- **Endpoints:**
+  - `POST /api/staff-report/filter`
+  - `POST /api/staff-report/list`
+- **Filters:** role, designation, staff_status, search_type, from_date, to_date
+- **Returns:** Comprehensive staff information including personal details, designation, department, and leave allocations
+- **Special Features:** Supports predefined search types (today, this_week, this_month, this_year), includes processed leave information
+- **Documentation:** `api/documentation/STAFF_REPORT_API_README.md` (589 lines)
 - **Status:** ✅ Complete with full documentation
 
 ---
