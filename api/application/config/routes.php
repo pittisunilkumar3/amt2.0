@@ -250,3 +250,11 @@ $route['student-profile-report/list']['POST'] = 'student_profile_report_api/list
 // Boys Girls Ratio Report API Routes
 $route['boys-girls-ratio-report/filter']['POST'] = 'boys_girls_ratio_report_api/filter';
 $route['boys-girls-ratio-report/list']['POST'] = 'boys_girls_ratio_report_api/list';
+
+// Online Admission Report API Routes
+$route['online-admission-report/filter']['POST'] = 'online_admission_report_api/filter';
+$route['online-admission-report/list']['POST'] = 'online_admission_report_api/list';
+
+// Student Teacher Ratio Report API Routes
+$route['student-teacher-ratio-report/filter']['POST'] = 'student_teacher_ratio_report_api/filter';
+$route['student-teacher-ratio-report/list']['POST'] = 'student_teacher_ratio_report_api/list';

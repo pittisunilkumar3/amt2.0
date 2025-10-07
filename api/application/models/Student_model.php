@@ -856,4 +856,252 @@ class Student_model extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * Get Online Admission Report by Filters
+     *
+     * Retrieves online admission data with optional filtering by class, section, admission status, and date range.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     *
+     * @param mixed  $class_id          Class ID (single value, array, or null)
+     * @param mixed  $section_id        Section ID (single value, array, or null)
+     * @param mixed  $admission_status  Admission status (0=pending, 1=admitted, array, or null)
+     * @param string $from_date         Start date for date range filter (or null)
+     * @param string $to_date           End date for date range filter (or null)
+     * @return array Array of online admission records
+     */
+    public function getOnlineAdmissionReportByFilters($class_id = null, $section_id = null, $admission_status = null, $from_date = null, $to_date = null)
+    {
+        // Build the query with comprehensive online admission fields
+        $this->db->select('
+            online_admissions.id,
+            online_admissions.reference_no,
+            online_admissions.admission_no,
+            online_admissions.firstname,
+            online_admissions.middlename,
+            online_admissions.lastname,
+            online_admissions.mobileno,
+            online_admissions.email,
+            online_admissions.dob,
+            online_admissions.gender,
+            online_admissions.form_status,
+            online_admissions.paid_status,
+            online_admissions.is_enroll,
+            online_admissions.created_at,
+            classes.id as class_id,
+            classes.class,
+            sections.id as section_id,
+            sections.section,
+            students.id as student_id,
+            students.admission_date,
+            (SELECT IFNULL(SUM(online_admission_payment.paid_amount), 0)
+             FROM online_admission_payment
+             WHERE online_admission_payment.online_admission_id = online_admissions.id) as paid_amount
+        ');
+
+        // Join with required tables
+        $this->db->from('online_admissions');
+        $this->db->join('students', 'students.admission_no = online_admissions.admission_no', 'left');
+        $this->db->join('student_session', 'student_session.student_id = students.id', 'left');
+        $this->db->join('class_sections', 'class_sections.id = online_admissions.class_section_id', 'left');
+        $this->db->join('classes', 'class_sections.class_id = classes.id', 'left');
+        $this->db->join('sections', 'sections.id = class_sections.section_id', 'left');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('classes.id', $class_id);
+            } else {
+                $this->db->where('classes.id', $class_id);
+            }
+        }
+
+        // Apply section filter if provided
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $this->db->where_in('sections.id', $section_id);
+            } else {
+                $this->db->where('sections.id', $section_id);
+            }
+        }
+
+        // Apply admission status filter if provided
+        if ($admission_status !== null && !empty($admission_status)) {
+            if (is_array($admission_status) && count($admission_status) > 0) {
+                $this->db->where_in('online_admissions.is_enroll', $admission_status);
+            } else {
+                $this->db->where('online_admissions.is_enroll', $admission_status);
+            }
+        }
+
+        // Apply date range filter if provided
+        if (!empty($from_date) && !empty($to_date)) {
+            $this->db->where('DATE(online_admissions.created_at) >=', $from_date);
+            $this->db->where('DATE(online_admissions.created_at) <=', $to_date);
+        } elseif (!empty($from_date)) {
+            $this->db->where('DATE(online_admissions.created_at) >=', $from_date);
+        } elseif (!empty($to_date)) {
+            $this->db->where('DATE(online_admissions.created_at) <=', $to_date);
+        }
+
+        // Order by admission number descending
+        $this->db->order_by('online_admissions.admission_no', 'desc');
+
+        // Execute query
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Get Student Teacher Ratio Report by Filters
+     *
+     * Retrieves student-teacher ratio statistics with optional filtering by class and section.
+     * Returns aggregated counts of students (total, male, female) and teachers grouped by class and section.
+     * Calculates boys:girls ratio and student:teacher ratio for each class-section combination.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     *
+     * @param mixed  $class_id    Class ID (single value, array, or null)
+     * @param mixed  $section_id  Section ID (single value, array, or null)
+     * @param int    $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of student-teacher ratio records with calculated ratios
+     */
+    public function getStudentTeacherRatioReportByFilters($class_id = null, $section_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->setting_model->getCurrentSession();
+        }
+
+        // Build the query with aggregated student counts
+        $this->db->select('
+            COUNT(*) as total_student,
+            SUM(CASE WHEN students.gender = "Male" THEN 1 ELSE 0 END) AS male,
+            SUM(CASE WHEN students.gender = "Female" THEN 1 ELSE 0 END) AS female,
+            classes.class,
+            sections.section,
+            classes.id as class_id,
+            sections.id as section_id
+        ');
+
+        // Join with required tables
+        $this->db->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id', 'inner');
+        $this->db->join('classes', 'student_session.class_id = classes.id', 'inner');
+        $this->db->join('sections', 'sections.id = student_session.section_id', 'inner');
+        $this->db->join('class_sections', 'class_sections.class_id = classes.id AND class_sections.section_id = sections.id', 'inner');
+
+        // Apply session filter
+        $this->db->where('student_session.session_id', $session_id);
+
+        // Apply active status filter
+        $this->db->where('students.is_active', 'yes');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('classes.id', $class_id);
+            } else {
+                $this->db->where('classes.id', $class_id);
+            }
+        }
+
+        // Apply section filter if provided
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $this->db->where_in('sections.id', $section_id);
+            } else {
+                $this->db->where('sections.id', $section_id);
+            }
+        }
+
+        // Group by class_sections to get aggregated counts per class-section combination
+        $this->db->group_by('class_sections.id');
+
+        // Order by class and section
+        $this->db->order_by('classes.id, sections.id');
+
+        // Execute query
+        $query = $this->db->get();
+        $results = $query->result_array();
+
+        // For each class-section, get teacher count and calculate ratios
+        foreach ($results as $key => $row) {
+            // Get teacher count for this class-section
+            $teacher_count = $this->count_classteachers($row['class_id'], $row['section_id']);
+            $total_teacher = !empty($teacher_count) ? $teacher_count : 0;
+
+            // Add teacher count to result
+            $results[$key]['total_teacher'] = $total_teacher;
+
+            // Calculate boys:girls ratio
+            $results[$key]['boys_girls_ratio'] = $this->calculateRatio($row['male'], $row['female']);
+
+            // Calculate student:teacher ratio
+            $results[$key]['teacher_ratio'] = $this->calculateRatio($row['total_student'], $total_teacher);
+        }
+
+        return $results;
+    }
+
+    /**
+     * Count Class Teachers
+     *
+     * Counts the number of unique teachers assigned to a specific class and section.
+     * Teachers are counted from the subject_timetable table where they are assigned to teach subjects.
+     * Only active teachers are counted.
+     *
+     * @param int $class_id   Class ID
+     * @param int $section_id Section ID
+     * @return int Number of unique teachers assigned to the class-section
+     */
+    public function count_classteachers($class_id, $section_id)
+    {
+        $sql = "SELECT staff.id
+                FROM `subject_timetable`
+                JOIN `subject_group_subjects` ON `subject_timetable`.`subject_group_subject_id` = `subject_group_subjects`.`id`
+                INNER JOIN subjects ON subject_group_subjects.subject_id = subjects.id
+                INNER JOIN staff ON staff.id = subject_timetable.staff_id
+                WHERE staff.is_active = '1'
+                AND `subject_timetable`.`class_id` = " . intval($class_id) . "
+                AND `subject_timetable`.`section_id` = " . intval($section_id) . "
+                AND `subject_timetable`.`session_id` = " . intval($this->current_session);
+
+        $query = $this->db->query($sql);
+        $count = $query->result();
+        $teacher = array();
+
+        if (!empty($count)) {
+            foreach ($count as $key => $value) {
+                $teacher[$value->id] = $value->id;
+            }
+        }
+
+        return count($teacher);
+    }
+
+    /**
+     * Calculate Ratio
+     *
+     * Helper method to calculate ratio between two numbers.
+     * Returns ratio in format "1:X" where X is rounded to 2 decimal places.
+     *
+     * @param int $num1 First number
+     * @param int $num2 Second number
+     * @return string Ratio in format "1:X" or "0:0" if both are zero
+     */
+    private function calculateRatio($num1, $num2)
+    {
+        if ($num2 > 0 && $num1 > 0) {
+            $ratio = round($num2 / $num1, 2);
+            return "1:" . $ratio;
+        } elseif ($num1 == 0 && $num2 > 0) {
+            return "0:1";
+        } elseif ($num1 > 0 && $num2 == 0) {
+            return "1:0";
+        } else {
+            return "0:0";
+        }
+    }
+
 }

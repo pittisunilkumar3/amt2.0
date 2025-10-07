@@ -4,6 +4,11 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
+**Total APIs Implemented:** 10
+**Total Endpoints:** 20 (filter + list for each API)
+**Implementation Date:** October 2025
+**Status:** ✅ Production Ready
+
 ---
 
 ## ✅ Completed Report APIs
@@ -78,6 +83,26 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Filters:** class_id, section_id, session_id
 - **Returns:** Aggregated boys/girls statistics with calculated ratios grouped by class and section
 - **Special Features:** Includes summary statistics and automatic ratio calculation
+- **Status:** ✅ Complete with full documentation and interactive HTML tester
+
+### 9. Online Admission Report API
+- **Controller:** `api/application/controllers/Online_admission_report_api.php`
+- **Endpoints:**
+  - `POST /api/online-admission-report/filter`
+  - `POST /api/online-admission-report/list`
+- **Filters:** class_id, section_id, admission_status (0=pending, 1=admitted), from_date, to_date
+- **Returns:** Online admission data including reference_no, admission_no, personal info, status info, payment info
+- **Special Features:** Date range filtering, payment amount calculation from online_admission_payment table
+- **Status:** ✅ Complete with full documentation and interactive HTML tester
+
+### 10. Student Teacher Ratio Report API
+- **Controller:** `api/application/controllers/Student_teacher_ratio_report_api.php`
+- **Endpoints:**
+  - `POST /api/student-teacher-ratio-report/filter`
+  - `POST /api/student-teacher-ratio-report/list`
+- **Filters:** class_id, section_id, session_id
+- **Returns:** Aggregated student-teacher ratio statistics with student counts (total, male, female), teacher counts, and calculated ratios
+- **Special Features:** Includes summary statistics, boys:girls ratio, student:teacher ratio, automatic teacher count from subject_timetable
 - **Status:** ✅ Complete with full documentation and interactive HTML tester
 
 ---
