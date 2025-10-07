@@ -536,4 +536,324 @@ class Student_model extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * Get Parent Login Detail Report by Filters
+     *
+     * Retrieves parent login credential information with optional filtering by class, section, and session.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     * Includes parent username and password from users table.
+     *
+     * @param mixed $class_id    Class ID (single value, array, or null)
+     * @param mixed $section_id  Section ID (single value, array, or null)
+     * @param int   $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of student records with parent login credential information
+     */
+    public function getParentLoginDetailReportByFilters($class_id = null, $section_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->setting_model->getCurrentSession();
+        }
+
+        // Start building the query
+        $this->db->select('
+            students.id,
+            students.admission_no,
+            students.firstname,
+            students.middlename,
+            students.lastname,
+            students.mobileno,
+            students.email,
+            students.guardian_name,
+            students.guardian_phone,
+            students.parent_id,
+            students.is_active,
+            student_session.class_id,
+            student_session.section_id,
+            student_session.session_id,
+            classes.class,
+            sections.section,
+            sessions.session,
+            parent_users.username as parent_username,
+            parent_users.password as parent_password
+        ');
+
+        // Join with student_session table
+        $this->db->join('student_session', 'students.id = student_session.student_id', 'inner');
+
+        // Join with classes table
+        $this->db->join('classes', 'student_session.class_id = classes.id', 'inner');
+
+        // Join with sections table
+        $this->db->join('sections', 'sections.id = student_session.section_id', 'inner');
+
+        // Join with sessions table
+        $this->db->join('sessions', 'student_session.session_id = sessions.id', 'inner');
+
+        // Join with users table to get parent login credentials
+        // Using LEFT JOIN to handle students without parent accounts
+        $this->db->join('users as parent_users', 'students.parent_id = parent_users.id AND parent_users.role = "parent"', 'left');
+
+        // Apply session filter
+        $this->db->where('student_session.session_id', $session_id);
+
+        // Apply active status filter
+        $this->db->where('students.is_active', 'yes');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('student_session.class_id', $class_id);
+            } else {
+                $this->db->where('student_session.class_id', $class_id);
+            }
+        }
+
+        // Apply section filter if provided
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $this->db->where_in('student_session.section_id', $section_id);
+            } else {
+                $this->db->where('student_session.section_id', $section_id);
+            }
+        }
+
+        // Group by student ID to avoid duplicates
+        $this->db->group_by('students.id');
+
+        // Order by admission number
+        $this->db->order_by('students.admission_no', 'asc');
+
+        // Execute query
+        $query = $this->db->get('students');
+        return $query->result_array();
+    }
+
+    /**
+     * Get Student Profile Report by Filters
+     *
+     * Retrieves comprehensive student profile information with optional filtering by class, section, and session.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     * Includes extensive student data with hostel, transport, category, and login information.
+     *
+     * @param mixed $class_id    Class ID (single value, array, or null)
+     * @param mixed $section_id  Section ID (single value, array, or null)
+     * @param int   $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of student profile records with comprehensive information
+     */
+    public function getStudentProfileReportByFilters($class_id = null, $section_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->setting_model->getCurrentSession();
+        }
+
+        // Start building the query with comprehensive student profile fields
+        $this->db->select('
+            student_session.transport_fees,
+            student_session.vehroute_id,
+            vehicle_routes.route_id,
+            vehicle_routes.vehicle_id,
+            transport_route.route_title,
+            vehicles.vehicle_no,
+            hostel_rooms.room_no,
+            vehicles.driver_name,
+            vehicles.driver_contact,
+            hostel.id as hostel_id,
+            hostel.hostel_name,
+            room_types.id as room_type_id,
+            room_types.room_type,
+            students.hostel_room_id,
+            student_session.id as student_session_id,
+            student_session.fees_discount,
+            classes.id AS class_id,
+            classes.class,
+            sections.id AS section_id,
+            sections.section,
+            students.id,
+            students.admission_no,
+            students.roll_no,
+            students.admission_date,
+            students.firstname,
+            students.middlename,
+            students.lastname,
+            students.image,
+            students.mobileno,
+            students.email,
+            students.state,
+            students.city,
+            students.pincode,
+            students.note,
+            students.religion,
+            students.cast,
+            school_houses.house_name,
+            students.dob,
+            students.current_address,
+            students.previous_school,
+            students.guardian_is,
+            students.parent_id,
+            students.permanent_address,
+            students.category_id,
+            students.adhar_no,
+            students.samagra_id,
+            students.bank_account_no,
+            students.bank_name,
+            students.ifsc_code,
+            students.guardian_name,
+            students.father_pic,
+            students.height,
+            students.weight,
+            students.measurement_date,
+            students.mother_pic,
+            students.guardian_pic,
+            students.guardian_relation,
+            students.guardian_phone,
+            students.guardian_address,
+            students.is_active,
+            students.created_at,
+            students.updated_at,
+            students.father_name,
+            students.father_phone,
+            students.blood_group,
+            students.school_house_id,
+            students.father_occupation,
+            students.mother_name,
+            students.mother_phone,
+            students.mother_occupation,
+            students.guardian_occupation,
+            students.gender,
+            students.rte,
+            students.guardian_email,
+            users.username,
+            users.password,
+            students.dis_reason,
+            students.dis_note,
+            categories.category
+        ');
+
+        // Join with required tables
+        $this->db->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id', 'inner');
+        $this->db->join('classes', 'student_session.class_id = classes.id', 'inner');
+        $this->db->join('sections', 'sections.id = student_session.section_id', 'inner');
+
+        // Left joins for optional data
+        $this->db->join('hostel_rooms', 'hostel_rooms.id = students.hostel_room_id', 'left');
+        $this->db->join('hostel', 'hostel.id = hostel_rooms.hostel_id', 'left');
+        $this->db->join('room_types', 'room_types.id = hostel_rooms.room_type_id', 'left');
+        $this->db->join('vehicle_routes', 'vehicle_routes.id = student_session.vehroute_id', 'left');
+        $this->db->join('transport_route', 'vehicle_routes.route_id = transport_route.id', 'left');
+        $this->db->join('vehicles', 'vehicles.id = vehicle_routes.vehicle_id', 'left');
+        $this->db->join('school_houses', 'school_houses.id = students.school_house_id', 'left');
+        $this->db->join('users', 'users.user_id = students.id AND users.role = "student"', 'left');
+        $this->db->join('categories', 'categories.id = students.category_id', 'left');
+
+        // Apply session filter
+        $this->db->where('student_session.session_id', $session_id);
+
+        // Apply active status filter
+        $this->db->where('students.is_active', 'yes');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('classes.id', $class_id);
+            } else {
+                $this->db->where('classes.id', $class_id);
+            }
+        }
+
+        // Apply section filter if provided
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $this->db->where_in('sections.id', $section_id);
+            } else {
+                $this->db->where('sections.id', $section_id);
+            }
+        }
+
+        // Order by student ID descending
+        $this->db->order_by('students.id', 'desc');
+
+        // Execute query
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Get Boys Girls Ratio Report by Filters
+     *
+     * Retrieves aggregated boys/girls ratio statistics with optional filtering by class, section, and session.
+     * Returns counts of male and female students grouped by class and section.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     *
+     * @param mixed $class_id    Class ID (single value, array, or null)
+     * @param mixed $section_id  Section ID (single value, array, or null)
+     * @param int   $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of aggregated records with total_student, male, female counts by class and section
+     */
+    public function getBoysGirlsRatioReportByFilters($class_id = null, $section_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->setting_model->getCurrentSession();
+        }
+
+        // Build the query with aggregated counts
+        $this->db->select('
+            COUNT(*) as total_student,
+            SUM(CASE WHEN students.gender = "Male" THEN 1 ELSE 0 END) AS male,
+            SUM(CASE WHEN students.gender = "Female" THEN 1 ELSE 0 END) AS female,
+            classes.class,
+            sections.section,
+            classes.id as class_id,
+            sections.id as section_id
+        ');
+
+        // Join with required tables
+        $this->db->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id', 'inner');
+        $this->db->join('classes', 'student_session.class_id = classes.id', 'inner');
+        $this->db->join('sections', 'sections.id = student_session.section_id', 'inner');
+        $this->db->join('categories', 'students.category_id = categories.id', 'left');
+        $this->db->join('class_sections', 'class_sections.class_id = classes.id AND class_sections.section_id = sections.id', 'inner');
+
+        // Apply session filter
+        $this->db->where('student_session.session_id', $session_id);
+
+        // Apply active status filter
+        $this->db->where('students.is_active', 'yes');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('classes.id', $class_id);
+            } else {
+                $this->db->where('classes.id', $class_id);
+            }
+        }
+
+        // Apply section filter if provided
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $this->db->where_in('sections.id', $section_id);
+            } else {
+                $this->db->where('sections.id', $section_id);
+            }
+        }
+
+        // Group by class_sections to get aggregated counts per class-section combination
+        $this->db->group_by('class_sections.id');
+
+        // Order by student ID
+        $this->db->order_by('students.id');
+
+        // Execute query
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }

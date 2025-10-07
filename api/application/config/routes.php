@@ -234,3 +234,19 @@ $route['admission-report/list']['POST'] = 'admission_report_api/list';
 // Login Detail Report API Routes
 $route['login-detail-report/filter']['POST'] = 'login_detail_report_api/filter';
 $route['login-detail-report/list']['POST'] = 'login_detail_report_api/list';
+
+// Parent Login Detail Report API Routes
+$route['parent-login-detail-report/filter']['POST'] = 'parent_login_detail_report_api/filter';
+$route['parent-login-detail-report/list']['POST'] = 'parent_login_detail_report_api/list';
+
+// Class Subject Report API Routes
+$route['class-subject-report/filter']['POST'] = 'class_subject_report_api/filter';
+$route['class-subject-report/list']['POST'] = 'class_subject_report_api/list';
+
+// Student Profile Report API Routes
+$route['student-profile-report/filter']['POST'] = 'student_profile_report_api/filter';
+$route['student-profile-report/list']['POST'] = 'student_profile_report_api/list';
+
+// Boys Girls Ratio Report API Routes
+$route['boys-girls-ratio-report/filter']['POST'] = 'boys_girls_ratio_report_api/filter';
+$route['boys-girls-ratio-report/list']['POST'] = 'boys_girls_ratio_report_api/list';

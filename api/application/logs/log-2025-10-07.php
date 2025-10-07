@@ -86,3 +86,5 @@ ORDER BY `students`.`id` ASC
 ERROR - 2025-10-07 08:32:09 --> Error loading models: Unable to locate the model you have specified: Role_model
 ERROR - 2025-10-07 10:16:11 --> Severity: Warning --> Undefined property: Login_detail_report_api::$auth_model C:\xampp\htdocs\amt\api\application\controllers\Login_detail_report_api.php 90
 ERROR - 2025-10-07 10:16:11 --> Severity: error --> Exception: Call to a member function check_auth_client() on null C:\xampp\htdocs\amt\api\application\controllers\Login_detail_report_api.php 90
+ERROR - 2025-10-07 11:06:34 --> Severity: Warning --> Undefined property: Class_subject_report_api::$setting_model C:\xampp\htdocs\amt\api\system\core\Model.php 74
+ERROR - 2025-10-07 11:06:34 --> Severity: error --> Exception: Call to a member function getCurrentSession() on null C:\xampp\htdocs\amt\api\application\models\Subjecttimetable_model.php 13

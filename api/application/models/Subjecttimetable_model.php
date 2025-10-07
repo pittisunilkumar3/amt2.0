@@ -79,4 +79,88 @@ class Subjecttimetable_model extends CI_Model
         }
     }
 
+    /**
+     * Get Class Subject Report by Filters
+     *
+     * Retrieves class subject assignment information with optional filtering by class, section, and session.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     * Includes subject details, teacher information, and class/section information.
+     *
+     * @param mixed $class_id    Class ID (single value, array, or null)
+     * @param mixed $section_id  Section ID (single value, array, or null)
+     * @param int   $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of subject assignment records with teacher and class information
+     */
+    public function getClassSubjectReportByFilters($class_id = null, $section_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->current_session;
+        }
+
+        // Build condition string for SQL query
+        $condition = '';
+
+        // Handle both single values and arrays for multi-select functionality - class_id
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $class_ids = implode(',', array_map('intval', $class_id));
+                $condition .= " AND `subject_timetable`.`class_id` IN (" . $class_ids . ")";
+            } elseif (!is_array($class_id)) {
+                $condition .= " AND `subject_timetable`.`class_id` = " . intval($class_id);
+            }
+        }
+
+        // Handle both single values and arrays for multi-select functionality - section_id
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $section_ids = implode(',', array_map('intval', $section_id));
+                $condition .= " AND `subject_timetable`.`section_id` IN (" . $section_ids . ")";
+            } elseif (!is_array($section_id)) {
+                $condition .= " AND `subject_timetable`.`section_id` = " . intval($section_id);
+            }
+        }
+
+        // Build SQL query
+        $sql = "SELECT
+                    ct.staff_id as class_teacher,
+                    `subject_group_subjects`.`subject_id`,
+                    subjects.name as `subject_name`,
+                    subjects.code as subject_code,
+                    subjects.type as subject_type,
+                    staff.name as staff_name,
+                    staff.surname as staff_surname,
+                    staff.employee_id,
+                    `subject_timetable`.id as timetable_id,
+                    `subject_timetable`.day,
+                    `subject_timetable`.time_from,
+                    `subject_timetable`.time_to,
+                    `subject_timetable`.room_no,
+                    `subject_timetable`.start_time,
+                    `subject_timetable`.end_time,
+                    `subject_timetable`.class_id,
+                    `subject_timetable`.section_id,
+                    `subject_timetable`.session_id,
+                    `subject_timetable`.staff_id,
+                    `subject_timetable`.subject_group_id,
+                    `subject_timetable`.subject_group_subject_id,
+                    sec.section as section_name,
+                    cl.class as class_name
+                FROM `subject_timetable`
+                JOIN `subject_group_subjects` ON `subject_timetable`.`subject_group_subject_id` = `subject_group_subjects`.`id`
+                INNER JOIN subjects ON subject_group_subjects.subject_id = subjects.id
+                INNER JOIN staff ON staff.id = subject_timetable.staff_id
+                LEFT JOIN classes cl ON cl.id = subject_timetable.class_id
+                LEFT JOIN sections as sec ON sec.id = subject_timetable.section_id
+                LEFT JOIN class_teacher ct ON (ct.class_id = cl.id AND ct.staff_id = staff.id AND ct.section_id = sec.id)
+                WHERE `subject_timetable`.`session_id` = " . intval($session_id) . "
+                AND `staff`.`is_active` = 1
+                " . $condition . "
+                ORDER BY cl.class, sec.section, subjects.name, subject_timetable.day, subject_timetable.start_time";
+
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
 }
