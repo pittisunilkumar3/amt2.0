@@ -84,3 +84,5 @@ ORDER BY `students`.`id` ASC
 ERROR - 2025-10-07 11:40:47 --> Query error: No tables used - Invalid query: SELECT *
 ORDER BY `students`.`id` ASC
 ERROR - 2025-10-07 08:32:09 --> Error loading models: Unable to locate the model you have specified: Role_model
+ERROR - 2025-10-07 10:16:11 --> Severity: Warning --> Undefined property: Login_detail_report_api::$auth_model C:\xampp\htdocs\amt\api\application\controllers\Login_detail_report_api.php 90
+ERROR - 2025-10-07 10:16:11 --> Severity: error --> Exception: Call to a member function check_auth_client() on null C:\xampp\htdocs\amt\api\application\controllers\Login_detail_report_api.php 90

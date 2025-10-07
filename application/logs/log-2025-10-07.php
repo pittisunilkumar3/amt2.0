@@ -29,3 +29,23 @@ ERROR - 2025-10-07 12:52:36 --> Severity: Warning --> Undefined array key 1 C:\x
 ERROR - 2025-10-07 12:52:36 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
 ERROR - 2025-10-07 09:22:37 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-07 09:22:37 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-07 13:10:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-07 13:10:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-07 13:10:02 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\reports\admissionReport.php 308
+ERROR - 2025-10-07 09:40:02 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-07 09:40:02 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-07 13:11:33 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-07 13:11:33 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-07 13:11:34 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\reports\logindetailreport.php 226
+ERROR - 2025-10-07 09:41:34 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-07 09:41:34 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-07 13:15:38 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-07 13:15:38 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-07 13:15:38 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\reports\admissionReport.php 308
+ERROR - 2025-10-07 09:45:38 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-07 09:45:38 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-07 13:15:42 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-07 13:15:42 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-07 13:15:42 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\reports\logindetailreport.php 226
+ERROR - 2025-10-07 09:45:42 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-07 09:45:42 --> Could not find the language line "thank_you_for_your_complain"

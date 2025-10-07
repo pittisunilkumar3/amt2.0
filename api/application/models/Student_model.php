@@ -350,4 +350,190 @@ class Student_model extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * Get Admission Report by Filters
+     *
+     * Retrieves admission report data with optional filtering by class, year, and session.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     *
+     * @param mixed $class_id    Class ID (single value, array, or null)
+     * @param mixed $year        Admission year (single value, array, or null)
+     * @param int   $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of student records with admission information
+     */
+    public function getAdmissionReportByFilters($class_id = null, $year = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->setting_model->getCurrentSession();
+        }
+
+        // Start building the query
+        $this->db->select('
+            students.id,
+            students.admission_no,
+            students.admission_date,
+            students.firstname,
+            students.middlename,
+            students.lastname,
+            students.mobileno,
+            students.guardian_name,
+            students.guardian_relation,
+            students.guardian_phone,
+            students.is_active,
+            student_session.class_id,
+            student_session.section_id,
+            student_session.session_id,
+            classes.class,
+            sections.section,
+            sessions.session
+        ');
+
+        // Join with student_session table
+        $this->db->join('student_session', 'students.id = student_session.student_id', 'inner');
+
+        // Join with classes table
+        $this->db->join('classes', 'student_session.class_id = classes.id', 'inner');
+
+        // Join with sections table
+        $this->db->join('sections', 'student_session.section_id = sections.id', 'inner');
+
+        // Join with sessions table
+        $this->db->join('sessions', 'student_session.session_id = sessions.id', 'inner');
+
+        // Apply session filter
+        $this->db->where('student_session.session_id', $session_id);
+
+        // Apply active status filter
+        $this->db->where('students.is_active', 'yes');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('student_session.class_id', $class_id);
+            } else {
+                $this->db->where('student_session.class_id', $class_id);
+            }
+        }
+
+        // Apply year filter if provided (filter by admission_date year)
+        if ($year !== null && !empty($year)) {
+            if (is_array($year) && count($year) > 0) {
+                // For multiple years, use group_start/group_end with OR conditions
+                $this->db->group_start();
+                foreach ($year as $index => $y) {
+                    if ($index === 0) {
+                        $this->db->where('YEAR(students.admission_date)', $y);
+                    } else {
+                        $this->db->or_where('YEAR(students.admission_date)', $y);
+                    }
+                }
+                $this->db->group_end();
+            } else {
+                $this->db->where('YEAR(students.admission_date)', $year);
+            }
+        }
+
+        // Group by student ID to avoid duplicates
+        $this->db->group_by('students.id');
+
+        // Order by admission number
+        $this->db->order_by('students.admission_no', 'asc');
+
+        // Execute query
+        $query = $this->db->get('students');
+        return $query->result_array();
+    }
+
+    /**
+     * Get Login Detail Report by Filters
+     *
+     * Retrieves student login credential information with optional filtering by class, section, and session.
+     * Handles null/empty parameters gracefully by returning all records when filters are not provided.
+     * Supports both single values and arrays for multi-select functionality.
+     * Includes username and password from users table.
+     *
+     * @param mixed $class_id    Class ID (single value, array, or null)
+     * @param mixed $section_id  Section ID (single value, array, or null)
+     * @param int   $session_id  Session ID (defaults to current session if not provided)
+     * @return array Array of student records with login credential information
+     */
+    public function getLoginDetailReportByFilters($class_id = null, $section_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->setting_model->getCurrentSession();
+        }
+
+        // Start building the query
+        $this->db->select('
+            students.id,
+            students.admission_no,
+            students.firstname,
+            students.middlename,
+            students.lastname,
+            students.mobileno,
+            students.email,
+            students.is_active,
+            student_session.class_id,
+            student_session.section_id,
+            student_session.session_id,
+            classes.class,
+            sections.section,
+            sessions.session,
+            users.username,
+            users.password
+        ');
+
+        // Join with student_session table
+        $this->db->join('student_session', 'students.id = student_session.student_id', 'inner');
+
+        // Join with classes table
+        $this->db->join('classes', 'student_session.class_id = classes.id', 'inner');
+
+        // Join with sections table
+        $this->db->join('sections', 'sections.id = student_session.section_id', 'inner');
+
+        // Join with sessions table
+        $this->db->join('sessions', 'student_session.session_id = sessions.id', 'inner');
+
+        // Join with users table to get login credentials
+        $this->db->join('users', 'students.id = users.user_id AND users.role = "student"', 'left');
+
+        // Apply session filter
+        $this->db->where('student_session.session_id', $session_id);
+
+        // Apply active status filter
+        $this->db->where('students.is_active', 'yes');
+
+        // Apply class filter if provided
+        if ($class_id !== null && !empty($class_id)) {
+            if (is_array($class_id) && count($class_id) > 0) {
+                $this->db->where_in('student_session.class_id', $class_id);
+            } else {
+                $this->db->where('student_session.class_id', $class_id);
+            }
+        }
+
+        // Apply section filter if provided
+        if ($section_id !== null && !empty($section_id)) {
+            if (is_array($section_id) && count($section_id) > 0) {
+                $this->db->where_in('student_session.section_id', $section_id);
+            } else {
+                $this->db->where('student_session.section_id', $section_id);
+            }
+        }
+
+        // Group by student ID to avoid duplicates
+        $this->db->group_by('students.id');
+
+        // Order by admission number
+        $this->db->order_by('students.admission_no', 'asc');
+
+        // Execute query
+        $query = $this->db->get('students');
+        return $query->result_array();
+    }
+
 }

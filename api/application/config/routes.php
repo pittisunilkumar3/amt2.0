@@ -226,3 +226,11 @@ $route['student-report/list']['POST'] = 'student_report_api/list';
 // Guardian Report API Routes
 $route['guardian-report/filter']['POST'] = 'guardian_report_api/filter';
 $route['guardian-report/list']['POST'] = 'guardian_report_api/list';
+
+// Admission Report API Routes
+$route['admission-report/filter']['POST'] = 'admission_report_api/filter';
+$route['admission-report/list']['POST'] = 'admission_report_api/list';
+
+// Login Detail Report API Routes
+$route['login-detail-report/filter']['POST'] = 'login_detail_report_api/filter';
+$route['login-detail-report/list']['POST'] = 'login_detail_report_api/list';
