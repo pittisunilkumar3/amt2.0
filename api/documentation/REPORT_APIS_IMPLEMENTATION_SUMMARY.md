@@ -4,8 +4,8 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
-**Total APIs Implemented:** 10
-**Total Endpoints:** 20 (filter + list for each API)
+**Total APIs Implemented:** 20
+**Total Endpoints:** 40 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
 
@@ -104,6 +104,106 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Returns:** Aggregated student-teacher ratio statistics with student counts (total, male, female), teacher counts, and calculated ratios
 - **Special Features:** Includes summary statistics, boys:girls ratio, student:teacher ratio, automatic teacher count from subject_timetable
 - **Status:** ✅ Complete with full documentation and interactive HTML tester
+
+### 11. Daily Attendance Report API
+- **Controller:** `api/application/controllers/Daily_attendance_report_api.php`
+- **Endpoints:**
+  - `POST /api/daily-attendance-report/filter`
+  - `POST /api/daily-attendance-report/list`
+- **Filters:** date, from_date, to_date, session_id
+- **Returns:** Daily attendance statistics grouped by class and section with attendance type breakdowns (present, absent, late, excuse, half_day)
+- **Special Features:** Includes summary statistics with total students, present/absent counts, and percentages
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 12. Biometric Attendance Log Report API
+- **Controller:** `api/application/controllers/Biometric_attlog_report_api.php`
+- **Endpoints:**
+  - `POST /api/biometric-attlog-report/filter`
+  - `POST /api/biometric-attlog-report/list`
+- **Filters:** from_date, to_date, student_id, limit, offset (for pagination)
+- **Returns:** Biometric attendance log records with student details (name, roll_no, admission_no, class, section)
+- **Special Features:** Supports pagination, date range filtering, and student-specific filtering
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 13. Attendance Report API
+- **Controller:** `api/application/controllers/Attendance_report_api.php`
+- **Endpoints:**
+  - `POST /api/attendance-report/filter`
+  - `POST /api/attendance-report/list`
+- **Filters:** class_id, section_id, from_date, to_date, session_id
+- **Returns:** Detailed student attendance records with student information and total attendance count
+- **Special Features:** Multi-select support for class and section, date range filtering
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 14. Staff Attendance Report API
+- **Controller:** `api/application/controllers/Staff_attendance_report_api.php`
+- **Endpoints:**
+  - `POST /api/staff-attendance-report/filter`
+  - `POST /api/staff-attendance-report/list`
+- **Filters:** role_id, from_date, to_date, staff_id, session_id
+- **Returns:** Staff attendance records with staff details (name, employee_id, role, attendance type)
+- **Special Features:** Multi-select support for role and staff, date range filtering, attendance type information
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 15. Class Attendance Report API
+- **Controller:** `api/application/controllers/Class_attendance_report_api.php`
+- **Endpoints:**
+  - `POST /api/class-attendance-report/filter`
+  - `POST /api/class-attendance-report/list`
+- **Filters:** class_id, section_id, month, year, session_id
+- **Returns:** Monthly class attendance statistics with detailed attendance breakdown by student (present, absent, late, excuse, half_day counts)
+- **Special Features:** Includes summary statistics, attendance percentage calculation, monthly aggregation
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 16. Rank Report API
+- **Controller:** `api/application/controllers/Rank_report_api.php`
+- **Endpoints:**
+  - `POST /api/rank-report/filter`
+  - `POST /api/rank-report/list`
+- **Filters:** exam_group_id, exam_id, class_id, section_id, session_id
+- **Returns:** Exam rank reports with student rankings based on exam performance, including subject-wise results and overall rankings
+- **Special Features:** Includes exam details, exam subjects, exam grades, student subject results with marks and attendance
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 17. Online Exam Rank Report API
+- **Controller:** `api/application/controllers/Online_exam_rank_report_api.php`
+- **Endpoints:**
+  - `POST /api/online-exam-rank-report/filter`
+  - `POST /api/online-exam-rank-report/list`
+- **Filters:** exam_id, class_id, section_id
+- **Returns:** Online exam rank reports with student rankings based on online exam performance, including question-wise results and scores
+- **Special Features:** Includes exam details, student data with questions_results, rank information, attempt status
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 18. Online Exam Attend Report API
+- **Controller:** `api/application/controllers/Online_exam_attend_report_api.php`
+- **Endpoints:**
+  - `POST /api/online-exam-attend-report/filter`
+  - `POST /api/online-exam-attend-report/list`
+- **Filters:** from_date, to_date
+- **Returns:** Online exam attendance reports showing which students have attempted which online exams
+- **Special Features:** Includes student details, exam details (exam_name, attempt, duration, passing_percentage), total_exams_attempted count
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 19. Online Exams Report API
+- **Controller:** `api/application/controllers/Online_exams_report_api.php`
+- **Endpoints:**
+  - `POST /api/online-exams-report/filter`
+  - `POST /api/online-exams-report/list`
+- **Filters:** from_date, to_date
+- **Returns:** Online exams reports showing exam details, assigned students count, and question counts
+- **Special Features:** Includes total_records, filtered_records, exam information with assignment and question statistics
+- **Status:** ✅ Complete with model methods and routes configured
+
+### 20. Online Exam Report API
+- **Controller:** `api/application/controllers/Online_exam_report_api.php`
+- **Endpoints:**
+  - `POST /api/online-exam-report/filter`
+  - `POST /api/online-exam-report/list`
+- **Filters:** exam_id, class_id, section_id
+- **Returns:** Detailed online exam reports including exam information and student participation data
+- **Special Features:** Includes exam details, total_students count, students list with attempt status and rank information
+- **Status:** ✅ Complete with model methods and routes configured
 
 ---
 

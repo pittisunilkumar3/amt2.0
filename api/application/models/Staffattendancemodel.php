@@ -125,6 +125,76 @@ class Staffattendancemodel extends MY_Model {
         return $query->result_array();
     }
 
+    /**
+     * Get Staff Attendance Report by Filters
+     *
+     * Retrieves staff attendance records with optional filtering by role, date range, and staff ID.
+     *
+     * @param mixed  $role_id    Role ID (single value, array, or null)
+     * @param string $from_date  Start date for date range filter (or null)
+     * @param string $to_date    End date for date range filter (or null)
+     * @param mixed  $staff_id   Staff ID (single value, array, or null)
+     * @param int    $session_id Session ID (defaults to current session if not provided)
+     * @return array Array of staff attendance records
+     */
+    public function getStaffAttendanceReportByFilters($role_id = null, $from_date = null, $to_date = null, $staff_id = null, $session_id = null)
+    {
+        // If session_id is not provided, use current session
+        if (empty($session_id)) {
+            $session_id = $this->current_session;
+        }
+
+        $this->db->select('staff_attendance.*,
+                          staff.name,
+                          staff.surname,
+                          staff.employee_id,
+                          staff.contact_no,
+                          staff.email,
+                          roles.name as role_name,
+                          staff_attendance_type.type as attendance_type,
+                          staff_attendance_type.key_value as attendance_key');
+        $this->db->from('staff_attendance');
+        $this->db->join('staff', 'staff.id = staff_attendance.staff_id', 'inner');
+        $this->db->join('staff_roles', 'staff_roles.staff_id = staff.id', 'left');
+        $this->db->join('roles', 'roles.id = staff_roles.role_id', 'left');
+        $this->db->join('staff_attendance_type', 'staff_attendance_type.id = staff_attendance.staff_attendance_type_id', 'left');
+        $this->db->where('staff.is_active', 1);
+
+        // Apply role filter if provided
+        if ($role_id !== null && !empty($role_id)) {
+            if (is_array($role_id) && count($role_id) > 0) {
+                $this->db->where_in('roles.id', $role_id);
+            } else {
+                $this->db->where('roles.id', $role_id);
+            }
+        }
+
+        // Apply date range filter if provided
+        if (!empty($from_date) && !empty($to_date)) {
+            $this->db->where('staff_attendance.date >=', $from_date);
+            $this->db->where('staff_attendance.date <=', $to_date);
+        } elseif (!empty($from_date)) {
+            $this->db->where('staff_attendance.date >=', $from_date);
+        } elseif (!empty($to_date)) {
+            $this->db->where('staff_attendance.date <=', $to_date);
+        }
+
+        // Apply staff filter if provided
+        if ($staff_id !== null && !empty($staff_id)) {
+            if (is_array($staff_id) && count($staff_id) > 0) {
+                $this->db->where_in('staff.id', $staff_id);
+            } else {
+                $this->db->where('staff.id', $staff_id);
+            }
+        }
+
+        $this->db->order_by('staff_attendance.date', 'DESC');
+        $this->db->order_by('staff.name', 'ASC');
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function searchStaffattendance($date, $staff_id, $active_staff = true) {
 
         $sql = "select staff_attendance.staff_attendance_type_id,staff_attendance_type.type as `att_type`,staff_attendance_type.key_value as `key`,staff_attendance.remark,staff.name,staff.surname,staff.contact_no,staff.email,roles.name as user_type,IFNULL(staff_attendance.date, 'xxx') as date, IFNULL(staff_attendance.id, 0) as attendence_id, staff.id as id from staff left join staff_attendance on (staff.id = staff_attendance.staff_id) and staff_attendance.date = " . $this->db->escape($date) . " left join staff_roles on staff_roles.staff_id = staff.id left join roles on staff_roles.role_id = roles.id left join staff_attendance_type on staff_attendance_type.id = staff_attendance.staff_attendance_type_id where staff.id = " . $this->db->escape($staff_id);

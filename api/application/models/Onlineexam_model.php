@@ -152,4 +152,99 @@ class Onlineexam_model extends CI_model
         $query = $this->db->query($query);
         return $query->row();
     }
+
+    public function searchAllOnlineExamStudents($onlineexam_id, $class_id = null, $section_id = null, $is_attempted = null)
+    {
+        $this->db->select('class_sections.id as class_section_id,classes.id AS `class_id`,student_session.id as student_session_id,students.id,classes.class,sections.id AS `section_id`,sections.section,students.id,students.admission_no , students.roll_no,students.admission_date,students.firstname,students.middlename,students.lastname,students.image,   students.mobileno,students.email,students.state,students.city , students.pincode,students.religion,students.dob ,students.current_address,students.permanent_address,IFNULL(students.category_id, 0) as `category_id`,IFNULL(categories.category, "") as `category`,students.adhar_no,students.samagra_id,students.bank_account_no,students.bank_name, students.ifsc_code , students.guardian_name, students.guardian_relation,students.guardian_phone,students.guardian_address,students.is_active ,students.created_at ,students.updated_at,students.father_name,students.rte,students.gender,IFNULL(onlineexam_students.id, 0) as onlineexam_student_id,IFNULL(onlineexam_students.student_session_id, 0) as onlineexam_student_session_id,IFNULL(onlineexam_students.rank, 0) as exam_rank,onlineexam_students.is_attempted')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id', 'left');
+        $this->db->join('class_sections', 'class_sections.class_id = classes.id and class_sections.section_id = sections.id');
+        $this->db->join('categories', 'students.category_id = categories.id', 'left');
+        $this->db->join('onlineexam_students', 'onlineexam_students.student_session_id = student_session.id and onlineexam_students.onlineexam_id = ' . $this->db->escape($onlineexam_id), 'inner');
+        $this->db->where('students.is_active', 'yes');
+
+        if ($class_id != null && !empty($class_id)) {
+            if (is_array($class_id)) {
+                $this->db->where_in('student_session.class_id', $class_id);
+            } else {
+                $this->db->where('student_session.class_id', $class_id);
+            }
+        }
+
+        if ($section_id != null && !empty($section_id)) {
+            if (is_array($section_id)) {
+                $this->db->where_in('student_session.section_id', $section_id);
+            } else {
+                $this->db->where('student_session.section_id', $section_id);
+            }
+        }
+
+        if ($is_attempted != null) {
+            $this->db->where('onlineexam_students.is_attempted', $is_attempted);
+        }
+
+        $this->db->order_by('onlineexam_students.rank', 'asc');
+        $this->db->order_by('students.id', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+        } else {
+            $result = array();
+        }
+        return $result;
+    }
+
+    public function onlineexamReport($condition)
+    {
+        $where_clause = "1=1";
+
+        // Add condition with AND if condition is not empty
+        if (!empty($condition)) {
+            $where_clause .= " AND " . $condition;
+        }
+
+        $query = "SELECT onlineexam.*,(select count(*) from onlineexam_students WHERE onlineexam_students.onlineexam_id = onlineexam.id) as assign,(select count(*) from onlineexam_questions where onlineexam_questions.onlineexam_id=onlineexam.id) as questions FROM `onlineexam` inner join onlineexam_students on onlineexam_students.onlineexam_id=onlineexam.id inner join student_session on student_session.id=onlineexam_students.student_session_id where " . $where_clause . " GROUP BY onlineexam.id ORDER BY onlineexam.id DESC";
+
+        $query = $this->db->query($query);
+        $result = $query->result();
+
+        return json_encode(array(
+            'data' => $result,
+            'recordsTotal' => count($result),
+            'recordsFiltered' => count($result)
+        ));
+    }
+
+    public function onlineexamatteptreport($condition)
+    {
+        $where_clause = "students.is_active='yes'";
+
+        // Add condition with AND if condition is not empty
+        if (!empty($condition)) {
+            $where_clause .= " AND " . $condition;
+        }
+
+        $query = "SELECT student_session.id,students.admission_no,students.id as sid, CONCAT_WS(' ',firstname,middlename,lastname) as name,firstname,middlename,lastname,GROUP_CONCAT(onlineexam.id,'@',onlineexam.exam,'@',onlineexam.attempt,'@',onlineexam.exam_from,'@',onlineexam.exam_to,'@',onlineexam.duration,'@',onlineexam.passing_percentage,'@',onlineexam.is_active,'@',onlineexam.publish_result) as exams,GROUP_CONCAT(onlineexam_students.onlineexam_id) as attempt,`classes`.`id` AS `class_id`, `student_session`.`id` as `student_session_id`, `students`.`id`, `classes`.`class`, `sections`.`id` AS `section_id`, `sections`.`section`, `students`.`id`, `students`.`admission_no` FROM `student_session` INNER JOIN onlineexam_students on onlineexam_students.student_session_id=student_session.id INNER JOIN students on students.id=student_session.student_id JOIN `classes` ON `student_session`.`class_id` = `classes`.`id` JOIN `sections` ON `sections`.`id` = `student_session`.`section_id` LEFT JOIN `categories` ON `students`.`category_id` = `categories`.`id` INNER JOIN onlineexam on onlineexam_students.onlineexam_id=onlineexam.id WHERE " . $where_clause;
+
+        $query .= " GROUP BY student_session.id ORDER BY students.id";
+
+        $query = $this->db->query($query);
+        $std_data = $query->result();
+
+        if (!empty($std_data)) {
+            return json_encode(array(
+                'data' => $std_data,
+                'recordsTotal' => count($std_data),
+                'recordsFiltered' => count($std_data)
+            ));
+        } else {
+            return json_encode(array(
+                'data' => array(),
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0
+            ));
+        }
+    }
 }

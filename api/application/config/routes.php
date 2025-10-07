@@ -258,3 +258,43 @@ $route['online-admission-report/list']['POST'] = 'online_admission_report_api/li
 // Student Teacher Ratio Report API Routes
 $route['student-teacher-ratio-report/filter']['POST'] = 'student_teacher_ratio_report_api/filter';
 $route['student-teacher-ratio-report/list']['POST'] = 'student_teacher_ratio_report_api/list';
+
+// Daily Attendance Report API Routes
+$route['daily-attendance-report/filter']['POST'] = 'daily_attendance_report_api/filter';
+$route['daily-attendance-report/list']['POST'] = 'daily_attendance_report_api/list';
+
+// Biometric Attlog Report API Routes
+$route['biometric-attlog-report/filter']['POST'] = 'biometric_attlog_report_api/filter';
+$route['biometric-attlog-report/list']['POST'] = 'biometric_attlog_report_api/list';
+
+// Attendance Report API Routes
+$route['attendance-report/filter']['POST'] = 'attendance_report_api/filter';
+$route['attendance-report/list']['POST'] = 'attendance_report_api/list';
+
+// Staff Attendance Report API Routes
+$route['staff-attendance-report/filter']['POST'] = 'staff_attendance_report_api/filter';
+$route['staff-attendance-report/list']['POST'] = 'staff_attendance_report_api/list';
+
+// Class Attendance Report API Routes
+$route['class-attendance-report/filter']['POST'] = 'class_attendance_report_api/filter';
+$route['class-attendance-report/list']['POST'] = 'class_attendance_report_api/list';
+
+// Rank Report API Routes
+$route['rank-report/filter']['POST'] = 'rank_report_api/filter';
+$route['rank-report/list']['POST'] = 'rank_report_api/list';
+
+// Online Exam Rank Report API Routes
+$route['online-exam-rank-report/filter']['POST'] = 'online_exam_rank_report_api/filter';
+$route['online-exam-rank-report/list']['POST'] = 'online_exam_rank_report_api/list';
+
+// Online Exam Attend Report API Routes
+$route['online-exam-attend-report/filter']['POST'] = 'online_exam_attend_report_api/filter';
+$route['online-exam-attend-report/list']['POST'] = 'online_exam_attend_report_api/list';
+
+// Online Exams Report API Routes
+$route['online-exams-report/filter']['POST'] = 'online_exams_report_api/filter';
+$route['online-exams-report/list']['POST'] = 'online_exams_report_api/list';
+
+// Online Exam Report API Routes
+$route['online-exam-report/filter']['POST'] = 'online_exam_report_api/filter';
+$route['online-exam-report/list']['POST'] = 'online_exam_report_api/list';
