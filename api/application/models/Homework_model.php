@@ -109,4 +109,115 @@ class Homework_model extends CI_Model
             ->delete("daily_assignment");
     }
 
+    /**
+     * Get daily assignment report data
+     * Simplified version for API
+     */
+    public function getDailyAssignmentReport($class_id, $section_id, $subject_group_id, $subject_id, $condition = null, $session_id = null)
+    {
+        if ($session_id === null) {
+            $session_id = $this->current_session;
+        }
+
+        $this->db->select('daily_assignment.*,staff.name,staff.surname,staff.employee_id,classes.class,sections.section,students.firstname,students.middlename,students.lastname,students.id as student_id,students.admission_no as student_admission_no,subjects.name as subject_name,subjects.code as subject_code');
+        $this->db->join("student_session", "student_session.id = daily_assignment.student_session_id");
+        $this->db->join("classes", "classes.id = student_session.class_id");
+        $this->db->join("sections", "sections.id = student_session.section_id");
+        $this->db->join("students", "students.id = student_session.student_id");
+        $this->db->join("subject_group_subjects", "subject_group_subjects.id = daily_assignment.subject_group_subject_id");
+        $this->db->join("subjects", "subjects.id = subject_group_subjects.subject_id");
+        $this->db->join("staff", "staff.id = daily_assignment.evaluated_by", "left");
+        $this->db->where('student_session.session_id', $session_id);
+
+        if (!empty($class_id)) {
+            $this->db->where('student_session.class_id', $class_id);
+        }
+        if (!empty($section_id)) {
+            $this->db->where('student_session.section_id', $section_id);
+        }
+        if (!empty($subject_group_id)) {
+            $this->db->where('subject_group_subjects.subject_group_id', $subject_group_id);
+        }
+        if (!empty($subject_id)) {
+            $this->db->where('subject_group_subjects.id', $subject_id);
+        }
+        if ($condition != null) {
+            $this->db->where($condition);
+        }
+
+        $this->db->order_by('daily_assignment.date', 'DESC');
+        $this->db->from('daily_assignment');
+        $result = $this->db->get();
+        return $result->result_array();
+    }
+
+    /**
+     * Search homework for evaluation report
+     * Simplified version for API
+     */
+    public function search_homework($class_id, $section_id, $subject_group_id, $subject_id, $session_id = null)
+    {
+        if ($session_id === null) {
+            $session_id = $this->current_session;
+        }
+
+        if ((!empty($class_id)) && (!empty($section_id)) && (!empty($subject_id)) && (!empty($subject_group_id))) {
+            $this->db->where(array('homework.class_id' => $class_id, 'homework.section_id' => $section_id, 'subject_groups.id' => $subject_group_id, 'subject_group_subjects.id' => $subject_id));
+        } else if ((!empty($class_id)) && (!empty($section_id)) && (!empty($subject_group_id))) {
+            $this->db->where(array('homework.class_id' => $class_id, 'homework.section_id' => $section_id, 'subject_groups.id' => $subject_group_id));
+        } else if ((!empty($class_id)) && (empty($section_id)) && (empty($subject_id))) {
+            $this->db->where(array('homework.class_id' => $class_id));
+        } else if ((!empty($class_id)) && (!empty($section_id)) && (empty($subject_id))) {
+            $this->db->where(array('homework.class_id' => $class_id, 'homework.section_id' => $section_id));
+        }
+
+        $this->db->select("`homework`.*,classes.class,sections.section,subject_group_subjects.subject_id,subject_group_subjects.id as `subject_group_subject_id`,subjects.name as subject_name,subjects.code as subject_code,subject_groups.id as subject_groups_id,subject_groups.name,(select count(*) as total from submit_assignment where submit_assignment.homework_id=homework.id) as assignments");
+        $this->db->join("classes", "classes.id = homework.class_id");
+        $this->db->join("sections", "sections.id = homework.section_id");
+        $this->db->join("subject_group_subjects", "subject_group_subjects.id = homework.subject_group_subject_id");
+        $this->db->join("subjects", "subjects.id = subject_group_subjects.subject_id");
+        $this->db->join("subject_groups", "subject_group_subjects.subject_group_id=subject_groups.id");
+        $this->db->where('subject_groups.session_id', $session_id);
+        $this->db->order_by('homework.homework_date', 'DESC');
+        $query = $this->db->get("homework");
+        return $query->result_array();
+    }
+
+    /**
+     * Search homework report
+     * Simplified version for API
+     */
+    public function search_dthomeworkreport($class_id, $section_id, $subject_group_id, $subject_id, $session_id = null)
+    {
+        if ($session_id === null) {
+            $session_id = $this->current_session;
+        }
+
+        if ((!empty($class_id)) && (!empty($section_id)) && (!empty($subject_id)) && (!empty($subject_group_id))) {
+            $this->db->where(array('homework.class_id' => $class_id, 'homework.section_id' => $section_id, 'subject_groups.id' => $subject_group_id, 'subject_group_subjects.id' => $subject_id));
+        } else if ((!empty($class_id)) && (!empty($section_id)) && (!empty($subject_group_id))) {
+            $this->db->where(array('homework.class_id' => $class_id, 'homework.section_id' => $section_id, 'subject_groups.id' => $subject_group_id));
+        } else if ((!empty($class_id)) && (empty($section_id)) && (empty($subject_id))) {
+            $this->db->where(array('homework.class_id' => $class_id));
+        } else if ((!empty($class_id)) && (!empty($section_id)) && (empty($subject_id))) {
+            $this->db->where(array('homework.class_id' => $class_id, 'homework.section_id' => $section_id));
+        }
+
+        $this->db->select('`homework`.*,classes.class,sections.section,subject_group_subjects.subject_id,subject_group_subjects.id as `subject_group_subject_id`,subjects.name as subject_name,subjects.code as subject_code,subject_groups.id as subject_groups_id,subject_groups.name,(select count(*) as total from submit_assignment where submit_assignment.homework_id=homework.id) as assignments,staff.name as staff_name,staff.surname as staff_surname,staff.employee_id as staff_employee_id,
+        (SELECT COUNT(*) FROM student_session INNER JOIN students on students.id=student_session.student_id WHERE student_session.class_id=classes.id and student_session.section_id=sections.id and students.is_active="yes" and student_session.session_id=' . $session_id . ') as student_count')
+            ->join("classes", "classes.id = homework.class_id")
+            ->join("sections", "sections.id = homework.section_id")
+            ->join("subject_group_subjects", "subject_group_subjects.id = homework.subject_group_subject_id")
+            ->join("subjects", "subjects.id = subject_group_subjects.subject_id")
+            ->join("subject_groups", "subject_group_subjects.subject_group_id=subject_groups.id")
+            ->join("staff", "homework.created_by=staff.id")
+            ->where('subject_groups.session_id', $session_id)
+            ->order_by('homework.homework_date', 'DESC')
+            ->from('homework');
+
+        $result = $this->db->get();
+        return $result->result_array();
+    }
+
 }
+

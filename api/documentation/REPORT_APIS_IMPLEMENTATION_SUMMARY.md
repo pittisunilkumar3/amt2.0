@@ -4,8 +4,8 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
-**Total APIs Implemented:** 24
-**Total Endpoints:** 48 (filter + list for each API)
+**Total APIs Implemented:** 27
+**Total Endpoints:** 54 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
 
@@ -245,6 +245,39 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Returns:** Comprehensive staff information including personal details, designation, department, and leave allocations
 - **Special Features:** Supports predefined search types (today, this_week, this_month, this_year), includes processed leave information
 - **Documentation:** `api/documentation/STAFF_REPORT_API_README.md` (589 lines)
+- **Status:** ✅ Complete with full documentation
+
+### 25. Daily Assignment Report API
+- **Controller:** `api/application/controllers/Daily_assignment_report_api.php`
+- **Endpoints:**
+  - `POST /api/daily-assignment-report/filter`
+  - `POST /api/daily-assignment-report/list`
+- **Filters:** class_id, section_id, subject_group_id, subject_id, search_type, from_date, to_date, session_id
+- **Returns:** Student daily assignment information including assignment details, evaluation status, marks, and staff information
+- **Special Features:** Supports predefined search types (today, this_week, this_month, this_year), custom date range filtering, defaults to current year if no date filter provided
+- **Documentation:** `api/documentation/DAILY_ASSIGNMENT_REPORT_API_README.md` (489 lines)
+- **Status:** ✅ Complete with full documentation
+
+### 26. Evaluation Report API
+- **Controller:** `api/application/controllers/Evaluation_report_api.php`
+- **Endpoints:**
+  - `POST /api/evaluation-report/filter`
+  - `POST /api/evaluation-report/list`
+- **Filters:** class_id, section_id, subject_group_id, subject_id, session_id
+- **Returns:** Homework evaluation status with completion percentages including total students, evaluated count, submitted count, pending count, and calculated percentages
+- **Special Features:** Automatic percentage calculation for each homework, includes both evaluated and submitted statistics, provides evaluation_summary object for quick access
+- **Documentation:** `api/documentation/EVALUATION_REPORT_API_README.md` (300+ lines)
+- **Status:** ✅ Complete with full documentation
+
+### 27. Homework Report API
+- **Controller:** `api/application/controllers/Homework_report_api.php`
+- **Endpoints:**
+  - `POST /api/homework-report/filter`
+  - `POST /api/homework-report/list`
+- **Filters:** class_id, section_id, subject_group_id, subject_id, session_id
+- **Returns:** Comprehensive homework information including homework details, student counts, submission statistics, and staff information
+- **Special Features:** Includes student_count field for class size, assignments field for submission count, staff details (name, surname, employee_id)
+- **Documentation:** `api/documentation/HOMEWORK_REPORT_API_README.md` (300+ lines)
 - **Status:** ✅ Complete with full documentation
 
 ---

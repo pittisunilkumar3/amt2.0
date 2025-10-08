@@ -314,3 +314,15 @@ $route['payroll-report/list']['POST'] = 'payroll_report_api/list';
 // Staff Report API Routes
 $route['staff-report/filter']['POST'] = 'staff_report_api/filter';
 $route['staff-report/list']['POST'] = 'staff_report_api/list';
+
+// Daily Assignment Report API Routes
+$route['daily-assignment-report/filter']['POST'] = 'daily_assignment_report_api/filter';
+$route['daily-assignment-report/list']['POST'] = 'daily_assignment_report_api/list';
+
+// Evaluation Report API Routes
+$route['evaluation-report/filter']['POST'] = 'evaluation_report_api/filter';
+$route['evaluation-report/list']['POST'] = 'evaluation_report_api/list';
+
+// Homework Report API Routes
+$route['homework-report/filter']['POST'] = 'homework_report_api/filter';
+$route['homework-report/list']['POST'] = 'homework_report_api/list';
