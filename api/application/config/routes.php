@@ -358,3 +358,19 @@ $route['year-report-due-fees/list']['POST'] = 'year_report_due_fees_api/list';
 // Type Wise Balance Report API Routes
 $route['type-wise-balance-report/filter']['POST'] = 'type_wise_balance_report_api/filter';
 $route['type-wise-balance-report/list']['POST'] = 'type_wise_balance_report_api/list';
+
+// Collection Report API Routes
+$route['collection-report/filter']['POST'] = 'collection_report_api/filter';
+$route['collection-report/list']['POST'] = 'collection_report_api/list';
+
+// Total Student Academic Report API Routes
+$route['total-student-academic-report/filter']['POST'] = 'total_student_academic_report_api/filter';
+$route['total-student-academic-report/list']['POST'] = 'total_student_academic_report_api/list';
+
+// Student Academic Report API Routes
+$route['student-academic-report/filter']['POST'] = 'student_academic_report_api/filter';
+$route['student-academic-report/list']['POST'] = 'student_academic_report_api/list';
+
+// Report By Name API Routes
+$route['report-by-name/filter']['POST'] = 'report_by_name_api/filter';
+$route['report-by-name/list']['POST'] = 'report_by_name_api/list';

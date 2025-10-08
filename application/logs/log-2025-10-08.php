@@ -239,3 +239,394 @@ ERROR - 2025-10-08 16:27:06 --> Severity: Warning --> Undefined variable $sectio
 ERROR - 2025-10-08 16:27:06 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\reportduefees.php 47
 ERROR - 2025-10-08 12:57:08 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-08 12:57:08 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:57:53 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-08 21:57:53 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-08 21:57:53 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-08 21:57:53 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-08 21:57:53 --> Severity: Warning --> Undefined variable $is_captcha C:\xampp\htdocs\amt\application\views\admin\login.php 83
+ERROR - 2025-10-08 21:58:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 21:58:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 21:58:04 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 18:28:04 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:28:04 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:58:16 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 21:58:16 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 21:58:16 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 21:58:16 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 21:58:16 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 18:28:16 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:28:16 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:58:23 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 21:58:23 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 21:58:24 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 21:58:24 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 21:58:24 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 18:28:25 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:28:25 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:58:31 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 21:58:31 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 21:58:32 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\total_fee_collection_report.php 267
+ERROR - 2025-10-08 21:58:32 --> Could not find the language line "combined"
+ERROR - 2025-10-08 18:28:33 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:28:33 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:00:04 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:00:04 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:00:05 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\collection_report.php 267
+ERROR - 2025-10-08 18:30:05 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:30:05 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:01:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:01:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:01:02 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 22:01:02 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 22:01:02 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 18:31:02 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:31:02 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:01:16 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:01:16 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:01:16 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 22:01:16 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 22:01:16 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 18:31:16 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:31:16 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:01:28 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:01:28 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:01:28 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 18:31:28 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:31:28 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:04:40 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:04:40 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:04:40 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 22:04:40 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 22:04:40 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 18:34:41 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:34:41 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:04:49 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:04:49 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:04:49 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\collection_report.php 267
+ERROR - 2025-10-08 18:34:50 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 18:34:50 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:51:40 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:51:40 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:51:41 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 22:51:41 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 22:51:41 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 22:51:41 --> Severity: Warning --> Undefined variable $first_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 22:51:41 --> Severity: Warning --> Undefined variable $last_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 19:21:43 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:21:43 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:54:20 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:54:20 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:54:21 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:24:21 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:24:21 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:54:26 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:54:26 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:54:26 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 22:54:26 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 22:54:26 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 19:24:26 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:24:26 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> Undefined variable $first_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 22:54:50 --> Severity: Warning --> Undefined variable $last_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 22:54:51 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:54:51 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:54:52 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\collection_report.php 267
+ERROR - 2025-10-08 19:24:52 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:24:52 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:55:54 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:55:54 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:55:54 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 22:55:54 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 22:55:54 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 19:25:54 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:25:54 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:55:59 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:55:59 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:55:59 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:25:59 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:25:59 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:56:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:56:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:56:03 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 22:56:03 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 22:56:03 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 19:26:03 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:26:03 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 22:56:07 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 22:56:07 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 22:56:07 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 22:56:07 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 22:56:07 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 19:26:07 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:26:07 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:01:47 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:01:47 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:01:47 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 23:01:47 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 23:01:47 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 19:31:47 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:31:47 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> Undefined variable $first_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 23:02:37 --> Severity: Warning --> Undefined variable $last_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 19:32:38 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:32:38 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:04:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:04:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:04:18 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:34:19 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:34:19 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:04:31 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:31 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:31 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:31 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:32 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:34 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:34 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:35 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:36 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:36 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:36 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:36 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:37 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:37 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:04:38 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:35:09 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:35:09 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:08:24 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:08:24 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:08:24 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:38:24 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:38:24 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:08:37 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:37 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:37 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:37 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:38 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:39 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:40 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:41 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:41 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:42 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:42 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:42 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:42 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:42 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:42 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:43 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:43 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:43 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:43 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:43 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:43 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:44 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:44 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:08:45 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:39:22 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:39:22 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:10:08 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:10:08 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:10:08 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:40:08 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:40:08 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:10:18 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:10:18 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:10:18 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:10:18 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:10:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:10:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:10:19 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:40:20 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:40:20 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:10:22 --> Could not find the language line "not_generated"
+ERROR - 2025-10-08 23:14:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:14:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:14:03 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 23:14:03 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 23:14:03 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 19:44:04 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:44:04 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:14:11 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:14:11 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:14:11 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:14:11 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:14:11 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:14:12 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:14:12 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:44:12 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:44:12 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:14:14 --> Could not find the language line "not_generated"
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 57
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\totalstudentAcademicReport.php 70
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> Undefined variable $first_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 23:15:02 --> Severity: Warning --> Undefined variable $last_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 19:45:02 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:45:02 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:28:21 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:28:21 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:28:21 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:58:21 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:58:21 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 406
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\controllers\Financereports.php 407
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:28:27 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-08 19:58:28 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 19:58:28 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:28:30 --> Could not find the language line "not_generated"
+ERROR - 2025-10-08 23:51:54 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:51:54 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:51:54 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 23:51:54 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 23:51:54 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 20:21:54 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 20:21:54 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 34
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\studentAcademicReport.php 47
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> Undefined variable $first_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 23:52:01 --> Severity: Warning --> Undefined variable $last_date C:\xampp\htdocs\amt\application\libraries\Customlib.php 1647
+ERROR - 2025-10-08 20:22:02 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 20:22:02 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 20:59:30 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 20:59:30 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:00:32 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 21:00:32 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:00:32 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 21:00:32 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:00:32 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 21:00:32 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:00:52 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 21:00:52 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:01:01 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 21:01:01 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-08 21:01:07 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-08 21:01:07 --> Could not find the language line "thank_you_for_your_complain"

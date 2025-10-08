@@ -1104,4 +1104,161 @@ class Student_model extends CI_Model
         }
     }
 
+    /**
+     * Search students by class and section with session
+     * Used for Total Student Academic Report API
+     */
+    public function totalsearchByClassSectionWithSession($session_id = null, $class_id = null, $section_id = null)
+    {
+        $this->db->select('classes.id AS `class_id`,student_session.id as student_session_id,students.id,classes.class,sections.id AS `section_id`,sections.section,students.id,students.admission_no , students.roll_no,students.admission_date,students.firstname,students.middlename,  students.lastname,students.image,  students.mobileno, students.email ,students.state,students.city , students.pincode,students.religion,students.dob ,students.current_address,students.permanent_address,students.father_name,students.rte,students.gender')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id');
+
+        if ($session_id != null) {
+            $this->db->where('student_session.session_id', $session_id);
+        }
+
+        $this->db->where('students.is_active', 'yes');
+
+        if ($class_id != null) {
+            $this->db->where('student_session.class_id', $class_id);
+        }
+
+        if ($section_id != null) {
+            $this->db->where('student_session.section_id', $section_id);
+        }
+
+        $this->db->order_by('students.id');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Get all students with session filter
+     * Used for Total Student Academic Report API
+     */
+    public function gettotalStudents($session_id = null)
+    {
+        $this->db->select('classes.id AS `class_id`,student_session.id as student_session_id,students.id,classes.class,sections.id AS `section_id`,sections.section,students.id,students.admission_no , students.roll_no,students.admission_date,students.firstname,students.middlename,  students.lastname,students.image,    students.mobileno, students.email ,students.state ,   students.city , students.pincode ,     students.religion,     students.dob ,students.current_address,    students.permanent_address,students.father_name,students.rte,students.gender')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id');
+
+        if ($session_id != null) {
+            $this->db->where('student_session.session_id', $session_id);
+        }
+
+        $this->db->where('students.is_active', 'yes');
+        $this->db->order_by('students.id');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Search students by name
+     * Used for Report By Name API
+     */
+    public function searchByName($search_text, $class_id = null, $section_id = null, $session_id = null)
+    {
+        $this->db->select('students.id,students.admission_no,students.firstname,students.middlename,students.lastname,students.roll_no,students.father_name,classes.class,sections.section,student_session.id as student_session_id')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id');
+
+        $this->db->where('students.is_active', 'yes');
+
+        // Search in firstname, middlename, lastname, or admission_no
+        $this->db->group_start();
+        $this->db->like('students.firstname', $search_text);
+        $this->db->or_like('students.middlename', $search_text);
+        $this->db->or_like('students.lastname', $search_text);
+        $this->db->or_like('students.admission_no', $search_text);
+        $this->db->group_end();
+
+        if ($class_id != null) {
+            $this->db->where('student_session.class_id', $class_id);
+        }
+
+        if ($section_id != null) {
+            $this->db->where('student_session.section_id', $section_id);
+        }
+
+        if ($session_id != null) {
+            $this->db->where('student_session.session_id', $session_id);
+        }
+
+        $this->db->order_by('students.firstname');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Search students by class and section
+     * Used for Student Academic Report API
+     */
+    public function searchByClassSection($class_id, $section_id = null, $session_id = null)
+    {
+        $this->db->select('students.id,students.admission_no,students.firstname,students.middlename,students.lastname,students.roll_no,students.father_name,classes.class,sections.section,student_session.id as student_session_id')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id');
+
+        $this->db->where('students.is_active', 'yes');
+        $this->db->where('student_session.class_id', $class_id);
+
+        if ($section_id != null) {
+            $this->db->where('student_session.section_id', $section_id);
+        }
+
+        if ($session_id != null) {
+            $this->db->where('student_session.session_id', $session_id);
+        }
+
+        $this->db->order_by('students.firstname');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Get student by admission number
+     * Used for Student Academic Report API
+     */
+    public function getByAdmissionNo($admission_no)
+    {
+        $this->db->select('students.id,students.admission_no,students.firstname,students.middlename,students.lastname,students.roll_no,students.father_name,classes.class,sections.section,student_session.id as student_session_id')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id');
+
+        $this->db->where('students.admission_no', $admission_no);
+        $this->db->where('students.is_active', 'yes');
+
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    /**
+     * Get all students with session filter
+     * Used for Report By Name API
+     */
+    public function getAll($session_id = null)
+    {
+        $this->db->select('students.id,students.admission_no,students.firstname,students.middlename,students.lastname,students.roll_no,students.father_name,classes.class,sections.section,student_session.id as student_session_id')->from('students');
+        $this->db->join('student_session', 'student_session.student_id = students.id');
+        $this->db->join('classes', 'student_session.class_id = classes.id');
+        $this->db->join('sections', 'sections.id = student_session.section_id');
+
+        $this->db->where('students.is_active', 'yes');
+
+        if ($session_id != null) {
+            $this->db->where('student_session.session_id', $session_id);
+        }
+
+        $this->db->order_by('students.firstname');
+        $this->db->limit(100); // Limit to prevent large result sets
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }

@@ -1,9 +1,5 @@
 <?php
-/**
- * Test empty request to see actual error
- */
-
-$url = 'http://localhost/amt/api/due-fees-report/filter';
+$url = 'http://localhost/amt/api/collection-report/filter';
 $headers = [
     'Content-Type: application/json',
     'Client-Service: smartschool',
