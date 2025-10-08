@@ -4,8 +4,8 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
-**Total APIs Implemented:** 27
-**Total Endpoints:** 54 (filter + list for each API)
+**Total APIs Implemented:** 31
+**Total Endpoints:** 62 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
 
@@ -278,6 +278,50 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Returns:** Comprehensive homework information including homework details, student counts, submission statistics, and staff information
 - **Special Features:** Includes student_count field for class size, assignments field for submission count, staff details (name, surname, employee_id)
 - **Documentation:** `api/documentation/HOMEWORK_REPORT_API_README.md` (300+ lines)
+- **Status:** ✅ Complete with full documentation
+
+### 28. Issue Return Report API
+- **Controller:** `api/application/controllers/Issue_return_report_api.php`
+- **Endpoints:**
+  - `POST /api/issue-return-report/filter`
+  - `POST /api/issue-return-report/list`
+- **Filters:** search_type, from_date, to_date
+- **Returns:** Book issue and return information including book details, member information (students/teachers), issue dates, and return dates
+- **Special Features:** Supports predefined search types (today, this_week, this_month, this_year), custom date range filtering, defaults to current year
+- **Documentation:** `api/documentation/ISSUE_RETURN_REPORT_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 29. Student Book Issue Report API
+- **Controller:** `api/application/controllers/Student_book_issue_report_api.php`
+- **Endpoints:**
+  - `POST /api/student-book-issue-report/filter`
+  - `POST /api/student-book-issue-report/list`
+- **Filters:** search_type, from_date, to_date, member_type
+- **Returns:** Book issue information with filtering by member type (student/teacher), includes book details, member information, issue dates, and due return dates
+- **Special Features:** Member type filtering (all, student, teacher), predefined search types, custom date range filtering
+- **Documentation:** `api/documentation/STUDENT_BOOK_ISSUE_REPORT_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 30. Book Due Report API
+- **Controller:** `api/application/controllers/Book_due_report_api.php`
+- **Endpoints:**
+  - `POST /api/book-due-report/filter`
+  - `POST /api/book-due-report/list`
+- **Filters:** search_type, from_date, to_date, member_type
+- **Returns:** Overdue books information (books not yet returned), includes book details, member information, issue dates, and due return dates
+- **Special Features:** Only returns unreturned books (is_returned = 0), member type filtering, predefined search types, custom date range filtering
+- **Documentation:** `api/documentation/BOOK_DUE_REPORT_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 31. Book Inventory Report API
+- **Controller:** `api/application/controllers/Book_inventory_report_api.php`
+- **Endpoints:**
+  - `POST /api/book-inventory-report/filter`
+  - `POST /api/book-inventory-report/list`
+- **Filters:** search_type, from_date, to_date
+- **Returns:** Book inventory information including book details, total quantity, issued quantity, available quantity, and per unit cost
+- **Special Features:** Automatic calculation of available quantity (total - issued), includes total_issue, available_qty, and issued_qty fields
+- **Documentation:** `api/documentation/BOOK_INVENTORY_REPORT_API_README.md`
 - **Status:** ✅ Complete with full documentation
 
 ---

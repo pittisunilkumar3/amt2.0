@@ -326,3 +326,19 @@ $route['evaluation-report/list']['POST'] = 'evaluation_report_api/list';
 // Homework Report API Routes
 $route['homework-report/filter']['POST'] = 'homework_report_api/filter';
 $route['homework-report/list']['POST'] = 'homework_report_api/list';
+
+// Issue Return Report API Routes
+$route['issue-return-report/filter']['POST'] = 'issue_return_report_api/filter';
+$route['issue-return-report/list']['POST'] = 'issue_return_report_api/list';
+
+// Student Book Issue Report API Routes
+$route['student-book-issue-report/filter']['POST'] = 'student_book_issue_report_api/filter';
+$route['student-book-issue-report/list']['POST'] = 'student_book_issue_report_api/list';
+
+// Book Due Report API Routes
+$route['book-due-report/filter']['POST'] = 'book_due_report_api/filter';
+$route['book-due-report/list']['POST'] = 'book_due_report_api/list';
+
+// Book Inventory Report API Routes
+$route['book-inventory-report/filter']['POST'] = 'book_inventory_report_api/filter';
+$route['book-inventory-report/list']['POST'] = 'book_inventory_report_api/list';
