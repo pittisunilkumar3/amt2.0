@@ -4,8 +4,8 @@
 
 This document provides a comprehensive summary of all Report APIs created for the School Management System. All APIs follow consistent patterns for authentication, filtering, and response formats.
 
-**Total APIs Implemented:** 31
-**Total Endpoints:** 62 (filter + list for each API)
+**Total APIs Implemented:** 35
+**Total Endpoints:** 70 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
 
@@ -322,6 +322,50 @@ This document provides a comprehensive summary of all Report APIs created for th
 - **Returns:** Book inventory information including book details, total quantity, issued quantity, available quantity, and per unit cost
 - **Special Features:** Automatic calculation of available quantity (total - issued), includes total_issue, available_qty, and issued_qty fields
 - **Documentation:** `api/documentation/BOOK_INVENTORY_REPORT_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 32. Due Fees Report API
+- **Controller:** `api/application/controllers/Due_fees_report_api.php`
+- **Endpoints:**
+  - `POST /api/due-fees-report/filter`
+  - `POST /api/due-fees-report/list`
+- **Filters:** class_id, section_id, session_id
+- **Returns:** Students with pending/due fees including student details, fee details, transport fees, and payment information
+- **Special Features:** Calculates due fees based on current date, includes fee breakdown by fee type, transport fees integration, session support, empty request returns all students with due fees
+- **Documentation:** `api/documentation/DUE_FEES_REPORT_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 33. Daily Collection Report API
+- **Controller:** `api/application/controllers/Daily_collection_report_api.php`
+- **Endpoints:**
+  - `POST /api/daily-collection-report/filter`
+  - `POST /api/daily-collection-report/list`
+- **Filters:** date_from, date_to
+- **Returns:** Daily fee collection data with amounts collected per day, including regular fees and other fees
+- **Special Features:** Date range filtering, empty request returns current month's collection, includes both regular and other fees breakdown
+- **Documentation:** `api/documentation/DAILY_COLLECTION_REPORT_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 34. Year Report Due Fees API
+- **Controller:** `api/application/controllers/Year_report_due_fees_api.php`
+- **Endpoints:**
+  - `POST /api/year-report-due-fees/filter`
+  - `POST /api/year-report-due-fees/list`
+- **Filters:** class_id, section_id, session_id
+- **Returns:** Students with due fees for the entire year, including student details, fee details, and transport fees
+- **Special Features:** Year-end date calculation (December 31), comprehensive fee breakdown, transport fees integration, session support
+- **Documentation:** `api/documentation/YEAR_REPORT_DUE_FEES_API_README.md`
+- **Status:** ✅ Complete with full documentation
+
+### 35. Type Wise Balance Report API
+- **Controller:** `api/application/controllers/Type_wise_balance_report_api.php`
+- **Endpoints:**
+  - `POST /api/type-wise-balance-report/filter`
+  - `POST /api/type-wise-balance-report/list`
+- **Filters:** session_id (required), feetype_ids (required), feegroup_ids, class_id, section_id
+- **Returns:** Fee balance information categorized by fee type, including total amount, paid amount, fine, discount, and balance
+- **Special Features:** Multi-select support for fee types and groups, balance calculation, session-based filtering
+- **Documentation:** `api/documentation/TYPE_WISE_BALANCE_REPORT_API_README.md`
 - **Status:** ✅ Complete with full documentation
 
 ---

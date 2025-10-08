@@ -71,4 +71,15 @@ class Module_model extends CI_Model
         }
     }
 
+    /**
+     * Get permission by module name
+     * Used to check if a module is active
+     */
+    public function getPermissionByModulename($module_name)
+    {
+        $sql = "SELECT is_active FROM permission_group WHERE short_code = " . $this->db->escape($module_name);
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
+
 }

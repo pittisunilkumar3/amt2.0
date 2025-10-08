@@ -342,3 +342,19 @@ $route['book-due-report/list']['POST'] = 'book_due_report_api/list';
 // Book Inventory Report API Routes
 $route['book-inventory-report/filter']['POST'] = 'book_inventory_report_api/filter';
 $route['book-inventory-report/list']['POST'] = 'book_inventory_report_api/list';
+
+// Due Fees Report API Routes
+$route['due-fees-report/filter']['POST'] = 'due_fees_report_api/filter';
+$route['due-fees-report/list']['POST'] = 'due_fees_report_api/list';
+
+// Daily Collection Report API Routes
+$route['daily-collection-report/filter']['POST'] = 'daily_collection_report_api/filter';
+$route['daily-collection-report/list']['POST'] = 'daily_collection_report_api/list';
+
+// Year Report Due Fees API Routes
+$route['year-report-due-fees/filter']['POST'] = 'year_report_due_fees_api/filter';
+$route['year-report-due-fees/list']['POST'] = 'year_report_due_fees_api/list';
+
+// Type Wise Balance Report API Routes
+$route['type-wise-balance-report/filter']['POST'] = 'type_wise_balance_report_api/filter';
+$route['type-wise-balance-report/list']['POST'] = 'type_wise_balance_report_api/list';
