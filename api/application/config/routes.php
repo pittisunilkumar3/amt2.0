@@ -374,3 +374,11 @@ $route['student-academic-report/list']['POST'] = 'student_academic_report_api/li
 // Report By Name API Routes
 $route['report-by-name/filter']['POST'] = 'report_by_name_api/filter';
 $route['report-by-name/list']['POST'] = 'report_by_name_api/list';
+
+// Expense Group Report API Routes
+$route['expense-group-report/filter']['POST'] = 'expense_group_report_api/filter';
+$route['expense-group-report/list']['POST'] = 'expense_group_report_api/list';
+
+// Online Admission Report API Routes
+$route['online-admission-report/filter']['POST'] = 'online_admission_fee_report_api/filter';
+$route['online-admission-report/list']['POST'] = 'online_admission_fee_report_api/list';
