@@ -434,3 +434,7 @@ $route['issue-inventory-report/list']['POST'] = 'issue_inventory_report_api/list
 // Student Transport Details API Routes
 $route['student-transport-details/filter']['POST'] = 'student_transport_details_api/filter';
 $route['student-transport-details/list']['POST'] = 'student_transport_details_api/list';
+
+// Student Hostel Details API Routes
+$route['student-hostel-details/filter']['POST'] = 'student_hostel_details_api/filter';
+$route['student-hostel-details/list']['POST'] = 'student_hostel_details_api/list';
