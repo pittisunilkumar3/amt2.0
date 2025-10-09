@@ -3,49 +3,49 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * Payroll Report API Controller
- *
- * Provides API endpoints for payroll reports
- *
+ * Expense Report API Controller
+ * 
+ * Provides API endpoints for expense reports
+ * 
  * @package    Smart School
  * @subpackage API
  * @category   Finance Reports
  * @author     Smart School Team
  */
-class Payroll_report_api extends CI_Controller
+class Expense_report_api extends CI_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
-
+        
         // Suppress errors for clean JSON output
         ini_set('display_errors', 0);
         error_reporting(0);
-
+        
         // Load required models in correct order
         $this->load->model('setting_model');
         $this->load->model('auth_model');
-        $this->load->model('payroll_model');
-        $this->load->model('staff_model');
-
+        $this->load->model('expense_model');
+        $this->load->model('expensehead_model');
+        
         // Set JSON response header
         header('Content-Type: application/json');
     }
 
     /**
-     * Filter endpoint - Get payroll report with filters
-     *
-     * POST /api/payroll-report/filter
-     *
+     * Filter endpoint - Get expense report with filters
+     * 
+     * POST /api/expense-report/filter
+     * 
      * Request Body (all optional):
      * {
      *   "search_type": "today|this_week|this_month|last_month|this_year|period",
      *   "date_from": "2025-01-01",
      *   "date_to": "2025-12-31"
      * }
-     *
-     * Empty request {} returns all payroll for current year
+     * 
+     * Empty request {} returns all expenses for current year
      */
     public function filter()
     {
@@ -91,42 +91,35 @@ class Payroll_report_api extends CI_Controller
                 $date_label = $dates['label'];
             }
 
-            // Get payroll data
-            $payrolls = $this->payroll_model->getbetweenpayrollReport($start_date, $end_date);
+            // Get expense data
+            $expenses = $this->expense_model->search(null, $start_date, $end_date);
 
             // Calculate totals
-            $total_basic = 0;
-            $total_allowance = 0;
-            $total_deduction = 0;
-            $total_tax = 0;
-            $total_net_salary = 0;
-            $total_records = count($payrolls);
-
-            foreach ($payrolls as &$payroll) {
-                $basic = floatval($payroll['basic']);
-                $allowance = floatval($payroll['total_allowance']);
-                $deduction = floatval($payroll['total_deduction']);
-                $tax = floatval($payroll['tax']);
-
-                $gross_salary = $basic + $allowance - $deduction;
-                $net_salary = $gross_salary - $tax;
-
-                $payroll['gross_salary'] = number_format($gross_salary, 2, '.', '');
-                $payroll['net_salary'] = number_format($net_salary, 2, '.', '');
-
-                $total_basic += $basic;
-                $total_allowance += $allowance;
-                $total_deduction += $deduction;
-                $total_tax += $tax;
-                $total_net_salary += $net_salary;
+            $total_amount = 0;
+            $total_records = count($expenses);
+            $expense_heads = array();
+            
+            foreach ($expenses as $expense) {
+                $total_amount += floatval($expense['amount']);
+                
+                // Group by expense head
+                $head_id = $expense['exp_head_id'];
+                if (!isset($expense_heads[$head_id])) {
+                    $expense_heads[$head_id] = array(
+                        'head_id' => $head_id,
+                        'exp_category' => $expense['exp_category'],
+                        'count' => 0,
+                        'total' => 0
+                    );
+                }
+                $expense_heads[$head_id]['count']++;
+                $expense_heads[$head_id]['total'] += floatval($expense['amount']);
             }
-
-            $total_gross_salary = $total_basic + $total_allowance - $total_deduction;
 
             // Prepare response
             $response = array(
                 'status' => 1,
-                'message' => 'Payroll report retrieved successfully',
+                'message' => 'Expense report retrieved successfully',
                 'filters_applied' => array(
                     'search_type' => $search_type,
                     'date_from' => $start_date,
@@ -139,15 +132,11 @@ class Payroll_report_api extends CI_Controller
                 ),
                 'summary' => array(
                     'total_records' => $total_records,
-                    'total_basic' => number_format($total_basic, 2, '.', ''),
-                    'total_allowance' => number_format($total_allowance, 2, '.', ''),
-                    'total_deduction' => number_format($total_deduction, 2, '.', ''),
-                    'total_gross_salary' => number_format($total_gross_salary, 2, '.', ''),
-                    'total_tax' => number_format($total_tax, 2, '.', ''),
-                    'total_net_salary' => number_format($total_net_salary, 2, '.', '')
+                    'total_amount' => number_format($total_amount, 2, '.', ''),
+                    'expense_heads' => array_values($expense_heads)
                 ),
                 'total_records' => $total_records,
-                'data' => $payrolls,
+                'data' => $expenses,
                 'timestamp' => date('Y-m-d H:i:s')
             );
 
@@ -165,10 +154,10 @@ class Payroll_report_api extends CI_Controller
 
     /**
      * List endpoint - Get filter options
-     *
-     * POST /api/payroll-report/list
-     *
-     * Returns available search types for filtering
+     * 
+     * POST /api/expense-report/list
+     * 
+     * Returns available expense heads for filtering
      */
     public function list()
     {
@@ -183,11 +172,15 @@ class Payroll_report_api extends CI_Controller
                 return;
             }
 
+            // Get all expense heads
+            $expense_heads = $this->expensehead_model->get();
+
             // Prepare response
             $response = array(
                 'status' => 1,
-                'message' => 'Filter options retrieved successfully',
+                'message' => 'Expense heads retrieved successfully',
                 'data' => array(
+                    'expense_heads' => $expense_heads,
                     'search_types' => array(
                         array('key' => 'today', 'label' => 'Today'),
                         array('key' => 'this_week', 'label' => 'This Week'),

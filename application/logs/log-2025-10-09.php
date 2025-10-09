@@ -72,3 +72,168 @@ ERROR - 2025-10-09 01:14:18 --> Severity: Warning --> Undefined array key 1 C:\x
 ERROR - 2025-10-09 01:14:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
 ERROR - 2025-10-09 01:14:21 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
 ERROR - 2025-10-09 01:14:21 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 01:32:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 01:32:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 01:32:03 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\income.php 80
+ERROR - 2025-10-09 01:32:13 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 01:32:13 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 01:32:13 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 30
+ERROR - 2025-10-09 01:32:13 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 01:32:13 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 01:32:16 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 01:32:16 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 01:58:45 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 01:58:45 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 01:58:45 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\incomegroup.php 181
+ERROR - 2025-10-09 02:03:22 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:03:22 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:03:25 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:03:25 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:03:26 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\staff_report.php 237
+ERROR - 2025-10-09 02:03:36 --> Could not find the language line "not_generated"
+ERROR - 2025-10-09 02:03:36 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:03:36 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:17:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:17:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:17:11 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:17:11 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:20:46 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:20:46 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:20:46 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\income.php 80
+ERROR - 2025-10-09 02:24:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:24:18 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:24:18 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 30
+ERROR - 2025-10-09 02:24:18 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 02:24:18 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 02:24:24 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:24:24 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:24:24 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\income.php 80
+ERROR - 2025-10-09 02:24:27 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 02:24:27 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 02:24:27 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\incomegroup.php 181
+ERROR - 2025-10-09 05:43:17 --> Severity: Warning --> preg_replace(): Allocation of JIT memory failed, PCRE JIT will be disabled. This is likely caused by security restrictions. Either grant PHP permission to allocate executable memory, or set pcre.jit=0 C:\xampp\htdocs\amt\system\core\Common.php 725
+ERROR - 2025-10-09 05:43:17 --> Severity: Warning --> preg_replace(): Allocation of JIT memory failed, PCRE JIT will be disabled. This is likely caused by security restrictions. Either grant PHP permission to allocate executable memory, or set pcre.jit=0 C:\xampp\htdocs\amt\system\core\Common.php 725
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Undefined variable $is_captcha C:\xampp\htdocs\amt\application\views\admin\login.php 83
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:33 --> Severity: Warning --> Undefined variable $is_captcha C:\xampp\htdocs\amt\application\views\admin\login.php 83
+ERROR - 2025-10-09 09:13:34 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:34 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:34 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:34 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\application\libraries\Customlib.php 26
+ERROR - 2025-10-09 09:13:34 --> Severity: Warning --> Undefined variable $is_captcha C:\xampp\htdocs\amt\application\views\admin\login.php 83
+ERROR - 2025-10-09 09:14:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:14:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:14:04 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\incomegroup.php 181
+ERROR - 2025-10-09 05:44:05 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 05:44:05 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:14:33 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:14:33 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:14:34 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\income.php 80
+ERROR - 2025-10-09 05:44:34 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 05:44:34 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:14:39 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:14:39 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:14:40 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 30
+ERROR - 2025-10-09 09:14:40 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 09:14:40 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 05:44:40 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 05:44:40 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:14:51 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:14:51 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 05:44:52 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 05:44:52 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:25:25 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:25:25 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:25:26 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\financereports\income.php 80
+ERROR - 2025-10-09 05:55:28 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 05:55:28 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:27:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:27:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:27:03 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 30
+ERROR - 2025-10-09 09:27:03 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 09:27:03 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\duefeesremark.php 43
+ERROR - 2025-10-09 05:57:03 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 05:57:03 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 05:59:02 --> Severity: error --> Exception: No connection could be made because the target machine actively refused it C:\xampp\htdocs\amt\application\config\database.php 31
+ERROR - 2025-10-09 05:59:10 --> Severity: error --> Exception: No connection could be made because the target machine actively refused it C:\xampp\htdocs\amt\application\config\database.php 31
+ERROR - 2025-10-09 09:52:46 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:52:46 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:52:48 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-09 06:22:48 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:22:48 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:53:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:53:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:53:01 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\other_collection_report.php 68
+ERROR - 2025-10-09 06:23:01 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:23:01 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:53:08 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:53:08 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:53:09 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\total_fee_collection_report.php 267
+ERROR - 2025-10-09 09:53:09 --> Could not find the language line "combined"
+ERROR - 2025-10-09 06:23:09 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:23:09 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:53:17 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:53:17 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:53:18 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\combined_collection_report.php 267
+ERROR - 2025-10-09 06:23:19 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:23:19 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 09:53:25 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 09:53:25 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 09:53:26 --> Could not find the language line "please_select_search_duration"
+ERROR - 2025-10-09 06:23:26 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:23:26 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 06:23:27 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:23:27 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 06:23:27 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:23:27 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:10:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:10:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:10:55 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\collection_report.php 267
+ERROR - 2025-10-09 06:40:56 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:40:56 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:10:59 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:10:59 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:10:59 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\other_collection_report.php 68
+ERROR - 2025-10-09 06:40:59 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:40:59 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:11:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:11:03 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:11:03 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\total_fee_collection_report.php 267
+ERROR - 2025-10-09 10:11:03 --> Could not find the language line "combined"
+ERROR - 2025-10-09 06:41:03 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:41:03 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:13:14 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:13:14 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:13:14 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\combined_collection_report.php 267
+ERROR - 2025-10-09 06:43:14 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:43:14 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:15:08 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:15:08 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:15:08 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\combined_collection_report.php 267
+ERROR - 2025-10-09 06:45:09 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:45:09 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:15:42 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:15:42 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:15:42 --> Could not find the language line "please_select_search_duration"
+ERROR - 2025-10-09 06:45:42 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:45:42 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 06:45:43 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:45:43 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 06:45:43 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:45:43 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:18:06 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:18:06 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:18:06 --> Could not find the language line "please_select_search_duration"
+ERROR - 2025-10-09 06:48:06 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:48:06 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 06:48:06 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:48:06 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 06:48:07 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 06:48:07 --> Could not find the language line "thank_you_for_your_complain"

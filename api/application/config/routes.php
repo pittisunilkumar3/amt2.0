@@ -382,3 +382,39 @@ $route['expense-group-report/list']['POST'] = 'expense_group_report_api/list';
 // Online Admission Report API Routes
 $route['online-admission-report/filter']['POST'] = 'online_admission_fee_report_api/filter';
 $route['online-admission-report/list']['POST'] = 'online_admission_fee_report_api/list';
+
+// Income Group Report API Routes
+$route['income-group-report/filter']['POST'] = 'income_group_report_api/filter';
+$route['income-group-report/list']['POST'] = 'income_group_report_api/list';
+
+// Expense Report API Routes
+$route['expense-report/filter']['POST'] = 'expense_report_api/filter';
+$route['expense-report/list']['POST'] = 'expense_report_api/list';
+
+// Income Report API Routes
+$route['income-report/filter']['POST'] = 'income_report_api/filter';
+$route['income-report/list']['POST'] = 'income_report_api/list';
+
+// Due Fees Remark Report API Routes
+$route['due-fees-remark-report/filter']['POST'] = 'due_fees_remark_report_api/filter';
+$route['due-fees-remark-report/list']['POST'] = 'due_fees_remark_report_api/list';
+
+// Online Fees Report API Routes
+$route['online-fees-report/filter']['POST'] = 'online_fees_report_api/filter';
+$route['online-fees-report/list']['POST'] = 'online_fees_report_api/list';
+
+// Other Collection Report API Routes
+$route['other-collection-report/filter']['POST'] = 'other_collection_report_api/filter';
+$route['other-collection-report/list']['POST'] = 'other_collection_report_api/list';
+
+// Combined Collection Report API Routes
+$route['combined-collection-report/filter']['POST'] = 'combined_collection_report_api/filter';
+$route['combined-collection-report/list']['POST'] = 'combined_collection_report_api/list';
+
+// Total Fee Collection Report API Routes
+$route['total-fee-collection-report/filter']['POST'] = 'total_fee_collection_report_api/filter';
+$route['total-fee-collection-report/list']['POST'] = 'total_fee_collection_report_api/list';
+
+// Fee Collection Columnwise Report API Routes
+$route['fee-collection-columnwise-report/filter']['POST'] = 'fee_collection_columnwise_report_api/filter';
+$route['fee-collection-columnwise-report/list']['POST'] = 'fee_collection_columnwise_report_api/list';

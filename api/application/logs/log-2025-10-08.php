@@ -10635,3 +10635,26 @@ FROM `online_admission_payment`
 WHERE DATE_FORMAT(online_admission_payment.date, "%Y-%m-%d") >= '2025-01-01'
 AND DATE_FORMAT(online_admission_payment.date, "%Y-%m-%d") <= '2025-12-31'
 GROUP BY `online_admission_payment`.`payment_mode`
+ERROR - 2025-10-08 22:49:39 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 95
+ERROR - 2025-10-08 22:49:39 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 95
+ERROR - 2025-10-08 22:49:39 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 95
+ERROR - 2025-10-08 22:49:42 --> Severity: error --> Exception: Unable to locate the model you have specified: Studentfee_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-08 22:49:42 --> Severity: error --> Exception: Unable to locate the model you have specified: Studentfee_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-08 22:49:42 --> Severity: error --> Exception: Unable to locate the model you have specified: Studentfee_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-08 22:49:43 --> Severity: error --> Exception: Call to undefined method Studentfeemaster_model::getOnlineFeeCollectionReport() C:\xampp\htdocs\amt\api\application\controllers\Online_fees_report_api.php 95
+ERROR - 2025-10-08 22:49:43 --> Severity: error --> Exception: Call to undefined method Studentfeemaster_model::getOnlineFeeCollectionReport() C:\xampp\htdocs\amt\api\application\controllers\Online_fees_report_api.php 95
+ERROR - 2025-10-08 22:49:43 --> Severity: error --> Exception: Call to undefined method Studentfeemaster_model::getOnlineFeeCollectionReport() C:\xampp\htdocs\amt\api\application\controllers\Online_fees_report_api.php 95
+ERROR - 2025-10-08 22:50:57 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 96
+ERROR - 2025-10-08 22:50:57 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 96
+ERROR - 2025-10-08 22:50:57 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 96
+ERROR - 2025-10-08 22:50:59 --> Severity: error --> Exception: Unable to locate the model you have specified: Studentfee_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-08 22:50:59 --> Severity: error --> Exception: Unable to locate the model you have specified: Studentfee_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-08 22:50:59 --> Severity: error --> Exception: Unable to locate the model you have specified: Studentfee_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-08 22:51:01 --> Severity: error --> Exception: Call to undefined method Studentfeemaster_model::getOnlineFeeCollectionReport() C:\xampp\htdocs\amt\api\application\controllers\Online_fees_report_api.php 96
+ERROR - 2025-10-08 22:51:01 --> Severity: error --> Exception: Call to undefined method Studentfeemaster_model::getOnlineFeeCollectionReport() C:\xampp\htdocs\amt\api\application\controllers\Online_fees_report_api.php 96
+ERROR - 2025-10-08 22:51:01 --> Severity: error --> Exception: Call to undefined method Studentfeemaster_model::getOnlineFeeCollectionReport() C:\xampp\htdocs\amt\api\application\controllers\Online_fees_report_api.php 96
+ERROR - 2025-10-08 22:51:57 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 98
+ERROR - 2025-10-08 22:51:57 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 98
+ERROR - 2025-10-08 22:51:57 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 98
+ERROR - 2025-10-08 22:55:18 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 98
+ERROR - 2025-10-08 22:56:43 --> Severity: error --> Exception: Call to undefined method Income_model::search() C:\xampp\htdocs\amt\api\application\controllers\Income_report_api.php 98

@@ -295,29 +295,52 @@ class Payroll_model extends MY_Model
     }
 
     public function getbetweenpayrollReport($start_date, $end_date)
-    {      
-        
-        $condition = "date_format(staff_payslip.payment_date,'%Y-%m-%d') between '" . $start_date . "' and '" . $end_date . "'";       
-       
+    {
+
+        $condition = "date_format(staff_payslip.payment_date,'%Y-%m-%d') between " . $this->db->escape($start_date) . " and " . $this->db->escape($end_date);
+
         $this->db->select('staff.id,staff.employee_id,staff.name,roles.name as user_type,staff.surname,staff_designation.designation,department.department_name as department,staff_payslip.*');
         $this->db->join("staff_payslip", "staff_payslip.staff_id = staff.id", "inner");
         $this->db->join("staff_designation", "staff.designation = staff_designation.id", "left");
         $this->db->join("department", "staff.department = department.id", "left");
         $this->db->join("staff_roles", "staff_roles.staff_id = staff.id", "left");
-        $this->db->join("roles", "staff_roles.role_id = roles.id", "left");        
-        $this->db->where($condition); 
+        $this->db->join("roles", "staff_roles.role_id = roles.id", "left");
+        $this->db->where($condition);
         if ($this->session->has_userdata('admin')) {
             $getStaffRole     = $this->customlib->getStaffRole();
-            $staffrole   =   json_decode($getStaffRole);       
-            
-            $superadmin_rest = $this->customlib->superadmin_visible(); 
+            $staffrole   =   json_decode($getStaffRole);
+
+            $superadmin_rest = $this->customlib->superadmin_visible();
             if ($superadmin_rest == 'disabled' && $staffrole->id != 7) {
-                $this->db->where("roles.id !=", 7)  ;          
-            } 
+                $this->db->where("roles.id !=", 7)  ;
+            }
         }
-        
-        $query = $this->db->get("staff");         
-        return $query->result_array(); 
+
+        $query = $this->db->get("staff");
+        return $query->result_array();
+    }
+
+    /**
+     * Get payroll summary
+     *
+     * @param string $start_date Start date (Y-m-d format)
+     * @param string $end_date End date (Y-m-d format)
+     * @return array
+     */
+    public function getPayrollSummary($start_date, $end_date)
+    {
+        $condition = "date_format(staff_payslip.payment_date,'%Y-%m-%d') between " . $this->db->escape($start_date) . " and " . $this->db->escape($end_date);
+
+        $this->db->select('COUNT(DISTINCT staff_payslip.staff_id) as total_staff,
+                          SUM(staff_payslip.basic) as total_basic,
+                          SUM(staff_payslip.total_allowance) as total_allowance,
+                          SUM(staff_payslip.total_deduction) as total_deduction,
+                          SUM(staff_payslip.tax) as total_tax');
+        $this->db->from('staff_payslip');
+        $this->db->where($condition);
+
+        $query = $this->db->get();
+        return $query->row_array();
     }
 
 }

@@ -3,49 +3,50 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * Payroll Report API Controller
- *
- * Provides API endpoints for payroll reports
- *
+ * Income Group Report API Controller
+ * 
+ * Provides API endpoints for income group reports
+ * 
  * @package    Smart School
  * @subpackage API
  * @category   Finance Reports
  * @author     Smart School Team
  */
-class Payroll_report_api extends CI_Controller
+class Income_group_report_api extends CI_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
-
+        
         // Suppress errors for clean JSON output
         ini_set('display_errors', 0);
         error_reporting(0);
-
+        
         // Load required models in correct order
         $this->load->model('setting_model');
         $this->load->model('auth_model');
-        $this->load->model('payroll_model');
-        $this->load->model('staff_model');
-
+        $this->load->model('income_model');
+        $this->load->model('incomehead_model');
+        
         // Set JSON response header
         header('Content-Type: application/json');
     }
 
     /**
-     * Filter endpoint - Get payroll report with filters
-     *
-     * POST /api/payroll-report/filter
-     *
+     * Filter endpoint - Get income group report with filters
+     * 
+     * POST /api/income-group-report/filter
+     * 
      * Request Body (all optional):
      * {
      *   "search_type": "today|this_week|this_month|last_month|this_year|period",
      *   "date_from": "2025-01-01",
-     *   "date_to": "2025-12-31"
+     *   "date_to": "2025-12-31",
+     *   "head": "1"
      * }
-     *
-     * Empty request {} returns all payroll for current year
+     * 
+     * Empty request {} returns all income for current year
      */
     public function filter()
     {
@@ -70,6 +71,7 @@ class Payroll_report_api extends CI_Controller
             $search_type = (isset($input['search_type']) && $input['search_type'] !== '') ? $input['search_type'] : null;
             $date_from = (isset($input['date_from']) && $input['date_from'] !== '') ? $input['date_from'] : null;
             $date_to = (isset($input['date_to']) && $input['date_to'] !== '') ? $input['date_to'] : null;
+            $head = (isset($input['head']) && $input['head'] !== '') ? $input['head'] : null;
 
             // Determine date range
             if ($search_type !== null) {
@@ -91,46 +93,41 @@ class Payroll_report_api extends CI_Controller
                 $date_label = $dates['label'];
             }
 
-            // Get payroll data
-            $payrolls = $this->payroll_model->getbetweenpayrollReport($start_date, $end_date);
+            // Get income data
+            $incomes = $this->income_model->searchincomegroup($start_date, $end_date, $head);
 
             // Calculate totals
-            $total_basic = 0;
-            $total_allowance = 0;
-            $total_deduction = 0;
-            $total_tax = 0;
-            $total_net_salary = 0;
-            $total_records = count($payrolls);
-
-            foreach ($payrolls as &$payroll) {
-                $basic = floatval($payroll['basic']);
-                $allowance = floatval($payroll['total_allowance']);
-                $deduction = floatval($payroll['total_deduction']);
-                $tax = floatval($payroll['tax']);
-
-                $gross_salary = $basic + $allowance - $deduction;
-                $net_salary = $gross_salary - $tax;
-
-                $payroll['gross_salary'] = number_format($gross_salary, 2, '.', '');
-                $payroll['net_salary'] = number_format($net_salary, 2, '.', '');
-
-                $total_basic += $basic;
-                $total_allowance += $allowance;
-                $total_deduction += $deduction;
-                $total_tax += $tax;
-                $total_net_salary += $net_salary;
+            $total_amount = 0;
+            $total_records = 0;
+            $income_heads = array();
+            
+            foreach ($incomes as $income) {
+                $total_amount += floatval($income['amount']);
+                $total_records++;
+                
+                // Group by income head
+                $head_id = $income['head_id'];
+                if (!isset($income_heads[$head_id])) {
+                    $income_heads[$head_id] = array(
+                        'head_id' => $head_id,
+                        'income_category' => $income['income_category'],
+                        'count' => 0,
+                        'total' => 0
+                    );
+                }
+                $income_heads[$head_id]['count']++;
+                $income_heads[$head_id]['total'] += floatval($income['amount']);
             }
-
-            $total_gross_salary = $total_basic + $total_allowance - $total_deduction;
 
             // Prepare response
             $response = array(
                 'status' => 1,
-                'message' => 'Payroll report retrieved successfully',
+                'message' => 'Income group report retrieved successfully',
                 'filters_applied' => array(
                     'search_type' => $search_type,
                     'date_from' => $start_date,
-                    'date_to' => $end_date
+                    'date_to' => $end_date,
+                    'head' => $head
                 ),
                 'date_range' => array(
                     'start_date' => $start_date,
@@ -139,15 +136,11 @@ class Payroll_report_api extends CI_Controller
                 ),
                 'summary' => array(
                     'total_records' => $total_records,
-                    'total_basic' => number_format($total_basic, 2, '.', ''),
-                    'total_allowance' => number_format($total_allowance, 2, '.', ''),
-                    'total_deduction' => number_format($total_deduction, 2, '.', ''),
-                    'total_gross_salary' => number_format($total_gross_salary, 2, '.', ''),
-                    'total_tax' => number_format($total_tax, 2, '.', ''),
-                    'total_net_salary' => number_format($total_net_salary, 2, '.', '')
+                    'total_amount' => number_format($total_amount, 2, '.', ''),
+                    'income_heads' => array_values($income_heads)
                 ),
                 'total_records' => $total_records,
-                'data' => $payrolls,
+                'data' => $incomes,
                 'timestamp' => date('Y-m-d H:i:s')
             );
 
@@ -165,10 +158,10 @@ class Payroll_report_api extends CI_Controller
 
     /**
      * List endpoint - Get filter options
-     *
-     * POST /api/payroll-report/list
-     *
-     * Returns available search types for filtering
+     * 
+     * POST /api/income-group-report/list
+     * 
+     * Returns available income heads for filtering
      */
     public function list()
     {
@@ -183,11 +176,15 @@ class Payroll_report_api extends CI_Controller
                 return;
             }
 
+            // Get all income heads
+            $income_heads = $this->incomehead_model->get();
+
             // Prepare response
             $response = array(
                 'status' => 1,
-                'message' => 'Filter options retrieved successfully',
+                'message' => 'Income heads retrieved successfully',
                 'data' => array(
+                    'income_heads' => $income_heads,
                     'search_types' => array(
                         array('key' => 'today', 'label' => 'Today'),
                         array('key' => 'this_week', 'label' => 'This Week'),

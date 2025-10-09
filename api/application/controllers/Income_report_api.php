@@ -3,16 +3,17 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * Payroll Report API Controller
- *
- * Provides API endpoints for payroll reports
- *
+ * Income Report API Controller
+ * 
+ * Provides API endpoints for income reports (different from Income Group Report)
+ * This shows all income records without grouping
+ * 
  * @package    Smart School
  * @subpackage API
  * @category   Finance Reports
  * @author     Smart School Team
  */
-class Payroll_report_api extends CI_Controller
+class Income_report_api extends CI_Controller
 {
 
     public function __construct()
@@ -23,29 +24,47 @@ class Payroll_report_api extends CI_Controller
         ini_set('display_errors', 0);
         error_reporting(0);
 
-        // Load required models in correct order
-        $this->load->model('setting_model');
-        $this->load->model('auth_model');
-        $this->load->model('payroll_model');
-        $this->load->model('staff_model');
-
         // Set JSON response header
         header('Content-Type: application/json');
+
+        // Try to load database with error handling
+        try {
+            $this->load->database();
+
+            // Test database connection
+            if (!$this->db->conn_id) {
+                throw new Exception('Database connection failed');
+            }
+
+            // Load required models in correct order
+            $this->load->model('setting_model');
+            $this->load->model('auth_model');
+
+        } catch (Exception $e) {
+            // Return JSON error response
+            echo json_encode(array(
+                'status' => 0,
+                'message' => 'Database connection error. Please ensure MySQL is running in XAMPP.',
+                'error' => 'Unable to connect to database server',
+                'timestamp' => date('Y-m-d H:i:s')
+            ));
+            exit;
+        }
     }
 
     /**
-     * Filter endpoint - Get payroll report with filters
-     *
-     * POST /api/payroll-report/filter
-     *
+     * Filter endpoint - Get income report with filters
+     * 
+     * POST /api/income-report/filter
+     * 
      * Request Body (all optional):
      * {
      *   "search_type": "today|this_week|this_month|last_month|this_year|period",
      *   "date_from": "2025-01-01",
      *   "date_to": "2025-12-31"
      * }
-     *
-     * Empty request {} returns all payroll for current year
+     * 
+     * Empty request {} returns all income for current year
      */
     public function filter()
     {
@@ -91,42 +110,44 @@ class Payroll_report_api extends CI_Controller
                 $date_label = $dates['label'];
             }
 
-            // Get payroll data
-            $payrolls = $this->payroll_model->getbetweenpayrollReport($start_date, $end_date);
+            // Get income data directly from database
+            $this->db->select('income.id, income.date, income.name, income.invoice_no, income.amount, income.documents, income.note, income_head.income_category, income.income_head_id');
+            $this->db->from('income');
+            $this->db->join('income_head', 'income.income_head_id = income_head.id');
+            $this->db->where('income.date >=', $start_date);
+            $this->db->where('income.date <=', $end_date);
+            $this->db->order_by('income.date', 'desc');
+            $query = $this->db->get();
+            $incomeList = $query->result_array();
 
             // Calculate totals
-            $total_basic = 0;
-            $total_allowance = 0;
-            $total_deduction = 0;
-            $total_tax = 0;
-            $total_net_salary = 0;
-            $total_records = count($payrolls);
+            $total_amount = 0;
+            $total_records = 0;
+            $incomes = array();
 
-            foreach ($payrolls as &$payroll) {
-                $basic = floatval($payroll['basic']);
-                $allowance = floatval($payroll['total_allowance']);
-                $deduction = floatval($payroll['total_deduction']);
-                $tax = floatval($payroll['tax']);
+            if (!empty($incomeList)) {
+                foreach ($incomeList as $income) {
+                    $total_amount += floatval($income['amount']);
+                    $total_records++;
 
-                $gross_salary = $basic + $allowance - $deduction;
-                $net_salary = $gross_salary - $tax;
-
-                $payroll['gross_salary'] = number_format($gross_salary, 2, '.', '');
-                $payroll['net_salary'] = number_format($net_salary, 2, '.', '');
-
-                $total_basic += $basic;
-                $total_allowance += $allowance;
-                $total_deduction += $deduction;
-                $total_tax += $tax;
-                $total_net_salary += $net_salary;
+                    // Format for response
+                    $incomes[] = array(
+                        'id' => $income['id'],
+                        'name' => $income['name'],
+                        'invoice_no' => $income['invoice_no'],
+                        'income_category' => $income['income_category'],
+                        'date' => $income['date'],
+                        'amount' => number_format(floatval($income['amount']), 2, '.', ''),
+                        'note' => isset($income['note']) ? $income['note'] : '',
+                        'documents' => isset($income['documents']) ? $income['documents'] : ''
+                    );
+                }
             }
-
-            $total_gross_salary = $total_basic + $total_allowance - $total_deduction;
 
             // Prepare response
             $response = array(
                 'status' => 1,
-                'message' => 'Payroll report retrieved successfully',
+                'message' => 'Income report retrieved successfully',
                 'filters_applied' => array(
                     'search_type' => $search_type,
                     'date_from' => $start_date,
@@ -139,15 +160,10 @@ class Payroll_report_api extends CI_Controller
                 ),
                 'summary' => array(
                     'total_records' => $total_records,
-                    'total_basic' => number_format($total_basic, 2, '.', ''),
-                    'total_allowance' => number_format($total_allowance, 2, '.', ''),
-                    'total_deduction' => number_format($total_deduction, 2, '.', ''),
-                    'total_gross_salary' => number_format($total_gross_salary, 2, '.', ''),
-                    'total_tax' => number_format($total_tax, 2, '.', ''),
-                    'total_net_salary' => number_format($total_net_salary, 2, '.', '')
+                    'total_amount' => number_format($total_amount, 2, '.', '')
                 ),
                 'total_records' => $total_records,
-                'data' => $payrolls,
+                'data' => $incomes,
                 'timestamp' => date('Y-m-d H:i:s')
             );
 
@@ -165,9 +181,9 @@ class Payroll_report_api extends CI_Controller
 
     /**
      * List endpoint - Get filter options
-     *
-     * POST /api/payroll-report/list
-     *
+     * 
+     * POST /api/income-report/list
+     * 
      * Returns available search types for filtering
      */
     public function list()
@@ -213,51 +229,57 @@ class Payroll_report_api extends CI_Controller
     }
 
     /**
-     * Get date range by search type
-     * 
-     * @param string $search_type
-     * @return array
+     * Private helper method to get date range by search type
      */
     private function getDateRangeBySearchType($search_type)
     {
-        $current_year = date('Y');
-        $current_month = date('m');
-        $current_day = date('d');
-
+        $today = date('Y-m-d');
+        
         switch ($search_type) {
             case 'today':
-                $from_date = date('Y-m-d');
-                $to_date = date('Y-m-d');
-                $label = date('d/m/Y');
-                break;
+                return array(
+                    'from_date' => $today,
+                    'to_date' => $today,
+                    'label' => date('d/m/Y')
+                );
+            
             case 'this_week':
-                $from_date = date('Y-m-d', strtotime('monday this week'));
-                $to_date = date('Y-m-d', strtotime('sunday this week'));
-                $label = date('d/m/Y', strtotime($from_date)) . ' to ' . date('d/m/Y', strtotime($to_date));
-                break;
+                $start_of_week = date('Y-m-d', strtotime('monday this week'));
+                $end_of_week = date('Y-m-d', strtotime('sunday this week'));
+                return array(
+                    'from_date' => $start_of_week,
+                    'to_date' => $end_of_week,
+                    'label' => date('d/m/Y', strtotime($start_of_week)) . ' to ' . date('d/m/Y', strtotime($end_of_week))
+                );
+            
             case 'this_month':
-                $from_date = date('Y-m-01');
-                $to_date = date('Y-m-t');
-                $label = date('F Y');
-                break;
+                $start_of_month = date('Y-m-01');
+                $end_of_month = date('Y-m-t');
+                return array(
+                    'from_date' => $start_of_month,
+                    'to_date' => $end_of_month,
+                    'label' => date('F Y')
+                );
+            
             case 'last_month':
-                $from_date = date('Y-m-01', strtotime('first day of last month'));
-                $to_date = date('Y-m-t', strtotime('last day of last month'));
-                $label = date('F Y', strtotime($from_date));
-                break;
+                $start_of_last_month = date('Y-m-01', strtotime('first day of last month'));
+                $end_of_last_month = date('Y-m-t', strtotime('last day of last month'));
+                return array(
+                    'from_date' => $start_of_last_month,
+                    'to_date' => $end_of_last_month,
+                    'label' => date('F Y', strtotime($start_of_last_month))
+                );
+            
             case 'this_year':
             default:
-                $from_date = $current_year . '-01-01';
-                $to_date = $current_year . '-12-31';
-                $label = '01/01/' . $current_year . ' to 31/12/' . $current_year;
-                break;
+                $start_of_year = date('Y-01-01');
+                $end_of_year = date('Y-12-31');
+                return array(
+                    'from_date' => $start_of_year,
+                    'to_date' => $end_of_year,
+                    'label' => date('01/01/Y') . ' to ' . date('31/12/Y')
+                );
         }
-
-        return array(
-            'from_date' => $from_date,
-            'to_date' => $to_date,
-            'label' => $label
-        );
     }
 
 }
