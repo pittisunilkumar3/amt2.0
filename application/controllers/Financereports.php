@@ -3264,6 +3264,322 @@ class Financereports extends Admin_Controller
         }
     }
 
+    /**
+     * Fee Group-wise Collection Report with Graphical Representation
+     */
+    public function feegroupwise_collection()
+    {
+        if (!$this->rbac->hasPrivilege('fees_collection_report', 'can_view')) {
+            access_denied();
+        }
+
+        $this->session->set_userdata('top_menu', 'Reports');
+        $this->session->set_userdata('sub_menu', 'Reports/finance');
+        $this->session->set_userdata('subsub_menu', 'Reports/finance/feegroupwise_collection');
+
+        $data = array();
+        $data['title'] = 'Fee Group-wise Collection Report';
+        $data['sch_setting'] = $this->sch_setting_detail;
+        $data['currency_symbol'] = $this->customlib->getSchoolCurrencyFormat();
+
+        // Load required models
+        $this->load->model('feesessiongroup_model');
+        $this->load->model('feesessiongroupadding_model');
+        $this->load->model('session_model');
+
+        // Get filter data
+        $data['classlist'] = $this->class_model->get();
+        $data['sessionlist'] = $this->session_model->get();
+
+        // Set default values
+        $data['class_id'] = '';
+        $data['section_id'] = '';
+        $data['session_id'] = $this->current_session;
+        $data['from_date'] = '';
+        $data['to_date'] = '';
+        $data['date_grouping'] = 'none';
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('financereports/feegroupwise_collection', $data);
+        $this->load->view('layout/footer', $data);
+    }
+
+    /**
+     * Get Fee Group-wise Collection Data (AJAX)
+     */
+    public function getFeeGroupwiseData()
+    {
+        try {
+            // Get filter parameters
+            $session_id = $this->input->post('session_id') ?: $this->current_session;
+            $class_ids = $this->input->post('class_ids') ?: array();
+            $section_ids = $this->input->post('section_ids') ?: array();
+            $feegroup_ids = $this->input->post('feegroup_ids') ?: array();
+            $from_date = $this->input->post('from_date');
+            $to_date = $this->input->post('to_date');
+            $date_grouping = $this->input->post('date_grouping') ?: 'none';
+
+            // Load model
+            $this->load->model('feegroupwise_model');
+
+            // Get fee group-wise collection data
+            $data = $this->feegroupwise_model->getFeeGroupwiseCollection(
+                $session_id,
+                $class_ids,
+                $section_ids,
+                $feegroup_ids,
+                $from_date,
+                $to_date
+            );
+
+            // Get detailed student records
+            $detailed_data = $this->feegroupwise_model->getFeeGroupwiseDetailedData(
+                $session_id,
+                $class_ids,
+                $section_ids,
+                $feegroup_ids,
+                $from_date,
+                $to_date
+            );
+
+            // Calculate summary statistics
+            $summary = array(
+                'total_fee_groups' => count($data),
+                'total_amount' => 0,
+                'total_collected' => 0,
+                'total_balance' => 0,
+                'collection_percentage' => 0
+            );
+
+            foreach ($data as $row) {
+                $summary['total_amount'] += $row->total_amount;
+                $summary['total_collected'] += $row->amount_collected;
+                $summary['total_balance'] += $row->balance_amount;
+            }
+
+            if ($summary['total_amount'] > 0) {
+                $summary['collection_percentage'] = round(($summary['total_collected'] / $summary['total_amount']) * 100, 2);
+            }
+
+            echo json_encode(array(
+                'status' => 1,
+                'message' => 'Data retrieved successfully',
+                'grid_data' => $data,
+                'detailed_data' => $detailed_data,
+                'summary' => $summary
+            ));
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 0,
+                'message' => 'Error: ' . $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Export Fee Group-wise Collection Report
+     */
+    public function exportFeeGroupwiseReport()
+    {
+        try {
+            $export_format = $this->input->post('export_format');
+
+            // Get filter parameters
+            $session_id = $this->input->post('session_id') ?: $this->current_session;
+            $class_ids = $this->input->post('class_ids') ?: array();
+            $section_ids = $this->input->post('section_ids') ?: array();
+            $feegroup_ids = $this->input->post('feegroup_ids') ?: array();
+            $from_date = $this->input->post('from_date');
+            $to_date = $this->input->post('to_date');
+
+            // Load model
+            $this->load->model('feegroupwise_model');
+
+            // Get data
+            $data['results'] = $this->feegroupwise_model->getFeeGroupwiseDetailedData(
+                $session_id,
+                $class_ids,
+                $section_ids,
+                $feegroup_ids,
+                $from_date,
+                $to_date
+            );
+
+            $data['sch_setting'] = $this->sch_setting_detail;
+            $data['currency_symbol'] = $this->customlib->getSchoolCurrencyFormat();
+            $data['from_date'] = $from_date;
+            $data['to_date'] = $to_date;
+
+            if ($export_format == 'excel') {
+                $this->exportFeeGroupwiseExcel($data);
+            } elseif ($export_format == 'csv') {
+                $this->exportFeeGroupwiseCSV($data);
+            } else {
+                show_error('Invalid export format');
+            }
+
+        } catch (Exception $e) {
+            show_error('Export error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Export to Excel
+     */
+    private function exportFeeGroupwiseExcel($data)
+    {
+        $filename = 'Fee_Groupwise_Collection_Report_' . date('Y-m-d_H-i-s') . '.xls';
+
+        header('Content-Type: application/vnd.ms-excel; charset=UTF-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        echo $this->buildFeeGroupwiseExcelContent($data);
+        exit;
+    }
+
+    /**
+     * Build Excel content
+     */
+    private function buildFeeGroupwiseExcelContent($data)
+    {
+        $currency_symbol = $data['currency_symbol'];
+        $output = '';
+
+        // Header
+        $output .= '<table border="1">';
+        $output .= '<tr><th colspan="10" style="text-align:center;font-size:16px;font-weight:bold;">Fee Group-wise Collection Report</th></tr>';
+
+        if (!empty($data['from_date']) && !empty($data['to_date'])) {
+            $output .= '<tr><th colspan="10" style="text-align:center;">Period: ' . date('d-m-Y', strtotime($data['from_date'])) . ' to ' . date('d-m-Y', strtotime($data['to_date'])) . '</th></tr>';
+        }
+
+        $output .= '<tr><th colspan="10">&nbsp;</th></tr>';
+
+        // Table headers
+        $output .= '<tr style="background-color:#f2f2f2;font-weight:bold;">';
+        $output .= '<th>Admission No</th>';
+        $output .= '<th>Student Name</th>';
+        $output .= '<th>Class</th>';
+        $output .= '<th>Section</th>';
+        $output .= '<th>Fee Group</th>';
+        $output .= '<th>Total Fee (' . $currency_symbol . ')</th>';
+        $output .= '<th>Amount Collected (' . $currency_symbol . ')</th>';
+        $output .= '<th>Balance (' . $currency_symbol . ')</th>';
+        $output .= '<th>Collection %</th>';
+        $output .= '<th>Payment Status</th>';
+        $output .= '</tr>';
+
+        // Data rows
+        if (!empty($data['results'])) {
+            foreach ($data['results'] as $row) {
+                $collection_percentage = 0;
+                if ($row->total_amount > 0) {
+                    $collection_percentage = round(($row->amount_collected / $row->total_amount) * 100, 2);
+                }
+
+                $payment_status = 'Pending';
+                if ($row->balance_amount == 0) {
+                    $payment_status = 'Paid';
+                } elseif ($row->amount_collected > 0) {
+                    $payment_status = 'Partial';
+                }
+
+                $output .= '<tr>';
+                $output .= '<td>' . $row->admission_no . '</td>';
+                $output .= '<td>' . $row->student_name . '</td>';
+                $output .= '<td>' . $row->class_name . '</td>';
+                $output .= '<td>' . $row->section_name . '</td>';
+                $output .= '<td>' . $row->fee_group_name . '</td>';
+                $output .= '<td style="text-align:right;">' . number_format($row->total_amount, 2) . '</td>';
+                $output .= '<td style="text-align:right;">' . number_format($row->amount_collected, 2) . '</td>';
+                $output .= '<td style="text-align:right;">' . number_format($row->balance_amount, 2) . '</td>';
+                $output .= '<td style="text-align:right;">' . $collection_percentage . '%</td>';
+                $output .= '<td>' . $payment_status . '</td>';
+                $output .= '</tr>';
+            }
+        } else {
+            $output .= '<tr><td colspan="10" style="text-align:center;">No data available</td></tr>';
+        }
+
+        $output .= '</table>';
+        return $output;
+    }
+
+    /**
+     * Export to CSV
+     */
+    private function exportFeeGroupwiseCSV($data)
+    {
+        $filename = 'Fee_Groupwise_Collection_Report_' . date('Y-m-d_H-i-s') . '.csv';
+
+        header('Content-Type: text/csv; charset=UTF-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $output = fopen('php://output', 'w');
+
+        // UTF-8 BOM
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Headers
+        fputcsv($output, array('Fee Group-wise Collection Report'));
+
+        if (!empty($data['from_date']) && !empty($data['to_date'])) {
+            fputcsv($output, array('Period: ' . date('d-m-Y', strtotime($data['from_date'])) . ' to ' . date('d-m-Y', strtotime($data['to_date']))));
+        }
+
+        fputcsv($output, array('')); // Empty row
+
+        // Column headers
+        fputcsv($output, array(
+            'Admission No',
+            'Student Name',
+            'Class',
+            'Section',
+            'Fee Group',
+            'Total Fee',
+            'Amount Collected',
+            'Balance',
+            'Collection %',
+            'Payment Status'
+        ));
+
+        // Data rows
+        if (!empty($data['results'])) {
+            foreach ($data['results'] as $row) {
+                $collection_percentage = 0;
+                if ($row->total_amount > 0) {
+                    $collection_percentage = round(($row->amount_collected / $row->total_amount) * 100, 2);
+                }
+
+                $payment_status = 'Pending';
+                if ($row->balance_amount == 0) {
+                    $payment_status = 'Paid';
+                } elseif ($row->amount_collected > 0) {
+                    $payment_status = 'Partial';
+                }
+
+                fputcsv($output, array(
+                    $row->admission_no,
+                    $row->student_name,
+                    $row->class_name,
+                    $row->section_name,
+                    $row->fee_group_name,
+                    number_format($row->total_amount, 2),
+                    number_format($row->amount_collected, 2),
+                    number_format($row->balance_amount, 2),
+                    $collection_percentage . '%',
+                    $payment_status
+                ));
+            }
+        }
+
+        fclose($output);
+        exit;
+    }
+
 
 
 }

@@ -243,6 +243,10 @@ $route['parent-login-detail-report/list']['POST'] = 'parent_login_detail_report_
 $route['class-subject-report/filter']['POST'] = 'class_subject_report_api/filter';
 $route['class-subject-report/list']['POST'] = 'class_subject_report_api/list';
 
+// Class Section Report API Routes
+$route['class-section-report/filter']['POST'] = 'class_section_report_api/filter';
+$route['class-section-report/list']['POST'] = 'class_section_report_api/list';
+
 // Student Profile Report API Routes
 $route['student-profile-report/filter']['POST'] = 'student_profile_report_api/filter';
 $route['student-profile-report/list']['POST'] = 'student_profile_report_api/list';
@@ -450,3 +454,7 @@ $route['audit-log/list']['POST'] = 'audit_log_api/list';
 // User Log API Routes
 $route['user-log/filter']['POST'] = 'user_log_api/filter';
 $route['user-log/list']['POST'] = 'user_log_api/list';
+
+// Fee Group-wise Collection Report API Routes
+$route['feegroupwise-collection-report/filter']['POST'] = 'feegroupwise_collection_report_api/filter';
+$route['feegroupwise-collection-report/list']['POST'] = 'feegroupwise_collection_report_api/list';

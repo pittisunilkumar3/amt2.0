@@ -10370,3 +10370,29 @@ ERROR - 2025-10-09 11:54:42 --> Query error: Unknown column 'DISTINCT' in 'field
 FROM `userlog`
 WHERE `role` IS NOT NULL
 ORDER BY `role` ASC
+ERROR - 2025-10-09 14:26:02 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 14:26:02 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 14:26:02 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 14:26:02 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 14:26:02 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 14:26:44 --> Severity: error --> Exception: Unable to locate the model you have specified: Feegroupwise_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 14:26:44 --> Severity: error --> Exception: Unable to locate the model you have specified: Feegroupwise_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 14:26:44 --> Severity: error --> Exception: Unable to locate the model you have specified: Feegroupwise_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 14:26:44 --> Severity: error --> Exception: Unable to locate the model you have specified: Feegroupwise_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 14:26:44 --> Severity: error --> Exception: Unable to locate the model you have specified: Feegroupwise_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 14:27:03 --> Severity: error --> Exception: Unable to locate the model you have specified: Feegroupwise_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 15:00:16 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 15:00:37 --> Error loading models: Unable to locate the model you have specified: Sidebarmenu_model
+ERROR - 2025-10-09 17:02:55 --> Severity: error --> Exception: Unable to locate the model you have specified: Classsection_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 17:02:55 --> Severity: error --> Exception: Unable to locate the model you have specified: Classsection_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 17:02:55 --> Severity: error --> Exception: Unable to locate the model you have specified: Classsection_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 17:02:55 --> Severity: error --> Exception: Unable to locate the model you have specified: Classsection_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 17:02:55 --> Severity: error --> Exception: Unable to locate the model you have specified: Classsection_model C:\xampp\htdocs\amt\api\system\core\Loader.php 349
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\libraries\Customlib.php 2126
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Classsection_model.php 206
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\libraries\Customlib.php 2126
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Classsection_model.php 206
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\libraries\Customlib.php 2126
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Classsection_model.php 206
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\libraries\Customlib.php 2126
+ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Classsection_model.php 206
