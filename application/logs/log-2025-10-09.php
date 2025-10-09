@@ -237,3 +237,74 @@ ERROR - 2025-10-09 06:48:06 --> Could not find the language line "thanks_for_con
 ERROR - 2025-10-09 06:48:06 --> Could not find the language line "thank_you_for_your_complain"
 ERROR - 2025-10-09 06:48:07 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-09 06:48:07 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:30:45 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:30:45 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:00:48 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:00:48 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:30:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:30:56 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:00:56 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:00:56 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:31:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:31:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:31:01 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\admin\book\issue_returnreport.php 91
+ERROR - 2025-10-09 07:01:01 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:01:01 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:31:34 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:31:34 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:01:35 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:01:35 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:31:42 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:31:42 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:01:42 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:01:42 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:32:05 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:32:05 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:02:06 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:02:06 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:32:46 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:32:47 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:32:47 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\bookinventory.php 166
+ERROR - 2025-10-09 07:02:47 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:02:47 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:33:07 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:33:07 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:33:07 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\admin\book\issue_returnreport.php 91
+ERROR - 2025-10-09 07:03:07 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:03:07 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:33:17 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:33:17 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:33:17 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\bookinventory.php 166
+ERROR - 2025-10-09 07:03:17 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:03:17 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:35:05 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:35:05 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:05:06 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:05:06 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:35:11 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:35:11 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:35:11 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\inventorystock.php 77
+ERROR - 2025-10-09 07:05:12 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:05:12 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:36:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:36:01 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 10:36:01 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\additem.php 78
+ERROR - 2025-10-09 07:06:01 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:06:01 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 10:36:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 10:36:02 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 07:06:03 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 07:06:03 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 11:45:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 11:45:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 11:45:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 11:45:55 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 11:45:55 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\additem.php 78
+ERROR - 2025-10-09 11:45:56 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\admin\item\itemList.php 50
+ERROR - 2025-10-09 08:15:57 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 08:15:57 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-09 11:51:04 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-09 11:51:04 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-09 11:51:04 --> Severity: Warning --> Undefined variable $search_type C:\xampp\htdocs\amt\application\views\reports\inventorystock.php 77
+ERROR - 2025-10-09 08:21:05 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-09 08:21:05 --> Could not find the language line "thank_you_for_your_complain"

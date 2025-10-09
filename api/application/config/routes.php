@@ -418,3 +418,15 @@ $route['total-fee-collection-report/list']['POST'] = 'total_fee_collection_repor
 // Fee Collection Columnwise Report API Routes
 $route['fee-collection-columnwise-report/filter']['POST'] = 'fee_collection_columnwise_report_api/filter';
 $route['fee-collection-columnwise-report/list']['POST'] = 'fee_collection_columnwise_report_api/list';
+
+// Inventory Stock Report API Routes
+$route['inventory-stock-report/filter']['POST'] = 'inventory_stock_report_api/filter';
+$route['inventory-stock-report/list']['POST'] = 'inventory_stock_report_api/list';
+
+// Add Item Report API Routes
+$route['add-item-report/filter']['POST'] = 'add_item_report_api/filter';
+$route['add-item-report/list']['POST'] = 'add_item_report_api/list';
+
+// Issue Inventory Report API Routes
+$route['issue-inventory-report/filter']['POST'] = 'issue_inventory_report_api/filter';
+$route['issue-inventory-report/list']['POST'] = 'issue_inventory_report_api/list';
