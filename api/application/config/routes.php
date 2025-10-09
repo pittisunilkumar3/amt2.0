@@ -438,3 +438,15 @@ $route['student-transport-details/list']['POST'] = 'student_transport_details_ap
 // Student Hostel Details API Routes
 $route['student-hostel-details/filter']['POST'] = 'student_hostel_details_api/filter';
 $route['student-hostel-details/list']['POST'] = 'student_hostel_details_api/list';
+
+// Alumni Report API Routes
+$route['alumni-report/filter']['POST'] = 'alumni_report_api/filter';
+$route['alumni-report/list']['POST'] = 'alumni_report_api/list';
+
+// Audit Log API Routes
+$route['audit-log/filter']['POST'] = 'audit_log_api/filter';
+$route['audit-log/list']['POST'] = 'audit_log_api/list';
+
+// User Log API Routes
+$route['user-log/filter']['POST'] = 'user_log_api/filter';
+$route['user-log/list']['POST'] = 'user_log_api/list';

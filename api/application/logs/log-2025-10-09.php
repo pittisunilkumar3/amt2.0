@@ -10342,3 +10342,31 @@ ERROR - 2025-10-09 06:46:32 --> Severity: Warning --> Undefined array key "amoun
 ERROR - 2025-10-09 06:46:32 --> Severity: Warning --> Undefined array key "amount" C:\xampp\htdocs\amt\api\application\controllers\Fee_collection_columnwise_report_api.php 255
 ERROR - 2025-10-09 06:46:32 --> Severity: Warning --> Undefined array key "amount" C:\xampp\htdocs\amt\api\application\controllers\Fee_collection_columnwise_report_api.php 255
 ERROR - 2025-10-09 06:46:32 --> Severity: Warning --> Undefined array key "amount" C:\xampp\htdocs\amt\api\application\controllers\Fee_collection_columnwise_report_api.php 255
+ERROR - 2025-10-09 11:53:01 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `action`
+FROM `logs`
+WHERE `action` IS NOT NULL
+ORDER BY `action` ASC
+ERROR - 2025-10-09 11:53:02 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `action`
+FROM `logs`
+WHERE `action` IS NOT NULL
+ORDER BY `action` ASC
+ERROR - 2025-10-09 11:53:19 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `action`
+FROM `logs`
+WHERE `action` IS NOT NULL
+ORDER BY `action` ASC
+ERROR - 2025-10-09 11:53:48 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `action`
+FROM `logs`
+WHERE `action` IS NOT NULL
+ORDER BY `action` ASC
+ERROR - 2025-10-09 11:53:48 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `action`
+FROM `logs`
+WHERE `action` IS NOT NULL
+ORDER BY `action` ASC
+ERROR - 2025-10-09 11:54:42 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `role`
+FROM `userlog`
+WHERE `role` IS NOT NULL
+ORDER BY `role` ASC
+ERROR - 2025-10-09 11:54:42 --> Query error: Unknown column 'DISTINCT' in 'field list' - Invalid query: SELECT `DISTINCT` `role`
+FROM `userlog`
+WHERE `role` IS NOT NULL
+ORDER BY `role` ASC
