@@ -430,3 +430,7 @@ $route['add-item-report/list']['POST'] = 'add_item_report_api/list';
 // Issue Inventory Report API Routes
 $route['issue-inventory-report/filter']['POST'] = 'issue_inventory_report_api/filter';
 $route['issue-inventory-report/list']['POST'] = 'issue_inventory_report_api/list';
+
+// Student Transport Details API Routes
+$route['student-transport-details/filter']['POST'] = 'student_transport_details_api/filter';
+$route['student-transport-details/list']['POST'] = 'student_transport_details_api/list';
