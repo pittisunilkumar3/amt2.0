@@ -462,3 +462,6 @@ $route['feegroupwise-collection-report/list']['POST'] = 'feegroupwise_collection
 // Session Fee Structure API Routes
 $route['session-fee-structure/filter']['POST'] = 'session_fee_structure_api/filter';
 $route['session-fee-structure/list']['POST'] = 'session_fee_structure_api/list';
+
+// Fee Collection Filters API Routes
+$route['fee-collection-filters/get']['POST'] = 'fee_collection_filters_api/get';

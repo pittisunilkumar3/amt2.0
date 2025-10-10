@@ -1009,15 +1009,12 @@ $result_value->fees     = (object)$this->getDueFeeByFeeSessionGroup($fee_session
             log_message('debug', 'MODEL: No session_id filter applied (using current session)');
         }
 
-        // CRITICAL FIX: Add date filtering that was missing (using created_at column)
-        log_message('debug', 'MODEL: Adding date filter...');
-        if (!empty($start_date) && !empty($end_date)) {
-            log_message('debug', 'MODEL: Adding date WHERE conditions: ' . $start_date . ' to ' . $end_date);
-            $this->db->where('DATE(student_fees_deposite.created_at) >=', $start_date);
-            $this->db->where('DATE(student_fees_deposite.created_at) <=', $end_date);
-        } else {
-            log_message('debug', 'MODEL: No date filter applied');
-        }
+        // NOTE: Date filtering is NOT done in SQL query because payment dates are stored in JSON
+        // The actual date filtering happens in PHP when parsing the amount_detail JSON field
+        // Using created_at would be too restrictive - a fee record created in January might have
+        // payments in February, March, etc. We need to get all fee records and then filter by
+        // actual payment dates in the amount_detail JSON.
+        log_message('debug', 'MODEL: Skipping SQL date filter - will filter by payment dates in JSON');
 
         // Handle received_by filter
         log_message('debug', 'MODEL: Processing received_by filter...');

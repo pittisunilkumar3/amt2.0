@@ -763,15 +763,25 @@ class Studentfeemasteradding_model extends MY_Model
         // Handle both single values and arrays for multi-select functionality - session_id
         if ($session_id != null && !empty($session_id)) {
             if (is_array($session_id) && count($session_id) > 0) {
-                $this->db->where_in('fee_groups_feetypeadding.session_id', $session_id);
+                // FIX: Commented out fee_groups_feetypeadding.session_id filter to prevent session mismatch
+                // This filter was causing "No record found" because fee_groups_feetypeadding.session_id
+                // might not match student_session.session_id. We only filter by student enrollment session.
+                // This matches the pattern used in Studentfeemaster_model.php (line 942 is commented out)
+                // $this->db->where_in('fee_groups_feetypeadding.session_id', $session_id);
                 $this->db->where_in('student_session.session_id', $session_id);
             } elseif (!is_array($session_id)) {
-                $this->db->where('fee_groups_feetypeadding.session_id', $session_id);
+                // FIX: Commented out fee_groups_feetypeadding.session_id filter to prevent session mismatch
+                // $this->db->where('fee_groups_feetypeadding.session_id', $session_id);
                 $this->db->where('student_session.session_id', $session_id);
             }
         } else {
-            $this->db->where('fee_groups_feetypeadding.session_id', $this->current_session);
-            $this->db->where('student_session.session_id', $this->current_session);
+            // FIX: Do NOT filter by session when no session is specified
+            // This matches the behavior of getOtherfeesCurrentSessionStudentFeess() used in Daily Collection Report
+            // which does NOT filter by session at all, allowing all fee collections to be retrieved
+            // and filtered by date range only. This ensures consistency between Daily Collection Report
+            // and Other Fee Collection Report - both will show the same data for the same date range.
+            // Users can still filter by session by explicitly passing session_id parameter.
+            // REMOVED: $this->db->where('student_session.session_id', $this->current_session);
         }
         $this->db->order_by('student_fees_depositeadding.id', 'desc');
 
@@ -960,43 +970,49 @@ class Studentfeemasteradding_model extends MY_Model
     public function findObjectAmount($array, $st_date, $ed_date)
     {
         $ar = json_decode($array->amount_detail);
-        $array = array();
-        $amount = 0;
-        for ($i = $st_date; $i <= $ed_date; $i += 86400) {
-            $find = date('Y-m-d', $i);
+        $result_array = array();
+
+        if (!empty($ar)) {
             foreach ($ar as $row_key => $row_value) {
-                if ($row_value->date == $find) {
-                    $array[] = $row_value;
+                // Convert payment date to timestamp for comparison
+                $payment_timestamp = strtotime($row_value->date);
+
+                // Check if payment date falls within the date range
+                if ($payment_timestamp >= $st_date && $payment_timestamp <= $ed_date) {
+                    $result_array[] = $row_value;
                 }
             }
         }
-        return $array;
+
+        return $result_array;
     }
 
     public function findObjectById($array, $st_date, $ed_date)
     {
         $ar = json_decode($array->amount_detail);
+        $result_array = array();
 
-        $array = array();
-        for ($i = $st_date; $i <= $ed_date; $i += 86400) {
-            $find = date('Y-m-d', $i);
+        if (!empty($ar)) {
             foreach ($ar as $row_key => $row_value) {
-                if ($row_value->date == $find) {
-                    $array[] = $row_value;
+                // Convert payment date to timestamp for comparison
+                $payment_timestamp = strtotime($row_value->date);
+
+                // Check if payment date falls within the date range
+                if ($payment_timestamp >= $st_date && $payment_timestamp <= $ed_date) {
+                    $result_array[] = $row_value;
                 }
             }
         }
 
-        return $array;
+        return $result_array;
     }
 
     public function findObjectByCollectId($array, $st_date, $ed_date, $receivedBy)
     {
         $ar = json_decode($array->amount_detail);
+        $result_array = array();
 
-        $array = array();
-        for ($i = $st_date; $i <= $ed_date; $i += 86400) {
-            $find = date('Y-m-d', $i);
+        if (!empty($ar)) {
             foreach ($ar as $row_key => $row_value) {
                 if (isset($row_value->received_by)) {
                     $match = false;
@@ -1008,14 +1024,20 @@ class Studentfeemasteradding_model extends MY_Model
                         $match = ($row_value->received_by == $receivedBy);
                     }
 
-                    if ($row_value->date == $find && $match) {
-                        $array[] = $row_value;
+                    if ($match) {
+                        // Convert payment date to timestamp for comparison
+                        $payment_timestamp = strtotime($row_value->date);
+
+                        // Check if payment date falls within the date range
+                        if ($payment_timestamp >= $st_date && $payment_timestamp <= $ed_date) {
+                            $result_array[] = $row_value;
+                        }
                     }
                 }
             }
         }
 
-        return $array;
+        return $result_array;
     }
 
 
