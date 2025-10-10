@@ -458,3 +458,7 @@ $route['user-log/list']['POST'] = 'user_log_api/list';
 // Fee Group-wise Collection Report API Routes
 $route['feegroupwise-collection-report/filter']['POST'] = 'feegroupwise_collection_report_api/filter';
 $route['feegroupwise-collection-report/list']['POST'] = 'feegroupwise_collection_report_api/list';
+
+// Session Fee Structure API Routes
+$route['session-fee-structure/filter']['POST'] = 'session_fee_structure_api/filter';
+$route['session-fee-structure/list']['POST'] = 'session_fee_structure_api/list';
