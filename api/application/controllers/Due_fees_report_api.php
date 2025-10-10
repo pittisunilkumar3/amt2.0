@@ -79,11 +79,20 @@ class Due_fees_report_api extends CI_Controller
             $section_id = (isset($json_input['section_id']) && $json_input['section_id'] !== '') ? $json_input['section_id'] : null;
             $session_id = (isset($json_input['session_id']) && $json_input['session_id'] !== '') ? $json_input['session_id'] : null;
 
+            // Log filter parameters for debugging
+            log_message('debug', 'Due Fees Report API - Filters: class_id=' . ($class_id ?? 'null') .
+                                 ', section_id=' . ($section_id ?? 'null') .
+                                 ', session_id=' . ($session_id ?? 'null'));
+
             // Get current date
             $date = date('Y-m-d');
 
             // Get due fees data
+            // When session_id is provided: returns students enrolled in that session with their fees for that session
+            // When session_id is null: returns all students with due fees (no session filter)
             $fees_dues = $this->studentfeemaster_model->getStudentDueFeeTypesByDatee($date, $class_id, $section_id, $session_id);
+
+            log_message('debug', 'Due Fees Report API - Raw fees_dues count: ' . count($fees_dues));
 
             $students_list = array();
 
@@ -150,14 +159,32 @@ class Due_fees_report_api extends CI_Controller
                 }
             }
 
+            // Build response message based on filters
+            $message = 'Due fees report retrieved successfully';
+            if ($session_id !== null) {
+                $message .= ' for session ID ' . $session_id;
+            }
+            if ($class_id !== null) {
+                $message .= ', class ID ' . $class_id;
+            }
+            if ($section_id !== null) {
+                $message .= ', section ID ' . $section_id;
+            }
+
             $response = [
                 'status' => 1,
-                'message' => 'Due fees report retrieved successfully',
+                'message' => $message,
                 'filters_applied' => [
                     'class_id' => $class_id,
                     'section_id' => $section_id,
                     'session_id' => $session_id,
                     'date' => $date
+                ],
+                'filter_info' => [
+                    'session_filter' => $session_id !== null ? 'Students enrolled in session ' . $session_id . ' with fees for that session' : 'All students with due fees (no session filter)',
+                    'class_filter' => $class_id !== null ? 'Class ID ' . $class_id : 'All classes',
+                    'section_filter' => $section_id !== null ? 'Section ID ' . $section_id : 'All sections',
+                    'due_date_filter' => 'Fees due on or before ' . $date
                 ],
                 'total_records' => count($students_list),
                 'data' => array_values($students_list),

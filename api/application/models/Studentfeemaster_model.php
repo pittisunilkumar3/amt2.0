@@ -230,6 +230,11 @@ class Studentfeemaster_model extends CI_Model
      * Get student due fee types by date
      * Simplified version for API with session support
      * Gracefully handles null parameters - null means return ALL records for that parameter
+     *
+     * IMPORTANT: This method matches the web version logic exactly
+     * - Joins fee_groups_feetype by fee_groups_id (not fee_session_group_id)
+     * - When session_id is provided: filters students enrolled in that session
+     * - Shows all fee types for those students regardless of session assignment
      */
     public function getStudentDueFeeTypesByDatee($date, $class_id = null, $section_id = null, $session_id = null)
     {
@@ -237,8 +242,8 @@ class Studentfeemaster_model extends CI_Model
         $where_condition = array();
 
         // Add session filter only if session_id is explicitly provided
+        // Filter student enrollment by session
         if ($session_id !== null && $session_id !== '') {
-            $where_condition[] = "fee_session_groups.session_id = " . $this->db->escape($session_id);
             $where_condition[] = "student_session.session_id = " . $this->db->escape($session_id);
         }
 
@@ -258,17 +263,36 @@ class Studentfeemaster_model extends CI_Model
         // Build WHERE clause
         $where_clause = "WHERE " . implode(" AND ", $where_condition);
 
-        $sql = "SELECT student_fees_master.*, fee_session_groups.fee_groups_id, fee_session_groups.session_id,
-                fee_groups.name, fee_groups.is_system, fee_groups_feetype.amount as fee_amount,
-                fee_groups_feetype.id as fee_groups_feetype_id, fee_groups_feetype.fine_type,
-                fee_groups_feetype.due_date, fee_groups_feetype.fine_percentage, fee_groups_feetype.fine_amount,
-                IFNULL(student_fees_deposite.id, 0) as student_fees_deposite_id,
-                IFNULL(student_fees_deposite.amount_detail, 0) as amount_detail,
-                students.is_active, students.admission_no, students.roll_no, students.admission_date,
-                students.firstname, students.middlename, students.lastname, students.father_name,
-                students.image, students.mobileno, students.email, students.state, students.city, students.pincode,
-                classes.class, sections.section, feetype.type, feetype.code,
-                student_session.class_id, student_session.section_id, student_session.student_id,
+        // IMPORTANT: This SQL matches the web version exactly
+        // Join fee_groups_feetype by fee_groups_id, NOT by fee_session_group_id
+        // This ensures all fee types for the fee group are included
+        $sql = "SELECT student_fees_master.*,
+                fee_session_groups.fee_groups_id,
+                fee_session_groups.session_id,
+                fee_groups.name,
+                fee_groups.is_system,
+                fee_groups_feetype.amount as fee_amount,
+                fee_groups_feetype.id as fee_groups_feetype_id,
+                student_fees_deposite.amount_detail,
+                students.admission_no,
+                students.roll_no,
+                students.admission_date,
+                students.firstname,
+                students.middlename,
+                students.lastname,
+                students.father_name,
+                students.image,
+                students.mobileno,
+                students.email,
+                students.state,
+                students.city,
+                students.pincode,
+                students.is_active,
+                classes.class,
+                classes.id as class_id,
+                sections.section,
+                sections.id as section_id,
+                students.id as student_id,
                 student_session.id as student_session_id
                 FROM student_fees_master
                 INNER JOIN fee_session_groups ON fee_session_groups.id = student_fees_master.fee_session_group_id
@@ -276,9 +300,8 @@ class Studentfeemaster_model extends CI_Model
                 INNER JOIN students ON students.id = student_session.student_id
                 INNER JOIN classes ON student_session.class_id = classes.id
                 INNER JOIN sections ON sections.id = student_session.section_id
-                INNER JOIN fee_groups_feetype ON student_fees_master.fee_session_group_id = fee_groups_feetype.fee_session_group_id
                 INNER JOIN fee_groups ON fee_groups.id = fee_session_groups.fee_groups_id
-                INNER JOIN feetype ON feetype.id = fee_groups_feetype.feetype_id
+                INNER JOIN fee_groups_feetype ON fee_groups.id = fee_groups_feetype.fee_groups_id
                 LEFT JOIN student_fees_deposite ON student_fees_deposite.student_fees_master_id = student_fees_master.id
                     AND student_fees_deposite.fee_groups_feetype_id = fee_groups_feetype.id
                 " . $where_clause . "
@@ -291,28 +314,40 @@ class Studentfeemaster_model extends CI_Model
 
     /**
      * Get student deposit by fee group fee type array
-     * Simplified version for API
+     * Matches the web version exactly for consistency
+     *
+     * This method retrieves detailed fee information for a specific student session
+     * and specific fee types.
      */
     public function studentDepositByFeeGroupFeeTypeArray($student_session_id, $fee_type_array)
     {
-        $fee_groups_feetype_ids = implode(', ', $fee_type_array);
+        // Validate input
+        if (empty($fee_type_array) || !is_array($fee_type_array)) {
+            return array();
+        }
 
-        $sql = "SELECT student_fees_master.*, fee_session_groups.fee_groups_id, fee_session_groups.session_id,
-                fee_groups.name, fee_groups.is_system, fee_groups_feetype.amount as fee_amount,
-                fee_groups_feetype.id as fee_groups_feetype_id, fee_groups_feetype.fine_type,
-                fee_groups_feetype.due_date, fee_groups_feetype.fine_percentage, fee_groups_feetype.fine_amount,
+        $fee_groups_feetype_ids = implode(', ', array_map('intval', $fee_type_array));
+
+        // IMPORTANT: This SQL matches the web version exactly
+        // Join fee_groups_feetype by fee_session_group_id to get the correct fee assignments
+        $sql = "SELECT fee_groups_feetype.*,
+                student_fees_master.student_session_id,
+                student_fees_master.amount as previous_amount,
+                student_fees_master.is_system,
+                student_fees_master.id as student_fees_master_id,
+                feetype.code,
+                feetype.type,
                 IFNULL(student_fees_deposite.id, 0) as student_fees_deposite_id,
-                IFNULL(student_fees_deposite.amount_detail, 0) as amount_detail,
-                feetype.type, feetype.code
-                FROM student_fees_master
-                INNER JOIN fee_session_groups ON fee_session_groups.id = student_fees_master.fee_session_group_id
-                INNER JOIN fee_groups_feetype ON student_fees_master.fee_session_group_id = fee_groups_feetype.fee_session_group_id
-                INNER JOIN fee_groups ON fee_groups.id = fee_session_groups.fee_groups_id
+                student_fees_deposite.amount_detail,
+                fee_groups.name as fee_group_name
+                FROM fee_groups_feetype
+                INNER JOIN student_fees_master ON student_fees_master.fee_session_group_id = fee_groups_feetype.fee_session_group_id
                 INNER JOIN feetype ON feetype.id = fee_groups_feetype.feetype_id
+                INNER JOIN fee_groups ON fee_groups.id = fee_groups_feetype.fee_groups_id
                 LEFT JOIN student_fees_deposite ON student_fees_deposite.student_fees_master_id = student_fees_master.id
                     AND student_fees_deposite.fee_groups_feetype_id = fee_groups_feetype.id
-                WHERE student_fees_master.student_session_id = " . $this->db->escape($student_session_id) . "
-                AND fee_groups_feetype.id IN (" . $fee_groups_feetype_ids . ")
+                WHERE fee_groups_feetype.id IN (" . $fee_groups_feetype_ids . ")
+                AND student_fees_master.student_session_id = " . $this->db->escape($student_session_id) . "
                 ORDER BY fee_groups_feetype.due_date ASC";
 
         $query = $this->db->query($sql);
