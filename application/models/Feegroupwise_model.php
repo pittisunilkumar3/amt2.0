@@ -15,6 +15,7 @@ class Feegroupwise_model extends CI_Model
     /**
      * Get Fee Group-wise Collection Summary
      * Returns aggregated data for each fee group
+     * UPDATED: Now excludes additional fees - only returns regular fees
      */
     public function getFeeGroupwiseCollection($session_id = null, $class_ids = array(), $section_ids = array(), $feegroup_ids = array(), $from_date = null, $to_date = null)
     {
@@ -22,20 +23,16 @@ class Feegroupwise_model extends CI_Model
             $session_id = $this->current_session;
         }
 
-        // Get regular fees data
+        // Get regular fees data only (excluding additional fees)
         $regular_fees = $this->getRegularFeesCollection($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
 
-        // Get additional fees data
-        $additional_fees = $this->getAdditionalFeesCollection($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
-
-        // Merge both results
-        $combined_results = array_merge($regular_fees, $additional_fees);
-
         // Clean up and calculate percentages
-        foreach ($combined_results as $row) {
+        foreach ($regular_fees as $row) {
             $row->total_amount = floatval($row->total_amount);
             $row->amount_collected = floatval($row->amount_collected);
-            $row->balance_amount = $row->total_amount - $row->amount_collected;
+
+            // FIXED: Balance should never be negative - if collection >= total, balance = 0
+            $row->balance_amount = max(0, $row->total_amount - $row->amount_collected);
             $row->total_students = intval($row->total_students);
 
             // Calculate collection percentage
@@ -58,15 +55,17 @@ class Feegroupwise_model extends CI_Model
             }
         }
 
-        return $combined_results;
+        return $regular_fees;
     }
 
     /**
      * Get regular fees collection summary
+     * FIXED: Corrected JOIN to use fee_session_group_id instead of fee_group_id
      */
     private function getRegularFeesCollection($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date)
     {
         // First, get all fee groups with their total amounts from student_fees_master
+        // FIXED: Changed LEFT JOIN to use fsg.id instead of fg.id
         $sql = "
             SELECT
                 fg.id as fee_group_id,
@@ -75,7 +74,7 @@ class Feegroupwise_model extends CI_Model
                 COUNT(DISTINCT sfm.student_session_id) as total_students
             FROM fee_groups fg
             INNER JOIN fee_session_groups fsg ON fsg.fee_groups_id = fg.id AND fsg.session_id = ?
-            LEFT JOIN student_fees_master sfm ON sfm.fee_session_group_id = fg.id
+            LEFT JOIN student_fees_master sfm ON sfm.fee_session_group_id = fsg.id
         ";
 
         $where_conditions = array();
@@ -133,10 +132,12 @@ class Feegroupwise_model extends CI_Model
 
     /**
      * Get additional fees collection summary
+     * FIXED: Corrected JOIN to use fee_session_group_id instead of fee_group_id
      */
     private function getAdditionalFeesCollection($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date)
     {
         // First, get all fee groups with their total amounts from student_fees_masteradding
+        // FIXED: Changed LEFT JOIN to use fsga.id instead of fga.id
         $sql = "
             SELECT
                 fga.id as fee_group_id,
@@ -145,7 +146,7 @@ class Feegroupwise_model extends CI_Model
                 COUNT(DISTINCT sfma.student_session_id) as total_students
             FROM fee_groupsadding fga
             INNER JOIN fee_session_groupsadding fsga ON fsga.fee_groups_id = fga.id AND fsga.session_id = ?
-            LEFT JOIN student_fees_masteradding sfma ON sfma.fee_session_group_id = fga.id
+            LEFT JOIN student_fees_masteradding sfma ON sfma.fee_session_group_id = fsga.id
         ";
 
         $where_conditions = array();
@@ -202,18 +203,22 @@ class Feegroupwise_model extends CI_Model
 
     /**
      * Calculate collected amount from deposit tables by parsing JSON amount_detail
+     * FIXED: Now properly filters payments by fee_groups_feetype_id to avoid counting
+     * payments from other fee types within the same fee group
      */
     private function calculateCollectedAmount($fee_group_id, $session_id, $class_ids, $section_ids, $from_date, $to_date, $type = 'regular')
     {
         $total_collected = 0;
 
         if ($type == 'regular') {
-            // Query student_fees_deposite table
+            // Query student_fees_deposite table with fee_groups_feetype_id filter
+            // This ensures we only count payments for fee types belonging to this specific fee group
             $sql = "
-                SELECT sfd.amount_detail
+                SELECT sfd.amount_detail, sfd.fee_groups_feetype_id
                 FROM student_fees_deposite sfd
                 INNER JOIN student_fees_master sfm ON sfm.id = sfd.student_fees_master_id
-                WHERE sfm.fee_session_group_id = ?
+                INNER JOIN fee_groups_feetype fgft ON fgft.id = sfd.fee_groups_feetype_id
+                WHERE fgft.fee_groups_id = ?
             ";
 
             $params = array($fee_group_id);
@@ -237,12 +242,14 @@ class Feegroupwise_model extends CI_Model
             $query = $this->db->query($sql, $params);
 
         } else {
-            // Query student_fees_depositeadding table
+            // Query student_fees_depositeadding table with fee_groups_feetype_id filter
+            // This ensures we only count payments for fee types belonging to this specific fee group
             $sql = "
-                SELECT sfda.amount_detail
+                SELECT sfda.amount_detail, sfda.fee_groups_feetype_id
                 FROM student_fees_depositeadding sfda
                 INNER JOIN student_fees_masteradding sfma ON sfma.id = sfda.student_fees_master_id
-                WHERE sfma.fee_session_group_id = ?
+                INNER JOIN fee_groups_feetypeadding fgfta ON fgfta.id = sfda.fee_groups_feetype_id
+                WHERE fgfta.fee_groups_id = ?
             ";
 
             $params = array($fee_group_id);
@@ -299,6 +306,7 @@ class Feegroupwise_model extends CI_Model
     /**
      * Get Detailed Fee Group-wise Data (Student-level)
      * Returns individual student records with fee group details
+     * UPDATED: Now excludes additional fees - only returns regular fees
      */
     public function getFeeGroupwiseDetailedData($session_id = null, $class_ids = array(), $section_ids = array(), $feegroup_ids = array(), $from_date = null, $to_date = null)
     {
@@ -306,20 +314,16 @@ class Feegroupwise_model extends CI_Model
             $session_id = $this->current_session;
         }
 
-        // Get regular fees detailed data
+        // Get regular fees detailed data only (excluding additional fees)
         $regular_fees = $this->getRegularFeesDetailedData($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
 
-        // Get additional fees detailed data
-        $additional_fees = $this->getAdditionalFeesDetailedData($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
-
-        // Merge both results
-        $combined_results = array_merge($regular_fees, $additional_fees);
-
         // Clean up and add calculated fields
-        foreach ($combined_results as $row) {
+        foreach ($regular_fees as $row) {
             $row->total_amount = floatval($row->total_amount);
             $row->amount_collected = floatval($row->amount_collected);
-            $row->balance_amount = $row->total_amount - $row->amount_collected;
+
+            // FIXED: Balance should never be negative - if collection >= total, balance = 0
+            $row->balance_amount = max(0, $row->total_amount - $row->amount_collected);
 
             // Calculate collection percentage
             if ($row->total_amount > 0) {
@@ -329,10 +333,9 @@ class Feegroupwise_model extends CI_Model
             }
 
             // Determine payment status
-            if ($row->balance_amount == 0 && $row->amount_collected > 0) {
+            // FIXED: Check if collection >= total for "Paid" status
+            if ($row->amount_collected >= $row->total_amount && $row->amount_collected > 0) {
                 $row->payment_status = 'Paid';
-            } elseif ($row->amount_collected > 0 && $row->balance_amount < 0) {
-                $row->payment_status = 'Overpaid';
             } elseif ($row->amount_collected > 0) {
                 $row->payment_status = 'Partial';
             } else {
@@ -352,15 +355,17 @@ class Feegroupwise_model extends CI_Model
             }
         }
 
-        return $combined_results;
+        return $regular_fees;
     }
 
     /**
      * Get regular fees detailed data
+     * FIXED: Corrected JOIN to properly link through fee_session_groups table
      */
     private function getRegularFeesDetailedData($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date)
     {
         // Build SQL query
+        // FIXED: Added fee_session_groups join to properly link student_fees_master to fee_groups
         $sql = "
             SELECT
                 s.id as student_id,
@@ -378,7 +383,8 @@ class Feegroupwise_model extends CI_Model
             INNER JOIN classes c ON c.id = ss.class_id
             INNER JOIN sections sec ON sec.id = ss.section_id
             INNER JOIN student_fees_master sfm ON sfm.student_session_id = ss.id
-            INNER JOIN fee_groups fg ON fg.id = sfm.fee_session_group_id
+            INNER JOIN fee_session_groups fsg ON fsg.id = sfm.fee_session_group_id
+            INNER JOIN fee_groups fg ON fg.id = fsg.fee_groups_id
             WHERE fg.is_system = 0
         ";
 
@@ -411,6 +417,7 @@ class Feegroupwise_model extends CI_Model
         foreach ($results as $row) {
             $row->amount_collected = $this->calculateStudentCollectedAmount(
                 $row->student_fees_master_id,
+                $row->fee_group_id,
                 $from_date,
                 $to_date,
                 'regular'
@@ -423,10 +430,12 @@ class Feegroupwise_model extends CI_Model
 
     /**
      * Get additional fees detailed data
+     * FIXED: Corrected JOIN to properly link through fee_session_groupsadding table
      */
     private function getAdditionalFeesDetailedData($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date)
     {
         // Build SQL query
+        // FIXED: Added fee_session_groupsadding join to properly link student_fees_masteradding to fee_groupsadding
         $sql = "
             SELECT
                 s.id as student_id,
@@ -444,7 +453,8 @@ class Feegroupwise_model extends CI_Model
             INNER JOIN classes c ON c.id = ss.class_id
             INNER JOIN sections sec ON sec.id = ss.section_id
             INNER JOIN student_fees_masteradding sfma ON sfma.student_session_id = ss.id
-            INNER JOIN fee_groupsadding fga ON fga.id = sfma.fee_session_group_id
+            INNER JOIN fee_session_groupsadding fsga ON fsga.id = sfma.fee_session_group_id
+            INNER JOIN fee_groupsadding fga ON fga.id = fsga.fee_groups_id
             WHERE fga.is_system = 0
         ";
 
@@ -477,6 +487,7 @@ class Feegroupwise_model extends CI_Model
         foreach ($results as $row) {
             $row->amount_collected = $this->calculateStudentCollectedAmount(
                 $row->student_fees_master_id,
+                $row->fee_group_id,
                 $from_date,
                 $to_date,
                 'additional'
@@ -488,21 +499,33 @@ class Feegroupwise_model extends CI_Model
 
     /**
      * Calculate collected amount for a specific student from deposit tables
+     * FIXED: Now properly filters payments by fee_groups_feetype_id to avoid counting
+     * payments from other fee types within the same fee group
      */
-    private function calculateStudentCollectedAmount($student_fees_master_id, $from_date, $to_date, $type = 'regular')
+    private function calculateStudentCollectedAmount($student_fees_master_id, $fee_group_id, $from_date, $to_date, $type = 'regular')
     {
         $total_collected = 0;
 
         if ($type == 'regular') {
-            $this->db->select('amount_detail');
-            $this->db->from('student_fees_deposite');
-            $this->db->where('student_fees_master_id', $student_fees_master_id);
-            $query = $this->db->get();
+            // Join with fee_groups_feetype to filter by fee group
+            $sql = "
+                SELECT sfd.amount_detail
+                FROM student_fees_deposite sfd
+                INNER JOIN fee_groups_feetype fgft ON fgft.id = sfd.fee_groups_feetype_id
+                WHERE sfd.student_fees_master_id = ?
+                AND fgft.fee_groups_id = ?
+            ";
+            $query = $this->db->query($sql, array($student_fees_master_id, $fee_group_id));
         } else {
-            $this->db->select('amount_detail');
-            $this->db->from('student_fees_depositeadding');
-            $this->db->where('student_fees_master_id', $student_fees_master_id);
-            $query = $this->db->get();
+            // Join with fee_groups_feetypeadding to filter by fee group
+            $sql = "
+                SELECT sfda.amount_detail
+                FROM student_fees_depositeadding sfda
+                INNER JOIN fee_groups_feetypeadding fgfta ON fgfta.id = sfda.fee_groups_feetype_id
+                WHERE sfda.student_fees_master_id = ?
+                AND fgfta.fee_groups_id = ?
+            ";
+            $query = $this->db->query($sql, array($student_fees_master_id, $fee_group_id));
         }
 
         // Parse JSON amount_detail and sum up amounts
@@ -537,6 +560,7 @@ class Feegroupwise_model extends CI_Model
 
     /**
      * Get all fee groups for filter dropdown
+     * UPDATED: Now returns only regular fee groups (excluding additional fees)
      */
     public function getAllFeeGroups($session_id = null)
     {
@@ -544,7 +568,7 @@ class Feegroupwise_model extends CI_Model
             $session_id = $this->current_session;
         }
 
-        // Get regular fee groups
+        // Get regular fee groups only (excluding additional fee groups)
         $this->db->select('fg.id, fg.name');
         $this->db->from('fee_groups fg');
         $this->db->join('fee_session_groups fsg', 'fsg.fee_groups_id = fg.id');
@@ -554,17 +578,7 @@ class Feegroupwise_model extends CI_Model
         $query = $this->db->get();
         $regular_groups = $query->result_array();
 
-        // Get additional fee groups
-        $this->db->select('fga.id, fga.name');
-        $this->db->from('fee_groupsadding fga');
-        $this->db->join('fee_session_groupsadding fsga', 'fsga.fee_groups_id = fga.id');
-        $this->db->where('fga.is_system', 0);
-        $this->db->where('fsga.session_id', $session_id);
-        $this->db->order_by('fga.name', 'ASC');
-        $query = $this->db->get();
-        $additional_groups = $query->result_array();
-
-        return array_merge($regular_groups, $additional_groups);
+        return $regular_groups;
     }
 }
 

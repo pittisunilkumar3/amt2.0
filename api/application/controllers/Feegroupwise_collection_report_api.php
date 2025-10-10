@@ -98,6 +98,7 @@ class Feegroupwise_collection_report_api extends CI_Controller
             );
 
             // Calculate summary statistics
+            // Note: balance_amount from model is already calculated as max(0, total - collected)
             $summary = array(
                 'total_fee_groups' => count($grid_data),
                 'total_amount' => 0,
@@ -111,6 +112,9 @@ class Feegroupwise_collection_report_api extends CI_Controller
                 $summary['total_collected'] += floatval($row->amount_collected);
                 $summary['total_balance'] += floatval($row->balance_amount);
             }
+
+            // Ensure total balance is never negative (in case of overpayments)
+            $summary['total_balance'] = max(0, $summary['total_balance']);
 
             if ($summary['total_amount'] > 0) {
                 $summary['collection_percentage'] = round(($summary['total_collected'] / $summary['total_amount']) * 100, 2);

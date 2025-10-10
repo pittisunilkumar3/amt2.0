@@ -10396,3 +10396,9 @@ ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array off
 ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Classsection_model.php 206
 ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\libraries\Customlib.php 2126
 ERROR - 2025-10-09 17:03:23 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\amt\api\application\models\Classsection_model.php 206
+ERROR - 2025-10-09 17:21:44 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'INNER JOIN student_session ss ON ss.id = sfm.student_session_id AND ss.class_...' at line 5 - Invalid query: 
+                SELECT sfd.amount_detail
+                FROM student_fees_deposite sfd
+                INNER JOIN student_fees_master sfm ON sfm.id = sfd.student_fees_master_id
+                WHERE sfm.fee_session_group_id = '136'
+             INNER JOIN student_session ss ON ss.id = sfm.student_session_id AND ss.class_id IN ('1','2')

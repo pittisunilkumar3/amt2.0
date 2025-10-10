@@ -760,39 +760,54 @@ function generateColors(count) {
  * Populate detailed table
  */
 function populateTable(data) {
-    var html = '';
+    // Destroy existing DataTable if it exists
+    if ($.fn.DataTable.isDataTable('#feeGroupTable')) {
+        $('#feeGroupTable').DataTable().destroy();
+    }
+
+    // Clear the table body
+    $('#feeGroupTableBody').empty();
 
     if (data && data.length > 0) {
+        // Prepare data for DataTable
+        var tableData = [];
+
         $.each(data, function(index, item) {
             var statusClass = '';
             if (item.payment_status == 'Paid') statusClass = 'label-success';
             else if (item.payment_status == 'Partial') statusClass = 'label-warning';
             else statusClass = 'label-danger';
 
-            html += '<tr>';
-            html += '  <td>' + item.admission_no + '</td>';
-            html += '  <td>' + item.student_name + '</td>';
-            html += '  <td>' + item.class_name + '</td>';
-            html += '  <td>' + item.section_name + '</td>';
-            html += '  <td>' + item.fee_group_name + '</td>';
-            html += '  <td class="text-right">' + currency_symbol + ' ' + formatNumber(item.total_amount) + '</td>';
-            html += '  <td class="text-right text-success">' + currency_symbol + ' ' + formatNumber(item.amount_collected) + '</td>';
-            html += '  <td class="text-right text-danger">' + currency_symbol + ' ' + formatNumber(item.balance_amount) + '</td>';
-            html += '  <td class="text-right">' + item.collection_percentage + '%</td>';
-            html += '  <td><span class="label ' + statusClass + '">' + item.payment_status + '</span></td>';
-            html += '</tr>';
+            tableData.push([
+                item.admission_no,
+                item.student_name,
+                item.class_name,
+                item.section_name,
+                item.fee_group_name,
+                currency_symbol + ' ' + formatNumber(item.total_amount),
+                currency_symbol + ' ' + formatNumber(item.amount_collected),
+                currency_symbol + ' ' + formatNumber(item.balance_amount),
+                item.collection_percentage + '%',
+                '<span class="label ' + statusClass + '">' + item.payment_status + '</span>'
+            ]);
+        });
+
+        // Initialize DataTable with data
+        $('#feeGroupTable').DataTable({
+            "data": tableData,
+            "pageLength": 25,
+            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "order": [[0, "asc"]],
+            "columnDefs": [
+                { "orderable": true, "targets": "_all" },
+                { "className": "text-right", "targets": [5, 6, 7, 8] }
+            ],
+            "dom": '<"row"<"col-sm-6"l><"col-sm-6"f>>rtip'
         });
     } else {
-        html = '<tr><td colspan="10" class="text-center">No data available</td></tr>';
+        // Initialize empty DataTable
+        initializeDataTable();
     }
-
-    $('#feeGroupTableBody').html(html);
-
-    // Reinitialize DataTable
-    if ($.fn.DataTable.isDataTable('#feeGroupTable')) {
-        $('#feeGroupTable').DataTable().destroy();
-    }
-    initializeDataTable();
 }
 
 /**

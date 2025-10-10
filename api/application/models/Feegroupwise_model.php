@@ -15,6 +15,7 @@ class Feegroupwise_model extends CI_Model
     /**
      * Get Fee Group-wise Collection Summary
      * Returns aggregated data for each fee group
+     * UPDATED: Now excludes additional fees - only returns regular fees
      */
     public function getFeeGroupwiseCollection($session_id = null, $class_ids = array(), $section_ids = array(), $feegroup_ids = array(), $from_date = null, $to_date = null)
     {
@@ -22,20 +23,16 @@ class Feegroupwise_model extends CI_Model
             $session_id = $this->current_session;
         }
 
-        // Get regular fees data
+        // Get regular fees data only (excluding additional fees)
         $regular_fees = $this->getRegularFeesCollection($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
 
-        // Get additional fees data
-        $additional_fees = $this->getAdditionalFeesCollection($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
-
-        // Merge both results
-        $combined_results = array_merge($regular_fees, $additional_fees);
-
         // Clean up and calculate percentages
-        foreach ($combined_results as $row) {
+        foreach ($regular_fees as $row) {
             $row->total_amount = floatval($row->total_amount);
             $row->amount_collected = floatval($row->amount_collected);
-            $row->balance_amount = $row->total_amount - $row->amount_collected;
+
+            // FIXED: Balance should never be negative - if collection >= total, balance = 0
+            $row->balance_amount = max(0, $row->total_amount - $row->amount_collected);
             $row->total_students = intval($row->total_students);
 
             // Calculate collection percentage
@@ -58,7 +55,7 @@ class Feegroupwise_model extends CI_Model
             }
         }
 
-        return $combined_results;
+        return $regular_fees;
     }
 
     /**
@@ -299,6 +296,7 @@ class Feegroupwise_model extends CI_Model
     /**
      * Get Detailed Fee Group-wise Data (Student-level)
      * Returns individual student records with fee group details
+     * UPDATED: Now excludes additional fees - only returns regular fees
      */
     public function getFeeGroupwiseDetailedData($session_id = null, $class_ids = array(), $section_ids = array(), $feegroup_ids = array(), $from_date = null, $to_date = null)
     {
@@ -306,20 +304,16 @@ class Feegroupwise_model extends CI_Model
             $session_id = $this->current_session;
         }
 
-        // Get regular fees detailed data
+        // Get regular fees detailed data only (excluding additional fees)
         $regular_fees = $this->getRegularFeesDetailedData($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
 
-        // Get additional fees detailed data
-        $additional_fees = $this->getAdditionalFeesDetailedData($session_id, $class_ids, $section_ids, $feegroup_ids, $from_date, $to_date);
-
-        // Merge both results
-        $combined_results = array_merge($regular_fees, $additional_fees);
-
         // Clean up and add calculated fields
-        foreach ($combined_results as $row) {
+        foreach ($regular_fees as $row) {
             $row->total_amount = floatval($row->total_amount);
             $row->amount_collected = floatval($row->amount_collected);
-            $row->balance_amount = $row->total_amount - $row->amount_collected;
+
+            // FIXED: Balance should never be negative - if collection >= total, balance = 0
+            $row->balance_amount = max(0, $row->total_amount - $row->amount_collected);
 
             // Calculate collection percentage
             if ($row->total_amount > 0) {
@@ -329,10 +323,9 @@ class Feegroupwise_model extends CI_Model
             }
 
             // Determine payment status
-            if ($row->balance_amount == 0 && $row->amount_collected > 0) {
+            // FIXED: Check if collection >= total for "Paid" status
+            if ($row->amount_collected >= $row->total_amount && $row->amount_collected > 0) {
                 $row->payment_status = 'Paid';
-            } elseif ($row->amount_collected > 0 && $row->balance_amount < 0) {
-                $row->payment_status = 'Overpaid';
             } elseif ($row->amount_collected > 0) {
                 $row->payment_status = 'Partial';
             } else {
@@ -352,7 +345,7 @@ class Feegroupwise_model extends CI_Model
             }
         }
 
-        return $combined_results;
+        return $regular_fees;
     }
 
     /**
@@ -537,6 +530,7 @@ class Feegroupwise_model extends CI_Model
 
     /**
      * Get all fee groups for filter dropdown
+     * UPDATED: Now returns only regular fee groups (excluding additional fees)
      */
     public function getAllFeeGroups($session_id = null)
     {
@@ -544,7 +538,7 @@ class Feegroupwise_model extends CI_Model
             $session_id = $this->current_session;
         }
 
-        // Get regular fee groups
+        // Get regular fee groups only (excluding additional fee groups)
         $this->db->select('fg.id, fg.name');
         $this->db->from('fee_groups fg');
         $this->db->join('fee_session_groups fsg', 'fsg.fee_groups_id = fg.id');
@@ -554,17 +548,7 @@ class Feegroupwise_model extends CI_Model
         $query = $this->db->get();
         $regular_groups = $query->result_array();
 
-        // Get additional fee groups
-        $this->db->select('fga.id, fga.name');
-        $this->db->from('fee_groupsadding fga');
-        $this->db->join('fee_session_groupsadding fsga', 'fsga.fee_groups_id = fga.id');
-        $this->db->where('fga.is_system', 0);
-        $this->db->where('fsga.session_id', $session_id);
-        $this->db->order_by('fga.name', 'ASC');
-        $query = $this->db->get();
-        $additional_groups = $query->result_array();
-
-        return array_merge($regular_groups, $additional_groups);
+        return $regular_groups;
     }
 }
 
