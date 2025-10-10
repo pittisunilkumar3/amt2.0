@@ -465,3 +465,4 @@ $route['session-fee-structure/list']['POST'] = 'session_fee_structure_api/list';
 
 // Fee Collection Filters API Routes
 $route['fee-collection-filters/get']['POST'] = 'fee_collection_filters_api/get';
+$route['fee-collection-filters/get-hierarchy']['POST'] = 'fee_collection_filters_api/get_hierarchy';

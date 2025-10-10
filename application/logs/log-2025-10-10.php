@@ -701,3 +701,10 @@ ERROR - 2025-10-10 23:13:35 --> Severity: Warning --> Undefined variable $count 
 ERROR - 2025-10-10 23:13:35 --> Could not find the language line "combined"
 ERROR - 2025-10-10 19:43:36 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-10 19:43:36 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-10 23:50:00 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-10 23:50:00 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-10 23:50:00 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\reportByName.php 36
+ERROR - 2025-10-10 20:20:00 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-10 20:20:00 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-10 20:34:16 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-10 20:34:16 --> Could not find the language line "thank_you_for_your_complain"

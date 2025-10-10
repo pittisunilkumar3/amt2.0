@@ -86,12 +86,12 @@ class Fee_collection_filters_api extends CI_Controller
     }
 
     /**
-     * Get filter options for fee collection reports
-     * 
-     * Returns all available filter options including sessions, classes, sections,
-     * fee groups, fee types, staff collectors, and grouping options.
-     * Supports hierarchical filtering based on session_id and class_id.
-     * 
+     * Get filter options for fee collection reports (HIERARCHICAL)
+     *
+     * Returns hierarchical structure: Sessions → Classes → Sections
+     * Each session contains its classes, each class contains its sections.
+     * Supports filtering by session_id, class_id, and section_id.
+     *
      * @return void Outputs JSON response
      */
     public function get()
@@ -123,15 +123,22 @@ class Fee_collection_filters_api extends CI_Controller
             // Extract filter parameters (all optional)
             $session_id = isset($input['session_id']) ? $input['session_id'] : null;
             $class_id = isset($input['class_id']) ? $input['class_id'] : null;
+            $section_id = isset($input['section_id']) ? $input['section_id'] : null;
 
             // Log the received parameters for debugging
             log_message('debug', 'Fee Collection Filters API: Received session_id = ' . var_export($session_id, true));
             log_message('debug', 'Fee Collection Filters API: Received class_id = ' . var_export($class_id, true));
+            log_message('debug', 'Fee Collection Filters API: Received section_id = ' . var_export($section_id, true));
 
-            // Get all filter options
-            $sessions = $this->fee_collection_filters_model->get_sessions();
-            $classes = $this->fee_collection_filters_model->get_classes($session_id);
-            $sections = $this->fee_collection_filters_model->get_sections($class_id);
+            // Get hierarchical data (without students)
+            $hierarchical_data = $this->fee_collection_filters_model->get_hierarchical_data(
+                $session_id,
+                $class_id,
+                $section_id,
+                false // Don't include students in this endpoint
+            );
+
+            // Get other filter options
             $fee_groups = $this->fee_collection_filters_model->get_fee_groups();
             $fee_types = $this->fee_collection_filters_model->get_fee_types();
             $collect_by = $this->fee_collection_filters_model->get_staff_collectors();
@@ -139,9 +146,7 @@ class Fee_collection_filters_api extends CI_Controller
 
             // Format response data
             $response_data = array(
-                'sessions' => $sessions,
-                'classes' => $classes,
-                'sections' => $sections,
+                'sessions' => $hierarchical_data,
                 'fee_groups' => $fee_groups,
                 'fee_types' => $fee_types,
                 'collect_by' => $collect_by,
@@ -156,6 +161,104 @@ class Fee_collection_filters_api extends CI_Controller
 
         } catch (Exception $e) {
             log_message('error', 'Fee Collection Filters API Error: ' . $e->getMessage());
+            json_output(500, array(
+                'status' => 0,
+                'message' => 'Internal server error occurred',
+                'data' => null
+            ));
+        }
+    }
+
+    /**
+     * Get hierarchical academic data with students
+     *
+     * Returns complete hierarchical structure: Sessions → Classes → Sections → Students
+     * Each session contains its classes, each class contains its sections,
+     * and each section contains its enrolled students.
+     * Supports filtering by session_id, class_id, and section_id.
+     *
+     * @return void Outputs JSON response
+     */
+    public function get_hierarchy()
+    {
+        try {
+            // Validate request method
+            if ($this->input->method() !== 'post') {
+                json_output(405, array(
+                    'status' => 0,
+                    'message' => 'Method not allowed. Use POST method.',
+                    'data' => null
+                ));
+                return;
+            }
+
+            // Validate required headers
+            if (!$this->validate_headers()) {
+                json_output(401, array(
+                    'status' => 0,
+                    'message' => 'Unauthorized access. Invalid headers.',
+                    'data' => null
+                ));
+                return;
+            }
+
+            // Get input data (may be empty for getting all data)
+            $input = json_decode($this->input->raw_input_stream, true);
+
+            // Extract filter parameters (all optional)
+            $session_id = isset($input['session_id']) ? $input['session_id'] : null;
+            $class_id = isset($input['class_id']) ? $input['class_id'] : null;
+            $section_id = isset($input['section_id']) ? $input['section_id'] : null;
+
+            // Log the received parameters for debugging
+            log_message('debug', 'Fee Collection Hierarchy API: Received session_id = ' . var_export($session_id, true));
+            log_message('debug', 'Fee Collection Hierarchy API: Received class_id = ' . var_export($class_id, true));
+            log_message('debug', 'Fee Collection Hierarchy API: Received section_id = ' . var_export($section_id, true));
+
+            // Get hierarchical data with students
+            $hierarchical_data = $this->fee_collection_filters_model->get_hierarchical_data(
+                $session_id,
+                $class_id,
+                $section_id,
+                true // Include students in this endpoint
+            );
+
+            // Calculate statistics
+            $total_sessions = count($hierarchical_data);
+            $total_classes = 0;
+            $total_sections = 0;
+            $total_students = 0;
+
+            foreach ($hierarchical_data as $session) {
+                $total_classes += count($session['classes']);
+                foreach ($session['classes'] as $class) {
+                    $total_sections += count($class['sections']);
+                    foreach ($class['sections'] as $section) {
+                        $total_students += count($section['students']);
+                    }
+                }
+            }
+
+            json_output(200, array(
+                'status' => 1,
+                'message' => 'Hierarchical academic data retrieved successfully',
+                'filters_applied' => array(
+                    'session_id' => $session_id,
+                    'class_id' => $class_id,
+                    'section_id' => $section_id
+                ),
+                'statistics' => array(
+                    'total_sessions' => $total_sessions,
+                    'total_classes' => $total_classes,
+                    'total_sections' => $total_sections,
+                    'total_students' => $total_students
+                ),
+                'data' => $hierarchical_data,
+                'timestamp' => date('Y-m-d H:i:s')
+            ));
+
+        } catch (Exception $e) {
+            log_message('error', 'Fee Collection Hierarchy API Error: ' . $e->getMessage());
             json_output(500, array(
                 'status' => 0,
                 'message' => 'Internal server error occurred',
