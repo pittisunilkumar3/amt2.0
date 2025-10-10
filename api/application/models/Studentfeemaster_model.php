@@ -750,9 +750,20 @@ class Studentfeemaster_model extends CI_Model
      * Get student fees by class, section, and student
      * Used for Report By Name API
      * Returns detailed fee structure with fee groups and payment history
+     *
+     * @param int|null $class_id Class ID filter
+     * @param int|null $section_id Section ID filter
+     * @param int|null $student_id Student ID filter
+     * @param int|null $session_id Session ID filter (defaults to current session if null)
+     * @return array Array of student fees data
      */
-    public function getStudentFeesByClassSectionStudent($class_id = null, $section_id = null, $student_id = null)
+    public function getStudentFeesByClassSectionStudent($class_id = null, $section_id = null, $student_id = null, $session_id = null)
     {
+        // Use current session if session_id not provided
+        if ($session_id === null) {
+            $session_id = $this->current_session;
+        }
+
         $where_condition = array();
         if ($class_id != null) {
             $where_condition[] = " and student_session.class_id=" . $this->db->escape($class_id);
@@ -773,7 +784,7 @@ class Studentfeemaster_model extends CI_Model
                 INNER JOIN classes on classes.id =student_session.class_id
                 LEFT JOIN categories on students.category_id = categories.id
                 INNER JOIN sections on sections.id=student_session.section_id
-                WHERE student_session.session_id=" . $this->db->escape($this->current_session) . $where_condition_string;
+                WHERE student_session.session_id=" . $this->db->escape($session_id) . $where_condition_string;
 
         $query = $this->db->query($sql);
         $result = $query->result();

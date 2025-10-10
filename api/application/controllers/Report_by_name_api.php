@@ -65,9 +65,15 @@ class Report_by_name_api extends CI_Controller
             $class_id = (isset($json_input['class_id']) && $json_input['class_id'] !== '') ? $json_input['class_id'] : null;
             $section_id = (isset($json_input['section_id']) && $json_input['section_id'] !== '') ? $json_input['section_id'] : null;
             $student_id = (isset($json_input['student_id']) && $json_input['student_id'] !== '') ? $json_input['student_id'] : null;
+            $session_id = (isset($json_input['session_id']) && $json_input['session_id'] !== '') ? $json_input['session_id'] : null;
+
+            // If session_id is provided, use it to filter; otherwise use current session
+            if ($session_id === null) {
+                $session_id = $this->setting_model->getCurrentSession();
+            }
 
             // Get detailed student fees using the same method as web page
-            $student_due_fee = $this->studentfeemaster_model->getStudentFeesByClassSectionStudent($class_id, $section_id, $student_id);
+            $student_due_fee = $this->studentfeemaster_model->getStudentFeesByClassSectionStudent($class_id, $section_id, $student_id, $session_id);
 
             // Add transport fees for each student
             if (!empty($student_due_fee)) {
