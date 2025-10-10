@@ -356,31 +356,88 @@ class Studentfeemaster_model extends CI_Model
 
     /**
      * Get current session student fees for daily collection
-     * Simplified version for API
+     * Matches web version exactly - returns all fee deposits with student details
      */
     public function getCurrentSessionStudentFeess()
     {
-        $sql = "SELECT student_fees_deposite.id as student_fees_deposite_id,
-                student_fees_deposite.amount_detail
-                FROM student_fees_deposite
-                INNER JOIN fee_groups_feetype ON fee_groups_feetype.id = student_fees_deposite.fee_groups_feetype_id
-                WHERE fee_groups_feetype.session_id = " . $this->db->escape($this->current_session);
+        $sql = "SELECT student_fees_master.*,fee_session_groups.fee_groups_id,fee_session_groups.session_id,fee_groups.name,fee_groups.is_system,fee_groups_feetype.amount as `fee_amount`,fee_groups_feetype.id as fee_groups_feetype_id,student_fees_deposite.id as `student_fees_deposite_id`,student_fees_deposite.amount_detail,students.admission_no , students.roll_no,students.admission_date,students.firstname,students.middlename,  students.lastname,students.father_name,students.image, students.mobileno, students.email ,students.state ,   students.city , students.pincode ,students.is_active,classes.class,sections.section FROM `student_fees_master` INNER JOIN fee_session_groups on fee_session_groups.id=student_fees_master.fee_session_group_id INNER JOIN student_session on student_session.id=student_fees_master.student_session_id INNER JOIN students on students.id=student_session.student_id inner join classes on student_session.class_id=classes.id INNER JOIN sections on sections.id=student_session.section_id inner join fee_groups on fee_groups.id=fee_session_groups.fee_groups_id INNER JOIN fee_groups_feetype on fee_groups.id=fee_groups_feetype.fee_groups_id LEFT JOIN student_fees_deposite on student_fees_deposite.student_fees_master_id=student_fees_master.id and student_fees_deposite.fee_groups_feetype_id=fee_groups_feetype.id ";
 
-        $query = $this->db->query($sql);
-        return $query->result();
+        $query  = $this->db->query($sql);
+        $result_value = $query->result();
+
+        // Check if transport module is active and add transport fees
+        $module = $this->module_model->getPermissionByModulename('transport');
+        if (!empty($module) && isset($module['is_active']) && $module['is_active']) {
+            $this->db->select('`student_fees_deposite`.*,student_fees_deposite.id as `student_fees_deposite_id`,students.firstname,students.middlename,students.lastname,student_session.class_id,classes.class,sections.section,student_session.section_id,student_session.student_id,"Transport Fees" as name, "Transport Fees" as `type`, "" as `code`,0 as is_system,student_transport_fees.student_session_id,students.admission_no')->from('student_fees_deposite');
+
+            $this->db->join('student_transport_fees', 'student_transport_fees.id = `student_fees_deposite`.`student_transport_fee_id`');
+            $this->db->join('transport_feemaster', '`student_transport_fees`.`transport_feemaster_id` = `transport_feemaster`.`id`');
+            $this->db->join('student_session', 'student_session.id= `student_transport_fees`.`student_session_id`', 'INNER');
+            $this->db->join('classes', 'classes.id= student_session.class_id');
+            $this->db->join('sections', 'sections.id= student_session.section_id');
+            $this->db->join('students', 'students.id=student_session.student_id');
+            $this->db->order_by('student_fees_deposite.id','desc');
+
+            $query1 = $this->db->get();
+            $result_value1 = $query1->result();
+        } else {
+            $result_value1 = array();
+        }
+
+        // Merge regular fees and transport fees
+        if (empty($result_value)) {
+            $result_value2 = $result_value1;
+        } elseif (empty($result_value1)) {
+            $result_value2 = $result_value;
+        } else {
+            $result_value2 = array_merge($result_value, $result_value1);
+        }
+
+        return $result_value2;
     }
 
     /**
      * Get other fees for current session for daily collection
-     * Simplified version for API
+     * Matches web version - returns additional fees deposits
      */
     public function getOtherfeesCurrentSessionStudentFeess()
     {
-        $sql = "SELECT student_fees_deposite.id as student_fees_deposite_id,
-                student_fees_deposite.amount_detail
-                FROM student_fees_deposite
-                WHERE student_fees_deposite.student_transport_fee_id IS NOT NULL
-                OR student_fees_deposite.fee_groups_feetype_id IS NULL";
+        $sql = "SELECT
+            student_fees_masteradding.*,
+            fee_session_groupsadding.fee_groups_id,
+            fee_session_groupsadding.session_id,
+            fee_groupsadding.name,
+            fee_groupsadding.is_system,
+            fee_groups_feetypeadding.amount as `fee_amount`,
+            fee_groups_feetypeadding.id as fee_groups_feetype_id,
+            student_fees_depositeadding.id as `student_fees_deposite_id`,
+            student_fees_depositeadding.amount_detail,
+            students.admission_no,
+            students.roll_no,
+            students.admission_date,
+            students.firstname,
+            students.middlename,
+            students.lastname,
+            students.father_name,
+            students.image,
+            students.mobileno,
+            students.email,
+            students.state,
+            students.city,
+            students.pincode,
+            students.is_active,
+            classes.class,
+            sections.section
+        FROM `student_fees_masteradding`
+        INNER JOIN fee_session_groupsadding ON fee_session_groupsadding.id = student_fees_masteradding.fee_session_group_id
+        INNER JOIN student_session ON student_session.id = student_fees_masteradding.student_session_id
+        INNER JOIN students ON students.id = student_session.student_id
+        INNER JOIN classes ON student_session.class_id = classes.id
+        INNER JOIN sections ON sections.id = student_session.section_id
+        INNER JOIN fee_groupsadding ON fee_groupsadding.id = fee_session_groupsadding.fee_groups_id
+        INNER JOIN fee_groups_feetypeadding ON fee_groupsadding.id = fee_groups_feetypeadding.fee_groups_id
+        LEFT JOIN student_fees_depositeadding ON student_fees_depositeadding.student_fees_master_id = student_fees_masteradding.id
+            AND student_fees_depositeadding.fee_groups_feetype_id = fee_groups_feetypeadding.id";
 
         $query = $this->db->query($sql);
         return $query->result();

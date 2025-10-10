@@ -8,6 +8,7 @@ This document provides a comprehensive summary of all Report APIs created for th
 **Total Endpoints:** 70 (filter + list for each API)
 **Implementation Date:** October 2025
 **Status:** ✅ Production Ready
+**Last Updated:** 2025-10-10
 
 ---
 
@@ -341,10 +342,22 @@ This document provides a comprehensive summary of all Report APIs created for th
   - `POST /api/daily-collection-report/filter`
   - `POST /api/daily-collection-report/list`
 - **Filters:** date_from, date_to
-- **Returns:** Daily fee collection data with amounts collected per day, including regular fees and other fees
-- **Special Features:** Date range filtering, empty request returns current month's collection, includes both regular and other fees breakdown
-- **Documentation:** `api/documentation/DAILY_COLLECTION_REPORT_API_README.md`
-- **Status:** ✅ Complete with full documentation
+- **Returns:** Daily fee collection data with amounts collected per day, including regular fees and other fees (additional fees)
+- **Special Features:**
+  - Date range filtering with default to current month
+  - Separate tracking for regular fees (`fees_data`) and other fees (`other_fees_data`)
+  - Daily aggregation with amount totals, transaction counts, and deposit IDs
+  - Includes fine amounts in collection totals
+  - Initializes all dates in range with zero values for complete coverage
+  - Supports suggested date ranges (This Month, Last Month, This Year)
+- **Data Processing:**
+  - Retrieves all fee deposits for current session
+  - Parses JSON `amount_detail` field for payment transactions
+  - Filters by date range using Unix timestamps
+  - Aggregates by date: `amt = amount + amount_fine`
+- **Use Cases:** Daily collection dashboard, monthly reports, collection comparison, trend analysis
+- **Documentation:** `api/documentation/DAILY_COLLECTION_REPORT_API_README.md` (902 lines)
+- **Status:** ✅ Complete with comprehensive documentation (902 lines including examples, FAQs, use cases)
 
 ### 34. Year Report Due Fees API
 - **Controller:** `api/application/controllers/Year_report_due_fees_api.php`
