@@ -263,3 +263,9 @@ ERROR - 2025-10-10 15:37:38 --> Severity: Warning --> Undefined array key 1 C:\x
 ERROR - 2025-10-10 15:37:38 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
 ERROR - 2025-10-10 12:07:38 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-10 12:07:38 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-10 16:53:57 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-10 16:53:57 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-10 16:53:57 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\typewisereport.php 179
+ERROR - 2025-10-10 16:53:57 --> Severity: Warning --> Undefined variable $selected_section C:\xampp\htdocs\amt\application\views\financereports\typewisereport.php 925
+ERROR - 2025-10-10 13:23:57 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-10 13:23:57 --> Could not find the language line "thank_you_for_your_complain"
