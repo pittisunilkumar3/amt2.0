@@ -231,3 +231,14 @@ ERROR - 2025-10-10 14:34:45 --> Severity: Warning --> Undefined variable $sectio
 ERROR - 2025-10-10 14:34:45 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\reportduefees.php 47
 ERROR - 2025-10-10 11:04:52 --> Could not find the language line "thanks_for_contacting_us"
 ERROR - 2025-10-10 11:04:52 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-10 14:38:15 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-10 14:38:15 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-10 14:38:15 --> Severity: Warning --> Undefined variable $count C:\xampp\htdocs\amt\application\views\financereports\yearreportduefees.php 34
+ERROR - 2025-10-10 14:38:15 --> Severity: Warning --> Undefined variable $section_list C:\xampp\htdocs\amt\application\views\financereports\yearreportduefees.php 47
+ERROR - 2025-10-10 14:38:15 --> Severity: Warning --> foreach() argument must be of type array|object, null given C:\xampp\htdocs\amt\application\views\financereports\yearreportduefees.php 47
+ERROR - 2025-10-10 11:08:16 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-10 11:08:16 --> Could not find the language line "thank_you_for_your_complain"
+ERROR - 2025-10-10 14:47:30 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\top_sidemenu.php 71
+ERROR - 2025-10-10 14:47:30 --> Severity: Warning --> Undefined array key 1 C:\xampp\htdocs\amt\application\views\layout\sidebar.php 70
+ERROR - 2025-10-10 11:17:30 --> Could not find the language line "thanks_for_contacting_us"
+ERROR - 2025-10-10 11:17:30 --> Could not find the language line "thank_you_for_your_complain"
