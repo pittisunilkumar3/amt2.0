@@ -79,7 +79,7 @@ Auth-Key: schoolAdmin@
 | date_to | string | No | End date (YYYY-MM-DD) - used when search_type is 'period' |
 | class_id | integer | No | Filter by class ID |
 | section_id | integer | No | Filter by section ID |
-| session_id | integer | No | Filter by session ID (defaults to current session) |
+| session_id | integer | No | Filter by session ID - **IMPORTANT**: This filters by student enrollment session, not fee collection session |
 | feetype_id | integer | No | Filter by fee type ID |
 | received_by | string | No | Filter by person who received payment |
 | group | string | No | Group results by: class, collection, or mode |
@@ -303,6 +303,27 @@ Body:
 }
 ```
 
+### Test 5: Specific Filter Example (Working)
+```
+POST http://localhost/amt/api/other-collection-report/filter
+Headers:
+  Content-Type: application/json
+  Client-Service: smartschool
+  Auth-Key: schoolAdmin@
+Body:
+{
+    "session_id": "20",
+    "class_id": "16",
+    "section_id": "26",
+    "feetype_id": "4",
+    "collect_by_id": "6",
+    "from_date": "2025-09-01",
+    "to_date": "2025-10-11"
+}
+```
+
+**Note**: This example uses `session_id: "20"` (2024-25 session) because the student is enrolled in that session, not session 21.
+
 ## Technical Details
 
 - **Controller:** `api/application/controllers/Other_collection_report_api.php`
@@ -320,7 +341,7 @@ Body:
 - **Query Method:** Direct database queries using CodeIgniter's Query Builder
 - **Date Field:** Uses `created_at` timestamp for date filtering
 
-## Notes
+## Important Notes
 
 - All parameters are optional - empty request returns all records for current session
 - Null, empty string, and missing parameters are treated identically
@@ -329,9 +350,32 @@ Body:
 - Response always includes summary with total records and total amount
 - All amounts are formatted as decimal strings with 2 decimal places
 
+### Session ID Filtering
+
+**CRITICAL**: The `session_id` parameter filters by **student enrollment session**, not fee collection session. This means:
+
+- If a student is enrolled in session 20 (2024-25), you must use `session_id: 20` to find their fee collections
+- Fee collections are linked to students through their enrollment session
+- If you get "No records found" with a specific session_id, try without the session_id filter first
+- Use the debug endpoint `/debug-session/check-student-session` to verify which session a student belongs to
+
+### Troubleshooting "No Records Found"
+
+1. **Remove session_id filter** - Test without session_id to see if data exists
+2. **Check date range** - Ensure fee collections exist in the specified date range
+3. **Verify student enrollment** - Students must be enrolled in the specified session
+4. **Check collector assignment** - The specified collector must have collected fees for these criteria
+5. **Validate IDs** - Ensure class_id, section_id, feetype_id, and collect_by_id exist and are correct
+
 ---
 
-**Last Updated:** 2025-10-09  
-**Version:** 1.0  
-**Status:** ✅ Fully Working
+**Last Updated:** 2025-10-11
+**Version:** 1.1
+**Status:** ✅ Fully Working & Tested
+
+**Recent Updates:**
+- ✅ Fixed session_id filtering issue - now properly documented that session_id filters by student enrollment session
+- ✅ Enhanced debug information for "No records found" scenarios
+- ✅ Added troubleshooting guide for common issues
+- ✅ Added working test example with correct session_id
 

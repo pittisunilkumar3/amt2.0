@@ -164,30 +164,70 @@ class Other_collection_report_api extends CI_Controller
             }
 
             // Extract parameters with graceful null handling
-            $search_type = isset($input['search_type']) && $input['search_type'] !== '' ? $input['search_type'] : null;
-            $date_from = isset($input['date_from']) && $input['date_from'] !== '' ? $input['date_from'] : null;
-            $date_to = isset($input['date_to']) && $input['date_to'] !== '' ? $input['date_to'] : null;
+            // Support both API parameter names and web interface parameter names
+            $search_type = isset($input['search_type']) && $input['search_type'] !== '' && $input['search_type'] !== 'all' ? $input['search_type'] : null;
+
+            // Support both date_from/date_to (API) and from_date/to_date (web interface)
+            $date_from = null;
+            $date_to = null;
+            if (isset($input['date_from']) && $input['date_from'] !== '') {
+                $date_from = $input['date_from'];
+            } elseif (isset($input['from_date']) && $input['from_date'] !== '') {
+                $date_from = $input['from_date'];
+            }
+            if (isset($input['date_to']) && $input['date_to'] !== '') {
+                $date_to = $input['date_to'];
+            } elseif (isset($input['to_date']) && $input['to_date'] !== '') {
+                $date_to = $input['to_date'];
+            }
+
             $class_id = isset($input['class_id']) && $input['class_id'] !== '' ? $input['class_id'] : null;
             $section_id = isset($input['section_id']) && $input['section_id'] !== '' ? $input['section_id'] : null;
-            $session_id = isset($input['session_id']) && $input['session_id'] !== '' ? $input['session_id'] : null;
+
+            // Support both session_id and sch_session_id (web interface uses sch_session_id)
+            $session_id = null;
+            if (isset($input['session_id']) && $input['session_id'] !== '') {
+                $session_id = $input['session_id'];
+            } elseif (isset($input['sch_session_id']) && $input['sch_session_id'] !== '') {
+                $session_id = $input['sch_session_id'];
+            }
+
             $feetype_id = isset($input['feetype_id']) && $input['feetype_id'] !== '' ? $input['feetype_id'] : null;
-            $received_by = isset($input['received_by']) && $input['received_by'] !== '' ? $input['received_by'] : null;
+
+            // Support both received_by (API) and collect_by/collect_by_id (web interface)
+            $received_by = null;
+            if (isset($input['received_by']) && $input['received_by'] !== '') {
+                $received_by = $input['received_by'];
+            } elseif (isset($input['collect_by']) && $input['collect_by'] !== '') {
+                $received_by = $input['collect_by'];
+            } elseif (isset($input['collect_by_id']) && $input['collect_by_id'] !== '') {
+                $received_by = $input['collect_by_id'];
+            }
+
             $group = isset($input['group']) && $input['group'] !== '' ? $input['group'] : null;
 
             // Get date range
-            if ($search_type) {
+            // Priority: 1. Custom dates (from_date/to_date), 2. search_type, 3. Default to current year
+            if ($date_from && $date_to) {
+                // Use custom date range
+                $start_date = $date_from;
+                $end_date = $date_to;
+            } elseif ($search_type && $search_type !== 'period') {
+                // Use predefined search type
                 $dates = $this->get_date_range($search_type);
                 $start_date = $dates['from_date'];
                 $end_date = $dates['to_date'];
-            } elseif ($date_from && $date_to) {
-                $start_date = $date_from;
-                $end_date = $date_to;
             } else {
                 // Default to current year
                 $dates = $this->get_date_range('this_year');
                 $start_date = $dates['from_date'];
                 $end_date = $dates['to_date'];
             }
+
+            // IMPORTANT: Ensure dates are in Y-m-d format for consistency
+            // The model expects dates in Y-m-d format and converts them to timestamps
+            $start_date = date('Y-m-d', strtotime($start_date));
+            $end_date = date('Y-m-d', strtotime($end_date));
 
             // Use the same model method as the web interface
             // This method:
@@ -321,9 +361,31 @@ class Other_collection_report_api extends CI_Controller
                 $grouped_results = array_values($grouped_results);
             }
 
+            // Add debug info when no results found
+            $debug_info = array();
+            if (empty($formatted_results)) {
+                $debug_info = array(
+                    'note' => 'No records found with the applied filters',
+                    'suggestions' => array(
+                        'Check if there are any fee collections in the specified date range',
+                        'Verify that the class_id, section_id, and session_id are correct',
+                        'Verify that the feetype_id exists and has collections',
+                        'If using received_by filter, check if that collector has any collections',
+                        'Try removing some filters to see if data exists',
+                        'IMPORTANT: session_id filter is based on student enrollment session, not fee collection session',
+                        'Try without session_id filter first, then check what session_id the students belong to'
+                    ),
+                    'common_issues' => array(
+                        'session_id_mismatch' => 'Students may be enrolled in a different session than expected',
+                        'date_range_too_narrow' => 'Fee collections may be outside the specified date range',
+                        'collector_mismatch' => 'The specified collector may not have collected fees for these criteria'
+                    )
+                );
+            }
+
             $response = array(
                 'status' => 1,
-                'message' => 'Other collection report retrieved successfully',
+                'message' => empty($formatted_results) ? 'No records found with the applied filters' : 'Other collection report retrieved successfully',
                 'filters_applied' => array(
                     'search_type' => $search_type,
                     'date_from' => $start_date,
@@ -346,6 +408,11 @@ class Other_collection_report_api extends CI_Controller
                 'data' => $group ? $grouped_results : $formatted_results,
                 'timestamp' => date('Y-m-d H:i:s')
             );
+
+            // Add debug info if no results
+            if (!empty($debug_info)) {
+                $response['debug'] = $debug_info;
+            }
 
             echo json_encode($response);
 
