@@ -21,22 +21,23 @@ The Collection Report API provides endpoints to retrieve fee collection reports 
 **Purpose:** Retrieve fee collection report data with optional filters
 
 **Request Body Parameters:**
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| search_type | string | No | Predefined date range (today, this_week, this_month, last_month, this_year, last_year, period) |
-| date_from | string | No | Custom start date (YYYY-MM-DD format) |
-| date_to | string | No | Custom end date (YYYY-MM-DD format) |
-| feetype_id | string/int | No | Fee type ID to filter by (use 'transport_fees' for transport fees) |
-| received_by | string/int | No | Staff ID who received the payment |
-| group | string | No | Group by option (class, section, collection) |
-| class_id | string/int | No | Class ID to filter by |
-| section_id | string/int | No | Section ID to filter by |
-| session_id | string/int | No | Academic session ID to filter by |
+| Parameter | Type | Required | Description | Alternative Names |
+|-----------|------|----------|-------------|-------------------|
+| search_type | string | No | Predefined date range (today, this_week, last_week, this_month, last_month, last_3_month, last_6_month, last_12_month, this_year, last_year, period). Use "all" or omit for all records. | - |
+| date_from | string | No | Custom start date (YYYY-MM-DD format) | from_date |
+| date_to | string | No | Custom end date (YYYY-MM-DD format) | to_date |
+| feetype_id | string/int | No | Fee type ID to filter by (use 'transport_fees' for transport fees) | fee_type_id |
+| received_by | string/int | No | Staff ID who received the payment | collect_by_id, collect_by |
+| group | string | No | Group by option (class, collection, mode) | - |
+| class_id | string/int | No | Class ID to filter by | - |
+| section_id | string/int | No | Section ID to filter by | - |
+| session_id | string/int | No | Academic session ID to filter by | sch_session_id |
 
 **Graceful Null/Empty Handling:**
 - Empty request `{}` returns current month's collection data
-- `null` or empty string parameters are treated as "return ALL records" for that parameter
+- `null`, empty string, or "all" for search_type are treated as "return ALL records"
 - No validation errors for missing or empty parameters
+- Alternative parameter names are supported for backward compatibility
 
 **Example Requests:**
 
@@ -93,6 +94,31 @@ The Collection Report API provides endpoints to retrieve fee collection reports 
     "session_id": "1",
     "feetype_id": "1",
     "search_type": "this_month"
+}
+```
+
+8. **Using Alternative Parameter Names:**
+```json
+{
+    "session_id": "21",
+    "class_id": "19",
+    "section_id": "36",
+    "fee_type_id": "33",
+    "collect_by_id": "6",
+    "search_type": "all",
+    "from_date": "2025-09-01",
+    "to_date": "2025-10-11"
+}
+```
+
+9. **Using Period Search Type with Custom Dates:**
+```json
+{
+    "search_type": "period",
+    "date_from": "2025-09-01",
+    "date_to": "2025-10-11",
+    "class_id": "19",
+    "section_id": "36"
 }
 ```
 
@@ -344,9 +370,12 @@ curl -X POST "http://localhost/amt/api/collection-report/list" \
 ## Notes
 
 1. **Date Range Processing:**
-   - If `search_type` is provided, it takes precedence over custom dates
+   - If `search_type` is provided (except "all" or "period"), it takes precedence over custom dates
+   - If `search_type` is "all" or omitted, and custom dates are provided, custom dates are used
+   - If `search_type` is "period", custom dates from `date_from`/`date_to` are required
    - If neither `search_type` nor custom dates are provided, defaults to current month
-   - Custom dates require both `date_from` and `date_to`
+   - Custom dates require both `date_from`/`date_to` (or `from_date`/`to_date`)
+   - Valid search_type values: today, this_week, last_week, this_month, last_month, last_3_month, last_6_month, last_12_month, this_year, last_year, period, all
 
 2. **Transport Fees:**
    - Transport fees are included as a special fee type with ID 'transport_fees'

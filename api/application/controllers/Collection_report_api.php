@@ -63,23 +63,79 @@ class Collection_report_api extends CI_Controller
         try {
             // Get JSON input
             $json_input = json_decode($this->input->raw_input_stream, true);
-            
+
             // Get filter parameters (all optional)
+            // Support both old and new parameter names for backward compatibility
             // Treat empty strings as null for graceful handling
-            $search_type = (isset($json_input['search_type']) && $json_input['search_type'] !== '') ? $json_input['search_type'] : null;
-            $date_from = (isset($json_input['date_from']) && $json_input['date_from'] !== '') ? $json_input['date_from'] : null;
-            $date_to = (isset($json_input['date_to']) && $json_input['date_to'] !== '') ? $json_input['date_to'] : null;
-            $feetype_id = (isset($json_input['feetype_id']) && $json_input['feetype_id'] !== '') ? $json_input['feetype_id'] : null;
-            $received_by = (isset($json_input['received_by']) && $json_input['received_by'] !== '') ? $json_input['received_by'] : null;
+
+            // Search type - handle "all" as null (return all records)
+            $search_type = null;
+            if (isset($json_input['search_type']) && $json_input['search_type'] !== '' && $json_input['search_type'] !== 'all') {
+                $search_type = $json_input['search_type'];
+            }
+
+            // Date parameters - support both date_from/date_to and from_date/to_date
+            $date_from = null;
+            if (isset($json_input['date_from']) && $json_input['date_from'] !== '') {
+                $date_from = $json_input['date_from'];
+            } elseif (isset($json_input['from_date']) && $json_input['from_date'] !== '') {
+                $date_from = $json_input['from_date'];
+            }
+
+            $date_to = null;
+            if (isset($json_input['date_to']) && $json_input['date_to'] !== '') {
+                $date_to = $json_input['date_to'];
+            } elseif (isset($json_input['to_date']) && $json_input['to_date'] !== '') {
+                $date_to = $json_input['to_date'];
+            }
+
+            // Fee type - support both feetype_id and fee_type_id
+            $feetype_id = null;
+            if (isset($json_input['feetype_id']) && $json_input['feetype_id'] !== '') {
+                $feetype_id = $json_input['feetype_id'];
+            } elseif (isset($json_input['fee_type_id']) && $json_input['fee_type_id'] !== '') {
+                $feetype_id = $json_input['fee_type_id'];
+            }
+
+            // Collector - support both received_by and collect_by_id
+            $received_by = null;
+            if (isset($json_input['received_by']) && $json_input['received_by'] !== '') {
+                $received_by = $json_input['received_by'];
+            } elseif (isset($json_input['collect_by_id']) && $json_input['collect_by_id'] !== '') {
+                $received_by = $json_input['collect_by_id'];
+            } elseif (isset($json_input['collect_by']) && $json_input['collect_by'] !== '') {
+                $received_by = $json_input['collect_by'];
+            }
+
+            // Group by
             $group = (isset($json_input['group']) && $json_input['group'] !== '') ? $json_input['group'] : null;
+
+            // Class ID
             $class_id = (isset($json_input['class_id']) && $json_input['class_id'] !== '') ? $json_input['class_id'] : null;
+
+            // Section ID
             $section_id = (isset($json_input['section_id']) && $json_input['section_id'] !== '') ? $json_input['section_id'] : null;
-            $session_id = (isset($json_input['session_id']) && $json_input['session_id'] !== '') ? $json_input['session_id'] : null;
+
+            // Session ID - support both session_id and sch_session_id
+            $session_id = null;
+            if (isset($json_input['session_id']) && $json_input['session_id'] !== '') {
+                $session_id = $json_input['session_id'];
+            } elseif (isset($json_input['sch_session_id']) && $json_input['sch_session_id'] !== '') {
+                $session_id = $json_input['sch_session_id'];
+            }
 
             // Determine date range
-            if ($search_type !== null) {
+            if ($search_type !== null && $search_type !== 'period') {
+                // Use predefined date range
                 $dates = $this->customlib->get_betweendate($search_type);
             } elseif ($date_from !== null && $date_to !== null) {
+                // Use custom date range
+                $dates = [
+                    'from_date' => $date_from,
+                    'to_date' => $date_to
+                ];
+            } elseif ($search_type === 'period' && $date_from !== null && $date_to !== null) {
+                // Period with custom dates
                 $dates = [
                     'from_date' => $date_from,
                     'to_date' => $date_to
