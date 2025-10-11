@@ -41,6 +41,7 @@ class Fee_collection_columnwise_report_api extends CI_Controller
             $this->load->model('module_model');
             $this->load->model('class_model');
             $this->load->model('section_model');
+            $this->load->model('studentfeemaster_model');
             
         } catch (Exception $e) {
             // Return JSON error response
@@ -109,22 +110,21 @@ class Fee_collection_columnwise_report_api extends CI_Controller
             // Combine all fee types
             $combined_fee_types = array_merge($regular_fee_types, $other_fee_types);
 
-            // Get received by list from both tables
-            $this->db->select('DISTINCT received_by');
-            $this->db->from('student_fees_deposite');
-            $this->db->where('received_by IS NOT NULL');
-            $this->db->where('received_by !=', '');
-            $received_by_regular = $this->db->get()->result_array();
-            
-            $this->db->select('DISTINCT received_by');
-            $this->db->from('student_fees_depositeadding');
-            $this->db->where('received_by IS NOT NULL');
-            $this->db->where('received_by !=', '');
-            $received_by_other = $this->db->get()->result_array();
-            
-            $received_by_list = array_merge($received_by_regular, $received_by_other);
-            // Remove duplicates
-            $received_by_list = array_map("unserialize", array_unique(array_map("serialize", $received_by_list)));
+            // Get received by list from staff table (collectors)
+            // Note: received_by is stored in JSON amount_detail field in both tables
+            // So we get the list of staff who can collect fees
+            $collect_by_data = $this->studentfeemaster_model->get_feesreceived_by();
+
+            // Convert to array format for API response
+            $received_by_list = array();
+            if (!empty($collect_by_data)) {
+                foreach ($collect_by_data as $staff_id => $staff_name) {
+                    $received_by_list[] = array(
+                        'id' => $staff_id,
+                        'name' => $staff_name
+                    );
+                }
+            }
 
             $response = array(
                 'status' => 1,

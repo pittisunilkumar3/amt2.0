@@ -73,4 +73,13 @@ class Staff_model extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * Get staff name by ID
+     * Returns staff name, employee_id, and id
+     */
+    public function get_StaffNameById($id)
+    {
+        return $this->db->select("CONCAT_WS(' ',name,surname) as name,employee_id,id")->from('staff')->where('id', $id)->get()->row_array();
+    }
+
 }

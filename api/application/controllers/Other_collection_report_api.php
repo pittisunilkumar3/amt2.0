@@ -18,40 +18,32 @@ class Other_collection_report_api extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        
-        // Suppress errors for clean JSON output
-        ini_set('display_errors', 0);
-        error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-        
+
         // Set JSON response header
         header('Content-Type: application/json');
-        
-        // Try to load database with error handling
-        try {
-            $this->load->database();
-            
-            // Test database connection
-            if (!$this->db->conn_id) {
-                throw new Exception('Database connection failed');
-            }
-            
-            // Load required models
-            $this->load->model('setting_model');
-            $this->load->model('auth_model');
-            $this->load->model('module_model');
-            $this->load->model('class_model');
-            $this->load->model('section_model');
-            
-        } catch (Exception $e) {
-            // Return JSON error response
-            echo json_encode(array(
-                'status' => 0,
-                'message' => 'Database connection error. Please ensure MySQL is running in XAMPP.',
-                'error' => 'Unable to connect to database server',
-                'timestamp' => date('Y-m-d H:i:s')
-            ));
-            exit;
-        }
+
+        // Load database
+        $this->load->database();
+
+        // Add main application models path to search paths
+        // This allows loading models from the main application directory
+        $main_models_path = FCPATH . 'application/models/';
+        $this->load->add_package_path($main_models_path);
+
+        // Load required models
+        $this->load->model('setting_model');
+        $this->load->model('auth_model');
+        $this->load->model('module_model');
+        $this->load->model('class_model');
+        $this->load->model('section_model');
+        $this->load->model('studentfeemaster_model');
+        $this->load->model('staff_model'); // Needed for collector names
+
+        // Load model from main application directory
+        // The model exists in application/models/ not api/application/models/
+        // FCPATH points to api/ directory, so we need to go up one level with ../
+        require_once(FCPATH . '../application/models/Studentfeemasteradding_model.php');
+        $this->studentfeemasteradding_model = new Studentfeemasteradding_model();
     }
 
     /**
@@ -97,12 +89,21 @@ class Other_collection_report_api extends CI_Controller
             $this->db->order_by('type', 'asc');
             $fee_types = $this->db->get()->result_array();
 
-            // Get received by list
-            $this->db->select('DISTINCT received_by');
-            $this->db->from('student_fees_depositeadding');
-            $this->db->where('received_by IS NOT NULL');
-            $this->db->where('received_by !=', '');
-            $received_by_list = $this->db->get()->result_array();
+            // Get received by list from staff table (collectors)
+            // Note: received_by is stored in JSON amount_detail field, not as a column
+            // So we get the list of staff who can collect fees
+            $collect_by_data = $this->studentfeemaster_model->get_feesreceived_by();
+
+            // Convert to array format for API response
+            $received_by_list = array();
+            if (!empty($collect_by_data)) {
+                foreach ($collect_by_data as $staff_id => $staff_name) {
+                    $received_by_list[] = array(
+                        'id' => $staff_id,
+                        'name' => $staff_name
+                    );
+                }
+            }
 
             $response = array(
                 'status' => 1,
@@ -131,8 +132,17 @@ class Other_collection_report_api extends CI_Controller
 
     /**
      * Filter endpoint - Get other collection report with filters
-     * 
+     *
      * POST /api/other-collection-report/filter
+     *
+     * This endpoint matches the behavior of the web interface at:
+     * http://localhost/amt/financereports/other_collection_report
+     *
+     * Key differences from simple database query:
+     * 1. Uses studentfeemasteradding_model->getFeeCollectionReport() method
+     * 2. Parses amount_detail JSON field to extract individual payments
+     * 3. Filters by date and received_by from JSON, not table columns
+     * 4. Returns individual payment records, not just deposit records
      */
     public function filter()
     {
@@ -179,76 +189,136 @@ class Other_collection_report_api extends CI_Controller
                 $end_date = $dates['to_date'];
             }
 
-            // Get session ID - use provided or current
-            if ($session_id === null) {
-                $session_id = $this->setting_model->getCurrentSession();
-            }
+            // Use the same model method as the web interface
+            // This method:
+            // 1. Queries student_fees_depositeadding with all joins
+            // 2. Parses amount_detail JSON field to extract individual payments
+            // 3. Filters payments by date range (from JSON)
+            // 4. Filters payments by received_by (from JSON) if specified
+            // 5. Returns individual payment records with full student/fee details
+            $results = $this->studentfeemasteradding_model->getFeeCollectionReport(
+                $start_date,
+                $end_date,
+                $feetype_id,
+                $received_by,
+                $group,
+                $class_id,
+                $section_id,
+                $session_id
+            );
 
-            // Build query for other fee collection
-            $this->db->select('student_fees_depositeadding.*, students.firstname, students.middlename, students.lastname, 
-                student_session.class_id, classes.class, sections.section, student_session.section_id, 
-                student_session.student_id, fee_groupsadding.name, feetypeadding.type, feetypeadding.code, 
-                feetypeadding.is_system, student_fees_masteradding.student_session_id, students.admission_no');
-            $this->db->from('student_fees_depositeadding');
-            $this->db->join('fee_groups_feetypeadding', 'fee_groups_feetypeadding.id = student_fees_depositeadding.fee_groups_feetype_id');
-            $this->db->join('fee_groupsadding', 'fee_groupsadding.id = fee_groups_feetypeadding.fee_groups_id');
-            $this->db->join('feetypeadding', 'feetypeadding.id = fee_groups_feetypeadding.feetype_id');
-            $this->db->join('student_fees_masteradding', 'student_fees_masteradding.id = student_fees_depositeadding.student_fees_master_id');
-            $this->db->join('student_session', 'student_session.id = student_fees_masteradding.student_session_id');
-            $this->db->join('classes', 'classes.id = student_session.class_id');
-            $this->db->join('sections', 'sections.id = student_session.section_id');
-            $this->db->join('students', 'students.id = student_session.student_id');
-            
-            // Apply filters
-            $this->db->where('student_fees_depositeadding.created_at >=', $start_date);
-            $this->db->where('student_fees_depositeadding.created_at <=', $end_date . ' 23:59:59');
-            $this->db->where('student_session.session_id', $session_id);
-            
-            if ($class_id !== null) {
-                $this->db->where('student_session.class_id', $class_id);
-            }
-            
-            if ($section_id !== null) {
-                $this->db->where('student_session.section_id', $section_id);
-            }
-            
-            if ($feetype_id !== null) {
-                $this->db->where('feetypeadding.id', $feetype_id);
-            }
-            
-            if ($received_by !== null) {
-                $this->db->where('student_fees_depositeadding.received_by', $received_by);
-            }
-            
-            $this->db->order_by('student_fees_depositeadding.created_at', 'desc');
-            
-            $query = $this->db->get();
-            $results = $query->result_array();
-
-            // Group results if grouping is specified
-            $grouped_results = array();
+            // Format results to match web interface table columns exactly
+            $formatted_results = array();
             $total_amount = 0;
-            
-            if ($group && !empty($results)) {
-                $group_by_field = $this->get_group_field($group);
-                foreach ($results as $row) {
-                    $key = $row[$group_by_field];
+            $total_discount = 0;
+            $total_fine = 0;
+            $total_grand = 0;
+
+            foreach ($results as $row) {
+                // Calculate total for this payment (Paid + Fine - Discount)
+                $payment_total = floatval($row['amount']) + floatval($row['amount_fine']) - floatval($row['amount_discount']);
+
+                // Format collector name
+                $collector_name = '';
+                if (isset($row['received_byname']) && is_array($row['received_byname'])) {
+                    $collector_name = $row['received_byname']['name'] . ' (' . $row['received_byname']['employee_id'] . ')';
+                }
+
+                // Build formatted record matching web interface table
+                $formatted_record = array(
+                    'payment_id' => $row['id'] . '/' . $row['inv_no'],
+                    'date' => $row['date'],
+                    'admission_no' => $row['admission_no'],
+                    'student_name' => trim($row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname']),
+                    'class' => $row['class'] . ' (' . $row['section'] . ')',
+                    'fee_type' => $row['type'],
+                    'collect_by' => $collector_name,
+                    'mode' => $row['payment_mode'],
+                    'paid' => number_format($row['amount'], 2, '.', ''),
+                    'note' => isset($row['description']) ? $row['description'] : '',
+                    'discount' => number_format($row['amount_discount'], 2, '.', ''),
+                    'fine' => number_format($row['amount_fine'], 2, '.', ''),
+                    'total' => number_format($payment_total, 2, '.', ''),
+                    // Include original fields for reference
+                    'raw_data' => array(
+                        'id' => $row['id'],
+                        'student_id' => $row['student_id'],
+                        'class_id' => $row['class_id'],
+                        'section_id' => $row['section_id'],
+                        'received_by' => $row['received_by'],
+                        'inv_no' => $row['inv_no']
+                    )
+                );
+
+                $formatted_results[] = $formatted_record;
+
+                // Calculate totals
+                $total_amount += floatval($row['amount']);
+                $total_discount += floatval($row['amount_discount']);
+                $total_fine += floatval($row['amount_fine']);
+                $total_grand += $payment_total;
+            }
+
+            // Group results if grouping is specified (matches web interface logic)
+            $grouped_results = array();
+
+            if ($group && !empty($formatted_results)) {
+                // Determine group by field
+                if ($group == 'class') {
+                    $group_by_field = 'class_id';
+                } elseif ($group == 'collection') {
+                    $group_by_field = 'received_by';
+                } elseif ($group == 'mode') {
+                    $group_by_field = 'mode';
+                } else {
+                    $group_by_field = 'class_id';
+                }
+
+                // Group the results
+                foreach ($formatted_results as $idx => $record) {
+                    // Get grouping key
+                    if ($group == 'class') {
+                        $key = $results[$idx]['class_id'];
+                        $key_label = $record['class'];
+                    } elseif ($group == 'collection') {
+                        $key = $results[$idx]['received_by'];
+                        $key_label = $record['collect_by'];
+                    } elseif ($group == 'mode') {
+                        $key = $record['mode'];
+                        $key_label = $record['mode'];
+                    } else {
+                        $key = 'all';
+                        $key_label = 'All';
+                    }
+
                     if (!isset($grouped_results[$key])) {
                         $grouped_results[$key] = array(
-                            'group_name' => $key,
+                            'group_name' => $key_label,
                             'records' => array(),
-                            'subtotal' => 0
+                            'subtotal_paid' => 0,
+                            'subtotal_discount' => 0,
+                            'subtotal_fine' => 0,
+                            'subtotal_total' => 0
                         );
                     }
-                    $grouped_results[$key]['records'][] = $row;
-                    $grouped_results[$key]['subtotal'] += floatval($row['amount']);
-                    $total_amount += floatval($row['amount']);
+
+                    $grouped_results[$key]['records'][] = $record;
+                    $grouped_results[$key]['subtotal_paid'] += floatval($record['paid']);
+                    $grouped_results[$key]['subtotal_discount'] += floatval($record['discount']);
+                    $grouped_results[$key]['subtotal_fine'] += floatval($record['fine']);
+                    $grouped_results[$key]['subtotal_total'] += floatval($record['total']);
                 }
+
+                // Format subtotals
+                foreach ($grouped_results as &$group_data) {
+                    $group_data['subtotal_paid'] = number_format($group_data['subtotal_paid'], 2, '.', '');
+                    $group_data['subtotal_discount'] = number_format($group_data['subtotal_discount'], 2, '.', '');
+                    $group_data['subtotal_fine'] = number_format($group_data['subtotal_fine'], 2, '.', '');
+                    $group_data['subtotal_total'] = number_format($group_data['subtotal_total'], 2, '.', '');
+                }
+
+                // Convert to indexed array
                 $grouped_results = array_values($grouped_results);
-            } else {
-                foreach ($results as $row) {
-                    $total_amount += floatval($row['amount']);
-                }
             }
 
             $response = array(
@@ -266,11 +336,14 @@ class Other_collection_report_api extends CI_Controller
                     'group' => $group
                 ),
                 'summary' => array(
-                    'total_records' => count($results),
-                    'total_amount' => number_format($total_amount, 2, '.', '')
+                    'total_records' => count($formatted_results),
+                    'total_paid' => number_format($total_amount, 2, '.', ''),
+                    'total_discount' => number_format($total_discount, 2, '.', ''),
+                    'total_fine' => number_format($total_fine, 2, '.', ''),
+                    'grand_total' => number_format($total_grand, 2, '.', '')
                 ),
-                'total_records' => count($results),
-                'data' => $group ? $grouped_results : $results,
+                'total_records' => count($formatted_results),
+                'data' => $group ? $grouped_results : $formatted_results,
                 'timestamp' => date('Y-m-d H:i:s')
             );
 
