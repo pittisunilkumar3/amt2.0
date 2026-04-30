@@ -1,0 +1,2420 @@
+/* =============================================
+   Shared Admin Pages Styles (White Theme)
+   ---------------------------------------------
+   - Target: Clean, Eye-feasting, SaaS-like UI
+   - Focus: Tables, Cards (Boxes), Forms, Badges
+   ============================================= */
+
+/* --- Layout Background Accents --- */
+.content-wrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: #f8fafc !important;
+  /* Slightly softer background */
+  width: auto !important;
+  /* Ensure it adapts to sidebar margin */
+  max-width: 100% !important;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Force correct margins to prevent overlap */
+@media (min-width: 768px) {
+
+  /* Default Open State - applied when sidebar-collapse is NOT present */
+  .content-wrapper,
+  .right-side,
+  .main-footer {
+    margin-left: 220px !important;
+  }
+
+  /* Collapsed Mini State - overrides the above when class IS present */
+  .sidebar-collapse .content-wrapper,
+  .sidebar-collapse .right-side,
+  .sidebar-collapse .main-footer {
+    margin-left: 80px !important;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .content-wrapper,
+  .right-side,
+  .main-footer {
+    margin-left: 0 !important;
+  }
+}
+
+/* Modern Gradient Header Stripe - Reverted to original colors for continuity */
+.content-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 280px;
+  background-image: linear-gradient(45deg, var(--accent-gradient-start, #f33057), var(--accent-gradient-end, #3858f9));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content-wrapper>.content {
+  position: relative;
+  /* Removed z-index: 1; to prevent trapping modals in a low stacking context */
+  padding: 20px 25px !important;
+}
+
+/* --- Breadcrumb/Context Title --- */
+.content-wrapper .admin-page-context {
+  padding: 14px 10px 10px;
+  margin: 0 0 10px;
+}
+
+.content-wrapper .admin-page-context__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.content-wrapper .admin-page-context__sep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 4px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+}
+
+
+.content-wrapper .admin-page-context__submenu {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  /* Brighter submenu text */
+}
+
+/* --- Modern Content Header Fallback --- */
+.content-wrapper .content-header {
+  display: block;
+  /* Removed !important to allow JS hiding */
+  padding: 14px 10px 10px !important;
+  margin: 0 0 10px !important;
+  position: relative;
+  z-index: 5;
+  background: transparent !important;
+}
+
+.content-wrapper .content-header>h1 {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 12, 0.98) !important;
+  /* Gold/Yellow to match breadcrumb icon for contrast */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.content-wrapper .content-header>h1 small {
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 400 !important;
+}
+
+.content-wrapper .content-header .breadcrumb {
+  display: none !important;
+}
+
+/* --- High-Depth Floating Cards (.box) --- */
+.content-wrapper .box {
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px !important;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08),
+    0 20px 25px -5px rgba(0, 0, 0, 0.04);
+  margin-bottom: 30px;
+  overflow: visible !important;
+  /* Fixed: Allow custom dropdowns to float out */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-wrapper .box-header {
+  padding: 20px 25px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-wrapper .box-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.content-wrapper .box-body {
+  padding: 25px;
+}
+
+/* --- Premium Modern Tables --- */
+.content-wrapper .table-responsive {
+  border-radius: 0 0 20px 20px;
+  border: none;
+  overflow: visible !important;
+  /* Force no scroll on desktop */
+  width: 100% !important;
+}
+
+@media (max-width: 991px) {
+  .content-wrapper .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+    display: block;
+    /* Ensure container is block */
+  }
+
+  /* CRITICAL FIX: Use inline-table to bind background to full content width */
+  .content-wrapper .table-responsive table.table {
+    min-width: 100% !important;
+    width: auto !important;
+    max-width: none !important;
+    /* Prevent global max-width constraints */
+    table-layout: auto !important;
+    display: inline-table !important;
+    /* Expands table box to fit content */
+  }
+}
+
+/* --- Horizontal Scroll Utility for Dense Tables --- */
+/* Add this class to .table-responsive to enable scrolling when columns exceed screen width */
+.content-wrapper .table-has-scroll {
+  overflow-x: auto !important;
+  width: 100% !important;
+  padding-bottom: 5px;
+  /* Space for scrollbar visibility */
+  -webkit-overflow-scrolling: touch;
+}
+
+.content-wrapper .table-has-scroll table.table {
+  table-layout: auto !important;
+  /* Allow table to expand beyond fixed container */
+  min-width: 100% !important;
+  width: max-content !important;
+}
+
+.content-wrapper .table-has-scroll table.table thead tr th,
+.content-wrapper .table-has-scroll table.table tbody tr td {
+  white-space: nowrap !important;
+  /* Prevent excessive height from wrapping many columns */
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Custom Scrollbar for Premium Feel */
+.table-has-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-has-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.table-has-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.table-has-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* --- SumoSelect Premium Styling --- */
+.SumoSelect {
+  width: 100% !important;
+}
+
+.SumoSelect>.CaptionCont {
+  border: 1px solid #d2d6de !important;
+  border-radius: 4px !important;
+  min-height: 34px !important;
+  background-color: #fff !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.SumoSelect.open>.CaptionCont,
+.SumoSelect:focus>.CaptionCont {
+  border-color: #3c8dbc !important;
+  box-shadow: 0 0 0 3px rgba(60, 141, 188, 0.1) !important;
+}
+
+.SumoSelect>.CaptionCont>span {
+  font-size: 13px !important;
+  color: #444 !important;
+}
+
+.SumoSelect>.CaptionCont>span.placeholder {
+  color: #999 !important;
+  font-style: normal !important;
+}
+
+.SumoSelect .optWrapper {
+  border-radius: 0 0 4px 4px !important;
+  border: 1px solid #d2d6de !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  top: 33px !important;
+}
+
+.SumoSelect .optWrapper .options li.opt {
+  padding: 8px 12px !important;
+  border-bottom: 1px solid #f8f9fa !important;
+  transition: background-color 0.2s;
+}
+
+.SumoSelect .optWrapper .options li.opt:hover {
+  background-color: #f1f5f9 !important;
+}
+
+.SumoSelect .optWrapper .options li.opt.selected {
+  background-color: #e0f2fe !important;
+  color: #0369a1 !important;
+}
+
+/* Select All Styling */
+.SumoSelect .optWrapper .options li.opt.select-all {
+  background: #f8fafc !important;
+  border-bottom: 2px solid #e2e8f0 !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  height: 40px !important;
+  padding-top: 10px !important;
+}
+
+.SumoSelect .optWrapper .options li.opt.select-all.selected {
+  color: #0369a1 !important;
+}
+
+/* OK/Cancel Buttons */
+.SumoSelect .optWrapper .MultiControls {
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 8px !important;
+  background: #f8fafc !important;
+}
+
+.SumoSelect .optWrapper .MultiControls>p {
+  padding: 6px 15px !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  font-weight: 600 !important;
+}
+
+.SumoSelect .optWrapper .MultiControls>p.btnOk {
+  background-color: #3c8dbc !important;
+  color: #fff !important;
+}
+
+.SumoSelect .optWrapper .MultiControls>p.btnCancel {
+  background-color: #e2e8f0 !important;
+  color: #64748b !important;
+  margin-right: 8px !important;
+}
+
+.content-wrapper table.table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-top: -8px;
+  width: 100% !important;
+  table-layout: fixed !important;
+  /* Decisive: Force table to fit container */
+  background: transparent !important;
+}
+
+/* Table Headers */
+.content-wrapper table.table thead tr th {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  padding: 16px 15px !important;
+  border: none !important;
+  border-bottom: 2px solid #e2e8f0 !important;
+  white-space: normal !important;
+  width: auto !important;
+  /* Override DataTables inline fixed width */
+}
+
+/* Table Rows */
+.content-wrapper table.table tbody tr {
+  background: transparent !important;
+  /* Ensure row itself is transparent */
+  transition: all 0.2s ease;
+}
+
+.content-wrapper table.table tbody tr td {
+  background-color: #ffffff !important;
+  padding: 16px 15px !important;
+  border: none !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  vertical-align: middle !important;
+  font-size: 14px;
+  color: #64748b;
+  white-space: normal !important;
+  width: auto !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Rounded corners for the "floating row" look */
+.content-wrapper table.table tbody tr td:first-child {
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+}
+
+.content-wrapper table.table tbody tr td:last-child {
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  text-align: right !important;
+}
+
+/* Actions Column - Fit buttons and prevent wrap */
+.content-wrapper table.table th.noExport,
+.content-wrapper table.table td.white-space-nowrap,
+.content-wrapper table.table td:last-child {
+  white-space: nowrap !important;
+  width: 130px !important;
+  /* Fixed width to contain buttons in fixed layout */
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  text-align: right !important;
+}
+
+/* Allow long columns to wrap more aggressively */
+.content-wrapper table.table td.mailbox-name,
+.content-wrapper table.table td {
+  word-break: break-word;
+  /* Force break long names if they exceed space */
+  max-width: 250px;
+}
+
+.content-wrapper table.table tbody tr:hover td {
+  background-color: #f1f5f9 !important;
+  /* Slightly more visible hover color */
+}
+
+.content-wrapper table.table tbody tr:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Action Icons in Tables */
+.content-wrapper table.table td a.btn-xs {
+  min-width: 32px !important;
+  height: 32px !important;
+  width: auto !important;
+  /* Allow growth if text exists */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #64748b !important;
+  margin: 0 2px !important;
+  padding: 0 8px !important;
+  /* Internal padding for text */
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.content-wrapper table.table td a.btn-xs:hover {
+  background: #f1f5f9;
+  color: #3b82f6;
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+}
+
+.content-wrapper table.table td a.btn-xs i {
+  font-size: 14px;
+}
+
+/* --- Specialized Table Content Styling --- */
+/* Bold Primary Info */
+.content-wrapper table.table td.mailbox-name,
+.content-wrapper table.table td strong {
+  color: #475569;
+  /* Softened primary bold color from deep black-blue to Slate 600 */
+}
+
+/* Success/Time styling */
+.content-wrapper table.table td span[style*="color:green"],
+.content-wrapper table.table td .text-success {
+  color: #10b981 !important;
+  font-weight: 700;
+}
+
+.content-wrapper table.table td span[style*="color:red"],
+.content-wrapper table.table td .text-danger {
+  color: #ef4444 !important;
+  font-weight: 700;
+}
+
+/* --- Modern DataTables Components --- */
+/* Search Input Styling */
+.dataTables_filter {
+  float: right !important;
+  margin-bottom: 25px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-right: 10px !important;
+}
+
+.dataTables_filter label {
+  font-size: 0 !important;
+  /* Hide "Search:" label text */
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.dataTables_filter input {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 25px !important;
+  /* More pill-shaped */
+  padding: 0 20px !important;
+  height: 40px !important;
+  /* Fixed height for alignment */
+  width: 250px !important;
+  font-size: 14px !important;
+  color: #1e293b !important;
+  transition: all 0.3s ease !important;
+  margin-left: 0 !important;
+  /* Remove space from label */
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dataTables_filter input:focus {
+  background: #ffffff;
+  border-color: #3b82f6 !important;
+  width: 280px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Export Buttons Group */
+.dt-buttons {
+  margin-bottom: 25px !important;
+  gap: 8px !important;
+  display: inline-flex !important;
+  float: left !important;
+  align-items: center !important;
+  height: 40px !important;
+  /* Match search height */
+}
+
+.dt-buttons .btn {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  color: #64748b !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+}
+
+.dt-buttons .btn:hover {
+  background: #f8fafc !important;
+  color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* DataTables Layout Tweaks */
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+  zoom: 1;
+}
+
+/* Clearfix for internal floats */
+.dataTables_wrapper::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* DataTables Info - Left Aligned */
+.dataTables_info {
+  font-size: 13px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  padding: 0 !important;
+  margin-top: 25px !important;
+  float: left !important;
+}
+
+.dataTables_info b,
+.dataTables_info strong {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+/* Pagination Container - Right Aligned */
+.dataTables_paginate {
+  float: right !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 25px !important;
+  padding: 0 !important;
+}
+
+/* Fix for DataTables internal numbering span stacking vertically */
+.dataTables_paginate>span {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Base Button Style */
+.dataTables_paginate .paginate_button {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  height: 38px !important;
+  /* Fixed height for perfect alignment */
+  min-width: 38px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #475569 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  border-radius: 0 !important;
+  border-left-width: 0 !important;
+  /* Prevent double borders */
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+}
+
+/* Add back left border for the very first button */
+.dataTables_paginate .paginate_button.previous {
+  border-left-width: 1px !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+}
+
+.dataTables_paginate .paginate_button.next {
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+}
+
+.dataTables_paginate .paginate_button.current {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+  z-index: 2;
+}
+
+.dataTables_paginate .paginate_button:hover:not(.current):not(.disabled) {
+  background: #f8fafc !important;
+  color: #3b82f6 !important;
+  border-color: #e2e8f0 !important;
+  z-index: 1;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+  opacity: 0.5;
+  cursor: default !important;
+  background: #f8fafc !important;
+}
+
+.dataTables_paginate .paginate_button i {
+  font-size: 18px !important;
+  margin: 0 !important;
+}
+
+/* --- Ultra-Modern Forms --- */
+.content-wrapper .form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+  display: inline-flex !important;
+  /* Premium flex alignment for label + asterisk */
+  align-items: center;
+  gap: 4px;
+}
+
+/* Red asterisk for required fields */
+.content-wrapper .req,
+.content-wrapper .text-danger {
+  color: #ef4444 !important;
+  font-weight: 700;
+  margin: 0 !important;
+  /* Rely on gap */
+  display: inline-block !important;
+}
+
+.content-wrapper .form-group {
+  margin-bottom: 25px !important;
+  /* Added more breathing room between vertical fields */
+}
+
+/* Horizontal spacing refinement for filters/rows */
+/* Global Flexbox Upgrade: Eliminates float-based 'staircase' and 'empty space' issues */
+/* IMPORTANT: Exclude dashboard rows that use their own grid/responsive layouts */
+/* Applied ONLY to desktop (md/lg) to prevent mobile layout breakage */
+@media (min-width: 992px) {
+  .content-wrapper .row:not(.dashboard-top-cards-row):not(.dashboard-filter-summary-row):not(.dashboard-summary-cards-row):not(.dashboard-chart-row):not(.overview-cards-row) {
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Neutralize legacy Bootstrap float-clearing pseudo-elements that cause space inside flex */
+  .content-wrapper .row:not(.dashboard-top-cards-row):not(.dashboard-filter-summary-row):not(.dashboard-summary-cards-row):not(.dashboard-chart-row):not(.overview-cards-row)::before,
+  .content-wrapper .row:not(.dashboard-top-cards-row):not(.dashboard-filter-summary-row):not(.dashboard-summary-cards-row):not(.dashboard-chart-row):not(.overview-cards-row)::after {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+.content-wrapper .row:not(.dashboard-top-cards-row):not(.dashboard-filter-summary-row):not(.dashboard-summary-cards-row):not(.dashboard-chart-row):not(.overview-cards-row)>[class*="col-"] {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+/* Layout part - Consistent stacking and width for ALL form components */
+.content-wrapper .form-control,
+.content-wrapper .SumoSelect,
+.content-wrapper .custom-select {
+  display: block !important;
+  width: 100% !important;
+  /* Removed clear: both to prevent breaking floated grid columns in modals */
+}
+
+/* Explicit Reset for SumoSelect to prevent 'Double Border' look */
+.content-wrapper .SumoSelect {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Visual part - Premium look for standard inputs and custom-select boxes */
+.content-wrapper .form-control,
+.content-wrapper .custom-select {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px !important;
+  height: 42px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #1e293b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none !important;
+}
+
+.content-wrapper .form-control:focus {
+  background-color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+/* Pill-shaped variants for specific fields */
+.content-wrapper .form-control-pill {
+  border-radius: 999px !important;
+}
+
+/* Modern Select Styles */
+.content-wrapper select.form-control,
+.content-wrapper .custom-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px !important;
+  height: 42px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+  color: #1e293b;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.content-wrapper .custom-select::before {
+  content: none !important;
+  /* Hide legacy FontAwesome arrow */
+}
+
+/* Custom Multi-Select Dropdown Container */
+#custom-select-option-box {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  margin-top: 5px !important;
+  padding: 8px !important;
+  z-index: 9999 !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+}
+
+.custom-select-option {
+  padding: 10px 15px !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  font-size: 13px !important;
+  color: #475569 !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.custom-select-option:hover {
+  background-color: #f1f5f9 !important;
+  color: #3b82f6 !important;
+}
+
+.custom-select-option.group_name {
+  background-color: #f8fafc !important;
+  font-weight: 700 !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  letter-spacing: 0.05em !important;
+  margin-top: 10px !important;
+  padding: 8px 15px !important;
+  pointer-events: none !important;
+}
+
+.custom-select-option label {
+  margin: 0 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.custom-select-option-checkbox {
+  width: 16px !important;
+  height: 16px !important;
+  cursor: pointer !important;
+}
+
+/* --- Modern Global Badges/Pills --- */
+.badge,
+.label {
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+.label-success,
+.badge-success {
+  background-color: #ecfdf5 !important;
+  color: #10b981 !important;
+}
+
+.label-info,
+.badge-info {
+  background-color: #eff6ff !important;
+  color: #3b82f6 !important;
+}
+
+.label-warning,
+.badge-warning {
+  background-color: #fffbeb !important;
+  color: #f59e0b !important;
+}
+
+.label-danger,
+.badge-danger {
+  background-color: #fef2f2 !important;
+  color: #ef4444 !important;
+}
+
+/* Modern Pill styles for "Purpose" or Meeting types specifically */
+.purpose-pill {
+  padding: 4px 12px;
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* --- Modern Modals --- */
+/* Ensure modals can break out of parents on all pages */
+body.modal-open .content-wrapper,
+body.modal-open .content-wrapper>.content {
+  z-index: auto !important;
+  perspective: none !important;
+  transform: none !important;
+}
+
+.modal {
+  z-index: 9999 !important;
+  /* Ensure modal is above everything (Header/Sidebar) */
+}
+
+.modal-backdrop {
+  z-index: 9998 !important;
+  /* Ensure backdrop covers everything except modal */
+}
+
+.modal {
+  overflow-y: auto !important;
+  /* Allow modal to scroll */
+  overflow-x: hidden !important;
+}
+
+/* But ensure modal backdrop doesn't interfere */
+.modal-dialog {
+  overflow: visible !important;
+}
+
+.modal-content {
+  border: none !important;
+  border-radius: 24px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--accent-gradient-start, #f33057), var(--accent-gradient-end, #3858f9)) !important;
+  color: #ffffff !important;
+  padding: 20px 30px !important;
+  border-bottom: none !important;
+}
+
+.modal-header .modal-title {
+  font-weight: 800 !important;
+  font-size: 20px !important;
+  letter-spacing: -0.5px !important;
+}
+
+.modal-header .close {
+  color: #ffffff !important;
+  opacity: 0.6 !important;
+  transition: opacity 0.2s ease;
+  background: rgba(255, 255, 255, 0.1) !important;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0 !important;
+}
+
+.modal-header .close:hover {
+  opacity: 1 !important;
+}
+
+.modal-body {
+  padding: 30px !important;
+  background-color: #ffffff !important;
+}
+
+.modal-footer {
+  padding: 20px 30px !important;
+  background-color: #f8fafc !important;
+  border-top: 1px solid #f1f5f9 !important;
+  border-radius: 0 0 24px 24px !important;
+}
+
+/* --- Primary Modern Buttons --- */
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 10px 24px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2) !important;
+}
+
+/* --- SumoSelect Modernization --- */
+.SumoSelect {
+  width: 100%;
+}
+
+.SumoSelect>.CaptionCont {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  height: 42px !important;
+  line-height: 40px !important;
+  padding: 0 15px !important;
+  font-size: 14px !important;
+  color: #1e293b !important;
+  box-shadow: none !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative;
+  z-index: 100;
+  transition: all 0.2s ease;
+}
+
+/* Loading State for SumoSelect */
+.SumoSelect.loading>.CaptionCont {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  cursor: wait !important;
+}
+
+.SumoSelect.loading>.CaptionCont::after {
+  content: '';
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #cbd5e1;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: sumo-spin 0.6s linear infinite;
+}
+
+@keyframes sumo-spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.SumoSelect.loading .CaptionCont span {
+  opacity: 0.5;
+}
+
+.SumoSelect.open>.CaptionCont {
+  border-color: #3b82f6 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  z-index: 101 !important;
+}
+
+.SumoSelect>.CaptionCont>span.placeholder {
+  color: #94a3b8 !important;
+  font-style: normal !important;
+}
+
+/* Ensure Caption Text doesn't wrap or overlap */
+.SumoSelect>.CaptionCont>span {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block !important;
+  padding-right: 25px !important;
+}
+
+/* Search input inside the caption */
+.SumoSelect>.CaptionCont>.search-txt {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 40px 0 15px !important;
+  border: none !important;
+  background: transparent !important;
+  font-size: 14px !important;
+  color: #1e293b !important;
+  outline: none !important;
+  z-index: 1 !important;
+}
+
+.SumoSelect.open.up>.CaptionCont>.search-txt {
+  border-radius: 0 0 12px 12px !important;
+}
+
+.SumoSelect>.CaptionCont>label {
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 12px !important;
+  width: 16px !important;
+  margin: 0 !important;
+  background: none !important;
+  display: flex !important;
+  align-items: center !important;
+  z-index: 2 !important;
+  /* Above search text */
+}
+
+.SumoSelect>.CaptionCont>label i {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-block !important;
+}
+
+.SumoSelect>.optWrapper {
+  top: 41px !important;
+  /* Perfectly match the bottom of caption */
+  border: 1px solid #e2e8f0 !important;
+  border-top: none !important;
+  border-radius: 0 0 16px 16px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  z-index: 9999 !important;
+  /* Ensure it stays above everything in modals */
+  padding-bottom: 0 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Smart Up-direction support */
+.SumoSelect.up>.optWrapper {
+  top: auto !important;
+  bottom: 42px !important;
+  /* Position above the caption, not at 100% */
+  border-top: 1px solid #e2e8f0 !important;
+  border-bottom: none !important;
+  border-radius: 16px 16px 0 0 !important;
+  box-shadow: 0 -10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  margin-bottom: 0 !important;
+}
+
+/* Options Styling and Scrolling */
+.SumoSelect>.optWrapper .options {
+  max-height: 250px !important;
+  /* Prevent explosion of height */
+  overflow-y: auto !important;
+  padding: 5px 0 !important;
+  margin: 0 !important;
+}
+
+.SumoSelect>.optWrapper .options li.opt,
+.SumoSelect>.optWrapper>.select-all {
+  padding: 10px 15px 10px 35px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  margin: 2px 4px !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  cursor: pointer !important;
+}
+
+.SumoSelect>.optWrapper .options li.opt span,
+.SumoSelect>.optWrapper>.select-all span {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.SumoSelect>.optWrapper>.select-all>span i,
+.SumoSelect>.optWrapper .options li.opt span i {
+  width: 18px !important;
+  height: 18px !important;
+  border: 2px solid #cbd5e1 !important;
+  border-radius: 5px !important;
+  background-color: #ffffff !important;
+  margin-right: 0px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  position: relative !important;
+  transition: all 0.2s ease !important;
+}
+
+.SumoSelect>.optWrapper>.select-all.selected>span i,
+.SumoSelect>.optWrapper .options li.opt.selected span i {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+.SumoSelect>.optWrapper>.select-all label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  margin: 0 !important;
+}
+
+/* Multi-select Header (Select All) inside MultiControls if used */
+.SumoSelect>.optWrapper>.MultiControls {
+  padding: 10px 15px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  background-color: #f8fafc !important;
+  display: flex !important;
+  gap: 10px !important;
+}
+
+.SumoSelect>.optWrapper>.MultiControls>p {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  margin-bottom: 0 !important;
+  flex: 1;
+}
+
+
+/* Search Bar inside options (if SumoSelect uses a second one) */
+.SumoSelect .search-txt {
+  width: 100% !important;
+  padding: 12px 15px !important;
+  border: none !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  font-size: 13px !important;
+  outline: none !important;
+}
+
+/* Footer Buttons */
+.SumoSelect>.optWrapper>.SumoFooter {
+  display: flex !important;
+  padding: 8px !important;
+  border-top: 1px solid #f1f5f9 !important;
+  gap: 8px !important;
+  background: #ffffff !important;
+}
+
+.SumoSelect>.optWrapper>.SumoFooter>.btnOk,
+.SumoSelect>.optWrapper>.SumoFooter>.btnCancel {
+  flex: 1 !important;
+  height: 36px !important;
+  line-height: 34px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid transparent !important;
+}
+
+.SumoSelect>.optWrapper>.SumoFooter>.btnOk {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.SumoSelect>.optWrapper>.SumoFooter>.btnOk:hover {
+  background-color: #2563eb !important;
+}
+
+.SumoSelect>.optWrapper>.SumoFooter>.btnCancel {
+  background-color: #f1f5f9 !important;
+  color: #64748b !important;
+}
+
+.SumoSelect>.optWrapper>.SumoFooter>.btnCancel:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* --- Responsive Polish --- */
+@media (max-width: 768px) {
+  .content-wrapper>.content {
+    padding: 15px !important;
+  }
+
+  .content-wrapper .box-header {
+    padding: 15px;
+  }
+
+  .content-wrapper .box-body {
+    padding: 15px;
+  }
+
+  .dataTables_filter input {
+    width: 100% !important;
+  }
+}
+
+/* Datepicker Z-Index Fix for Modals */
+.datepicker {
+  z-index: 9999 !important;
+}
+
+/* --- Student Admission Page Isolation --- */
+.student-admission-wrapper .box {
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+  position: relative;
+  overflow: visible !important;
+  /* Prevent clipping of button hover effects */
+}
+
+/* Fix Missing Import Button - Position it over the card header */
+.student-admission-wrapper .impbtntitle {
+  position: absolute;
+  right: 40px;
+  /* Increased from 30px to avoid edge clipping */
+  top: 35px;
+  /* Adjusted to align vertically with title */
+  z-index: 99;
+  /* Higher z-index to stay on top */
+  float: none !important;
+}
+
+.student-admission-wrapper .box-header {
+  background: transparent !important;
+  padding-bottom: 0 !important;
+}
+
+/* Transform internal sections into clean cards */
+.student-admission-wrapper .bozero {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 30px;
+  padding: 30px;
+  border: 1px solid #edf2f7;
+  position: relative;
+  overflow: hidden;
+  /* Contains floats */
+}
+
+/* Section Headers */
+.student-admission-wrapper .pagetitleh-whitebg,
+.student-admission-wrapper .pagetitleh2 {
+  background: transparent !important;
+  color: #2d3748;
+  font-size: 19px;
+  font-weight: 700;
+  padding: 0 0 18px 0;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f1f5f9;
+  box-shadow: none !important;
+  letter-spacing: -0.01em;
+}
+
+/* Better spacing for form groups */
+.student-admission-wrapper .form-group {
+  margin-bottom: 24px;
+}
+
+/* Remove old button container styling to align with new cards */
+.student-admission-wrapper .box-footer {
+  background: transparent !important;
+  border-top: none !important;
+  padding: 20px 0;
+  text-align: right;
+  /* Align save button to right */
+}
+
+
+/* FIX: Allow Dropdowns to Escape Cards */
+.student-admission-wrapper .bozero {
+  overflow: visible !important;
+  z-index: 1;
+}
+
+
+/* FIX: Remove Stacking Context for Dropdowns */
+.student-admission-wrapper .bozero {
+  z-index: auto !important;
+}
+
+/* --- Native Select Styling for Admission Page --- */
+.student-admission-wrapper select.form-control {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 1.2em !important;
+  padding-right: 2.5rem !important;
+  padding-left: 1rem !important;
+  border-radius: 8px !important;
+  border: 1px solid #cbd5e1 !important;
+  height: 40px !important;
+  background-color: #fff !important;
+  color: #334155 !important;
+  font-size: 14px !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.student-admission-wrapper select.form-control:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  outline: none !important;
+}
+
+/* --- Fix for Fee Details List Overlap & Alignment --- */
+.student-admission-wrapper .list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  /* Adjust padding as needed */
+  border: none;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.student-admission-wrapper .list-group-item::after {
+  display: none;
+  /* Flexbox handles layout now */
+}
+
+/* Fee Row Items */
+.student-admission-wrapper .list-group-item .stfirstdiv {
+  flex: 1;
+  /* Name takes available space */
+  padding-left: 0;
+  /* Reset excessive padding */
+  margin-right: 15px;
+  /* Guarantee gap between Name and Due Date */
+}
+
+.student-admission-wrapper .list-group-item .due_date {
+  width: 120px;
+  /* Fixed width for better columnar alignment */
+  text-align: center;
+}
+
+.student-admission-wrapper .list-group-item .tools {
+  width: 100px;
+  /* Fixed width for amount */
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Fix Import Sample Data Table Scroll */
+.student-admission-wrapper #sampledata {
+  width: max-content !important;
+  /* Force table to expand to fit headers */
+  max-width: none !important;
+  /* Cancel bootstrap max-width */
+  margin-bottom: 0 !important;
+}
+
+/* Ensure empty cells don't collapse */
+.student-admission-wrapper #sampledata td,
+.student-admission-wrapper #sampledata th {
+  white-space: nowrap;
+  padding: 12px 15px !important;
+}
+
+/* Fix Red Star Alignment in Table Headers */
+.student-admission-wrapper #sampledata th .text-red {
+  display: inline-block;
+  margin-right: 3px;
+  vertical-align: middle;
+  /* Aligns star with text */
+}
+
+/* Custom Scrollbar Styling */
+.student-admission-wrapper .box-body::-webkit-scrollbar {
+  height: 8px;
+  /* Slimmer horizontal scrollbar */
+  width: 8px;
+}
+
+.student-admission-wrapper .box-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.student-admission-wrapper .box-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  border: 2px solid #f1f5f9;
+  /* Creates a padding effect */
+}
+
+
+
+.student-admission-wrapper .box-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================
+   Global Report Lists - Grid of Cards Style
+   ========================================= */
+
+/* Reset List */
+.reportlists {
+  padding: 15px;
+  /* Add padding to keep cards inside the box */
+  margin: 0;
+  /* Remove negative margins that caused overflow */
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* List Item Spacing */
+.reportlists li {
+  margin-bottom: 20px;
+  /* Columns are handled by bootstrap classes (col-lg-4 etc) inline */
+}
+
+/* The Card Link */
+/* The Card Link */
+.reportlists li a {
+  display: block;
+  background: #f8fafc;
+  /* Light Slate background to contrast with white box */
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  /* Tighter radius */
+  padding: 12px 15px;
+  /* Compact padding */
+  color: #475569;
+  font-size: 14px;
+  /* Standard font size */
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+  /* Flat by default inside box */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover Effect */
+.reportlists li a:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-color: #3b82f6;
+  color: #1e293b;
+}
+
+/* Icon Styling */
+.reportlists li a i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  /* Smaller icon box */
+  height: 32px;
+  background: #ffffff;
+  color: #3b82f6;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  margin-right: 10px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+/* Icon Hover */
+.reportlists li a:hover i {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+/* Restoring Default White Box for Reports (Removed Transparent Overrides) */
+/* The .box.border0.margesection classes will now revert to their default white styles */
+
+/* --- Modern Setup Vertical Menu (Visitors, Complaint, Source, Reference) --- */
+/* Targeted via .modern-setup-menu class added to the view */
+
+.modern-setup-menu {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+/* Override potential global tablists styles */
+.modern-setup-menu>li {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  display: block !important;
+  float: none !important;
+  /* Ensure vertical */
+  background: white !important;
+}
+
+.modern-setup-menu>li>a {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 14px 20px !important;
+  color: #475569 !important;
+  /* Slate 600 */
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid #f1f5f9 !important;
+  background: transparent !important;
+  margin: 0 !important;
+  /* Reset any margins */
+  border-radius: 0 !important;
+  /* Reset any pills */
+}
+
+/* Remove last border */
+.modern-setup-menu>li:last-child>a {
+  border-bottom: none !important;
+}
+
+/* Hover State */
+.modern-setup-menu>li>a:hover {
+  background-color: #f8fafc !important;
+  color: #3b82f6 !important;
+  /* Blue 500 */
+  padding-left: 24px !important;
+  /* Slide animation */
+}
+
+/* Active State */
+.modern-setup-menu>li>a.active {
+  background-color: #eff6ff !important;
+  /* Light blue tint */
+  color: #2563eb !important;
+  /* Blue 600 */
+  font-weight: 700 !important;
+  border-left: 4px solid #3b82f6 !important;
+  /* Accent bar */
+  padding-left: 16px !important;
+  /* Adjust for border */
+}
+
+/* Fix for the container box to be invisible so the menu card shines */
+.col-md-2 .box.border0 {
+  box-shadow: none !important;
+  background: transparent !important;
+  border: none !important;
+  margin-bottom: 0 !important;
+}
+
+/* Responsive adjustment for the side menu */
+@media (max-width: 768px) {
+  .col-md-2 .box.border0 {
+    margin-bottom: 20px !important;
+  }
+}
+
+/* --- Modern Details View (Student Profile Card) --- */
+/* Completely revamps the '.slide-row' card layout for a modern, cleaner look */
+
+/* 1. Reset & Container */
+.carousel-row {
+  margin-bottom: 20px;
+  transition: transform 0.2s ease;
+}
+
+.slide-row {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  /* Subtle border */
+  border-radius: 12px;
+  /* Rounded card */
+  padding: 24px;
+  min-height: auto;
+  /* Let content dictate height */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  /* Soft shadow */
+  overflow: visible;
+  /* Allow buttons/tooltips to overflow if needed */
+  position: relative;
+  display: flex;
+  /* Flex layout for side-by-side */
+  flex-wrap: wrap;
+  /* Responsive wrapping */
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* 2. Photo Section (Left) */
+.slide-carousel {
+  width: 120px;
+  /* Fixed width for image container */
+  flex: 0 0 120px;
+  float: none;
+  /* Disable float */
+  display: block;
+}
+
+.slide-carousel .carousel-inner .item img {
+  border-radius: 12px;
+  /* Rounded image */
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #fff;
+}
+
+/* Hide legacy carousel indicators if present for single image */
+.slide-carousel .carousel-indicators {
+  display: none;
+}
+
+/* 3. Content Section (Middle) */
+.slide-content {
+  position: static;
+  /* Reset absolute positioning */
+  width: auto;
+  height: auto;
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  /* Take remaining space */
+  border-left: none;
+  overflow: visible;
+}
+
+/* Student Name Title */
+.slide-content h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.slide-content h4 a {
+  color: #1e293b;
+  /* Slate 800 */
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.slide-content h4 a:hover {
+  color: #3b82f6;
+  /* Blue 500 */
+}
+
+/* Details Grid */
+.slide-content .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  /* Slightly wider gap */
+  margin: 0 !important;
+  /* Remove bootstrap negative margins */
+}
+
+.slide-content .col-md-6 {
+  padding: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* LEFT COLUMN: Shorter data (Class, App No, DOB) - 40% Width */
+.slide-content .col-md-6:first-of-type {
+  flex: 0 0 calc(40% - 12px) !important;
+  max-width: calc(40% - 12px) !important;
+}
+
+/* RIGHT COLUMN: Longer data (Guardian Name, Address) - 60% Width */
+.slide-content .col-md-6:last-of-type {
+  flex: 0 0 calc(60% - 12px) !important;
+  max-width: calc(60% - 12px) !important;
+}
+
+.slide-content address {
+  margin-bottom: 0;
+  font-style: normal;
+  font-size: 14px;
+  color: #64748b;
+  /* Slate 500 */
+  line-height: 1.8;
+}
+
+/* Typography for labels vs values */
+.slide-content address b,
+.slide-content address strong b {
+  color: #334155 !important;
+  /* Slate 700 */
+  font-weight: 600;
+}
+
+/* 4. Action Buttons (Right/Footer) */
+.slide-footer {
+  position: static;
+  /* Reset absolute positioning */
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  /* Stack buttons vertically on desktop for cleaner look, or row */
+  align-self: flex-start;
+  /* Align to top */
+  gap: 8px;
+}
+
+.slide-footer .buttons {
+  float: none !important;
+  display: flex;
+  flex-direction: row;
+  /* Horizontal row of buttons */
+  gap: 8px;
+}
+
+/* Modern Button Styling */
+.slide-footer .btn {
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  transition: all 0.2s;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.slide-footer .btn:hover {
+  background: #ffffff;
+  border-color: #3b82f6;
+  color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
+}
+
+.slide-footer .btn i {
+  font-size: 14px;
+}
+
+/* 5. Responsive Adjustments */
+@media (max-width: 768px) {
+  .slide-row {
+    flex-direction: column;
+    /* Stack vertically on mobile */
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .slide-carousel {
+    width: 100px;
+    margin-bottom: 15px;
+  }
+
+  .slide-content {
+    width: 100%;
+    text-align: left;
+    /* Keep text left-aligned for readability, or center if preferred */
+  }
+
+  .slide-content h4 {
+    text-align: center;
+  }
+
+  .slide-footer {
+    width: 100%;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* --- Multi-Class Student Selection Styling --- */
+.multiclass-item {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+  margin-bottom: 24px !important;
+}
+
+.multiclass-item .panel-body {
+  padding: 20px !important;
+  background: transparent !important;
+}
+
+/* Header Styling (Name + Add Button) */
+.multiclass-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 20px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  padding-bottom: 15px !important;
+}
+
+.multiclass-header .student-name {
+  margin: 0 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+}
+
+/* Remove default panel styles that conflict */
+.multiclass-item.panel-info {
+  border-color: #e2e8f0 !important;
+}
+
+.multiclass-item.panel-info>.panel-heading {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+.multiclass-item .panel-footer {
+  background-color: #f8fafc !important;
+  border-top: 1px solid #f1f5f9 !important;
+  border-radius: 0 0 12px 12px !important;
+  padding: 12px 20px !important;
+}
+
+/* Add Row Button */
+.multiclass-item .addrow {
+  background-color: #eff6ff !important;
+  color: #3b82f6 !important;
+  border: 1px solid #dbeafe !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease;
+}
+
+.multiclass-item .addrow:hover {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+/* Remove Row Button */
+.multiclass-item .rmv_row {
+  background-color: #fee2e2 !important;
+  color: #ef4444 !important;
+  border: 1px solid #fecaca !important;
+  border-radius: 6px !important;
+  padding: 5px 10px !important;
+}
+
+.multiclass-item .rmv_row:hover {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+/* Update Button */
+.multiclass-item button[type="submit"] {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-weight: 500 !important;
+}
+
+.multiclass-item button[type="submit"]:hover {
+  background-color: #2563eb !important;
+}
+
+/* Form Controls inside */
+.multiclass-item .form-control {
+  border-radius: 6px !important;
+  border: 1px solid #cbd5e1 !important;
+  height: 38px !important;
+}
+
+/* =============================================
+   System Settings Page Styles
+   - Modern sidebar navigation
+   - Clean form sections with proper spacing
+   - Section headers with accent styling
+   ============================================= */
+
+/* --- Settings Page Layout Container --- */
+.content-wrapper>.content>.row>.col-md-2:first-child {
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+}
+
+/* --- Settings Sidebar Navigation --- */
+.content-wrapper .tablists {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.content-wrapper .tablists li {
+  display: block;
+  border-bottom: none;
+  margin-bottom: 4px;
+}
+
+.content-wrapper .tablists li:last-child {
+  margin-bottom: 0;
+}
+
+.content-wrapper .tablists li a {
+  display: block;
+  padding: 12px 16px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.content-wrapper .tablists li a:hover {
+  background: #f1f5f9;
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.content-wrapper .tablists li a.active,
+.content-wrapper .tablists li.active a {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.08) 100%);
+  color: #2563eb;
+  font-weight: 600;
+  border-left-color: #3b82f6;
+}
+
+/* --- Settings Main Content Box --- */
+.content-wrapper .col-md-10>.box,
+.content-wrapper .col-md-10>.box.box-primary {
+  background: #ffffff;
+  border: none;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08),
+    0 20px 25px -5px rgba(0, 0, 0, 0.04);
+  overflow: visible;
+}
+
+/* Settings Box Header */
+.content-wrapper .col-md-10>.box .box-header.ptbnull {
+  padding: 20px 25px !important;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  margin: 0 !important;
+}
+
+.content-wrapper .col-md-10>.box .box-header.ptbnull .box-title.titlefix {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.content-wrapper .col-md-10>.box .box-header.ptbnull .box-title.titlefix i {
+  color: #3b82f6;
+}
+
+/* --- Settings Alert Boxes --- */
+.content-wrapper .col-md-10>.box .alert-info {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 15px 25px;
+}
+
+.content-wrapper .col-md-10>.box .alert-info::before {
+  content: "ℹ️ ";
+}
+
+/* --- Settings Section Headers --- */
+.content-wrapper .session-head {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 20px 0;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 10px;
+  border-left: 4px solid #3b82f6;
+  display: inline-block;
+  width: auto;
+}
+
+.content-wrapper .settinghr {
+  height: 1px;
+  background: linear-gradient(to right, #e2e8f0, transparent);
+  margin: 25px 0 20px 0;
+  border: none;
+}
+
+/* --- Settings Form Layout --- */
+.content-wrapper .col-md-10>.box .box-body {
+  padding: 25px;
+}
+
+/* Horizontal Form Groups (Restored Global Default) */
+.content-wrapper .col-md-10>.box .form-group.row {
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+/* --- Scoped Styles for Material Form (User Requested 'Lines Fields' & Cleaner Look) --- */
+.material-form .form-group.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  /* Align to bottom of text for underlined fields */
+  margin-bottom: 15px;
+  /* Tighter spacing */
+}
+
+/* Material Input Style (Lines Field) */
+.material-form .form-control {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #cbd5e1 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 8px 0 !important;
+  height: auto !important;
+  /* Allow variable height */
+  font-weight: 500;
+}
+
+.material-form .form-control:focus {
+  border-bottom: 2px solid #3b82f6 !important;
+  background: transparent !important;
+}
+
+/* Tighter Columns for Material Look */
+.material-form .col-md-6 .form-group.row>label.col-sm-4 {
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding-bottom: 8px;
+  /* Align with input text bottom */
+  color: #64748b;
+  font-weight: 600;
+}
+
+.material-form .col-md-6 .form-group.row>div.col-sm-8 {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+
+/* Address/Full Width Row Adjustment */
+.material-form .col-md-12 .form-group.row>label.col-sm-2 {
+  flex: 0 0 12.5%;
+  /* Match the visual width of the other labels (half of 25%) */
+  max-width: 12.5%;
+}
+
+.material-form .col-md-12 .form-group.row>div.col-sm-10 {
+  flex: 0 0 87.5%;
+  max-width: 87.5%;
+}
+
+/* Form Labels */
+.content-wrapper .col-md-10>.box .form-group.row>label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0;
+  padding-right: 10px;
+}
+
+.content-wrapper .col-md-10>.box .form-group.row>label .req {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* Text alignment for right column labels */
+.content-wrapper .col-md-10>.box .form-group.row>label.text-lg-end {
+  text-align: right;
+}
+
+/* --- Settings Form Controls --- */
+.content-wrapper .col-md-10>.box .form-control {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px !important;
+  height: 42px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.content-wrapper .col-md-10>.box .form-control:focus {
+  background-color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.content-wrapper .col-md-10>.box textarea.form-control {
+  height: auto;
+  min-height: 80px;
+}
+
+/* Select dropdowns */
+.content-wrapper .col-md-10>.box select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* --- Settings Box Footer --- */
+.content-wrapper .col-md-10>.box .box-footer {
+  background: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  padding: 20px 25px;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Save Button */
+.content-wrapper .col-md-10>.box .box-footer .btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+  border-radius: 25px !important;
+  padding: 12px 30px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+.content-wrapper .col-md-10>.box .box-footer .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* --- Settings Page Form Groups (without .row class) --- */
+.content-wrapper .col-md-10>.box .box-body>.row>.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding: 15px 0;
+  width: 100%;
+}
+
+/* Label column - ensure proper width */
+.content-wrapper .col-md-10>.box .box-body>.row>.form-group>label[class*="col-"] {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0;
+  padding-right: 15px;
+  padding-top: 10px;
+  flex-shrink: 0;
+  min-width: 150px;
+}
+
+/* Ensure label column respects its grid class */
+.content-wrapper .col-md-10>.box .form-group>.col-sm-3,
+.content-wrapper .col-md-10>.box .form-group>.col-lg-2,
+.content-wrapper .col-md-10>.box .form-group>.col-md-3 {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 140px;
+  max-width: 180px;
+}
+
+/* Radio/checkbox container - take remaining space */
+.content-wrapper .col-md-10>.box .form-group>.col-sm-9,
+.content-wrapper .col-md-10>.box .form-group>.col-lg-10,
+.content-wrapper .col-md-10>.box .form-group>.col-md-9,
+.content-wrapper .col-md-10>.box .form-group>[class*="col-sm-9"],
+.content-wrapper .col-md-10>.box .form-group>[class*="col-lg-10"] {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Settings Page Radio Buttons & Toggles --- */
+.content-wrapper .col-md-10>.box .radio-inline,
+.content-wrapper .col-md-10>.box .checkbox-inline {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.content-wrapper .col-md-10>.box .radio-inline:hover,
+.content-wrapper .col-md-10>.box .checkbox-inline:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.content-wrapper .col-md-10>.box .radio-inline input[type="radio"],
+.content-wrapper .col-md-10>.box .checkbox-inline input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: #3b82f6;
+  width: 16px;
+  height: 16px;
+}
+
+/* Selected state for radio/checkbox */
+.content-wrapper .col-md-10>.box .radio-inline:has(input:checked),
+.content-wrapper .col-md-10>.box .checkbox-inline:has(input:checked) {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.15) 100%);
+  border-color: #3b82f6;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* --- Settings Image Previews --- */
+.content-wrapper .col-md-10>.box img {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Settings Tables (for ID Auto Generation etc.) --- */
+.content-wrapper .col-md-10>.box table.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 0;
+}
+
+.content-wrapper .col-md-10>.box table.table thead tr th {
+  background: #f8fafc !important;
+  color: #475569 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 14px 15px !important;
+  border-bottom: 2px solid #e2e8f0 !important;
+}
+
+.content-wrapper .col-md-10>.box table.table tbody tr td {
+  background: #ffffff !important;
+  padding: 14px 15px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  vertical-align: middle !important;
+}
+
+/* --- Toggle Switches for Settings --- */
+.content-wrapper .col-md-10 .onoffswitch {
+  position: relative;
+  width: 60px;
+  display: inline-block;
+}
+
+/* --- Settings Responsive Adjustments --- */
+@media (max-width: 991px) {
+
+  /* Stack sidebar above content on tablets */
+  .content-wrapper>.content>.row>.col-md-2:first-child {
+    position: relative;
+    top: 0;
+    margin-bottom: 20px;
+  }
+
+  .content-wrapper .tablists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 15px;
+  }
+
+  .content-wrapper .tablists li {
+    margin-bottom: 0;
+  }
+
+  .content-wrapper .tablists li a {
+    padding: 8px 14px;
+    font-size: 12px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .content-wrapper .tablists li a.active,
+  .content-wrapper .tablists li.active a {
+    border-left: none;
+    border-bottom-color: #3b82f6;
+  }
+
+  /* Form adjustments */
+  .content-wrapper .col-md-10>.box .form-group.row>label {
+    margin-bottom: 8px;
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .content-wrapper .tablists {
+    flex-direction: column;
+  }
+
+  .content-wrapper .tablists li a {
+    border-left: 3px solid transparent;
+    border-bottom: none;
+  }
+
+  .content-wrapper .tablists li a.active,
+  .content-wrapper .tablists li.active a {
+    border-left-color: #3b82f6;
+    border-bottom: none;
+  }
+
+  .content-wrapper .col-md-10>.box .box-body {
+    padding: 15px;
+  }
+
+  .content-wrapper .col-md-10>.box .box-footer {
+    padding: 15px;
+  }
+
+  .content-wrapper .session-head {
+    display: block;
+    font-size: 14px;
+  }
+
+  .content-wrapper .col-md-10>.box .alert-info {
+    margin: 10px 15px;
+  }
+}
